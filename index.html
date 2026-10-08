@@ -4,258 +4,122 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IAF AI Pro</title>
-
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,Tahoma,sans-serif;
- background:#07090d;
- color:#fff;
- min-height:100vh;
-}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#07090d;color:#fff;min-height:100vh}
 .container{max-width:900px;margin:auto;padding:20px}
-header{
- display:flex;justify-content:space-between;align-items:center;
- padding:12px 0 30px;
-}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 0 30px}
 .logo{font-size:25px;font-weight:900}
 .logo span{color:#19e6b2}
-.badge{
- background:#101820;border:1px solid #1d3c38;
- padding:8px 12px;border-radius:20px;color:#72f5d3;font-size:12px
-}
+.badge{background:#101820;border:1px solid #1d3c38;padding:8px 12px;border-radius:20px;color:#72f5d3;font-size:12px}
 .hero{text-align:center;padding:20px 0 30px}
 .hero h1{font-size:38px;margin:10px 0}
 .hero h1 span{color:#19e6b2}
 .hero p{color:#9aa4b2;line-height:1.8}
-.upload{
- border:2px dashed #24433e;
- background:linear-gradient(145deg,#0c1217,#090d12);
- border-radius:24px;
- padding:45px 20px;
- text-align:center;
- cursor:pointer;
- transition:.2s;
-}
+.upload{border:2px dashed #24433e;background:linear-gradient(145deg,#0c1217,#090d12);border-radius:24px;padding:45px 20px;text-align:center;cursor:pointer;transition:.2s}
 .upload:hover{border-color:#19e6b2;transform:translateY(-2px)}
 .upload-icon{font-size:48px;margin-bottom:15px}
 .upload h2{margin:8px 0}
 .upload p{color:#8d98a7}
 input[type=file]{display:none}
-
-.card{
- background:#0c1117;
- border:1px solid #18232d;
- border-radius:20px;
- padding:20px;
- margin-top:18px;
-}
+.card{background:#0c1117;border:1px solid #18232d;border-radius:20px;padding:20px;margin-top:18px}
 .card h3{margin-top:0}
-.grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:12px;
-}
-.option{
- background:#101820;
- border:1px solid #1c2934;
- padding:15px;
- border-radius:14px;
- cursor:pointer;
- text-align:center;
-}
-.option.active{
- border-color:#19e6b2;
- box-shadow:0 0 0 1px #19e6b2 inset;
-}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.option{background:#101820;border:1px solid #1c2934;padding:15px;border-radius:14px;cursor:pointer;text-align:center;transition:.2s}
+.option.active{border-color:#19e6b2;box-shadow:0 0 0 1px #19e6b2 inset}
 .option strong{display:block;font-size:18px}
 .option small{color:#84909e}
-.info{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:10px;
-}
-.info div{
- background:#101820;padding:13px;border-radius:12px;text-align:center
-}
+.info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.info div{background:#101820;padding:13px;border-radius:12px;text-align:center}
 .info b{display:block;font-size:17px}
 .info span{color:#7f8a97;font-size:11px}
-select,button{
- width:100%;padding:15px;border-radius:13px;
- border:1px solid #23313d;background:#101820;color:#fff;
- font-size:15px;
-}
-button{
- background:#19e6b2;color:#03100c;border:0;
- font-weight:900;cursor:pointer;margin-top:15px;
-}
+select,button{width:100%;padding:15px;border-radius:13px;border:1px solid #23313d;background:#101820;color:#fff;font-size:15px}
+button{background:#19e6b2;color:#03100c;border:0;font-weight:900;cursor:pointer;margin-top:15px}
 button:hover{filter:brightness(1.08)}
 button:disabled{opacity:.45;cursor:not-allowed}
 .hidden{display:none}
-.video-wrap video{
- width:100%;max-height:420px;border-radius:16px;background:#000
-}
-.progress{
- height:10px;background:#18212a;border-radius:10px;
- overflow:hidden;margin-top:15px;
-}
-.bar{
- height:100%;width:0%;
- background:#19e6b2;
- transition:width .3s;
-}
-.status{text-align:center;color:#8f9ba8;margin-top:10px}
-.note{
- color:#768391;font-size:12px;text-align:center;line-height:1.7;margin-top:15px
-}
+.video-wrap video{width:100%;max-height:420px;border-radius:16px;background:#000}
+.progress{height:10px;background:#18212a;border-radius:10px;overflow:hidden;margin-top:15px}
+.bar{height:100%;width:0%;background:#19e6b2;transition:width .3s}
+.status{text-align:center;color:#8f9ba8;margin-top:10px;padding:10px;border-radius:10px}
+.status.error{background:#2a0d0d;color:#ff6b6b}
+.status.success{background:#0d2a1c;color:#19e6b2}
+.note{color:#768391;font-size:12px;text-align:center;line-height:1.7;margin-top:15px}
 footer{text-align:center;color:#53606d;padding:35px 0 15px;font-size:12px}
-
-@media(max-width:600px){
- .container{padding:14px}
- .hero h1{font-size:30px}
- .grid{grid-template-columns:1fr 1fr}
- .info{grid-template-columns:1fr 1fr 1fr}
-}
+.download-link{display:block;margin-top:15px;padding:15px;background:#19e6b2;color:#03100c;text-align:center;border-radius:13px;font-weight:900;text-decoration:none}
+@media(max-width:600px){.container{padding:14px}.hero h1{font-size:30px}.grid{grid-template-columns:1fr 1fr}.info{grid-template-columns:1fr 1fr 1fr}}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <header>
- <div class="logo">IAF <span>AI</span></div>
- <div class="badge">AI VIDEO ENHANCER</div>
+<div class="logo">IAF <span>AI</span></div>
+<div class="badge">AI VIDEO ENHANCER</div>
 </header>
-
 <section class="hero">
- <h1>حوّل فيديوك إلى <span>جودة احترافية</span></h1>
- <p>
- ارفع الفيديو واختر الإعداد المناسب لتحضيره للتحسين بالذكاء الاصطناعي.
- </p>
+<h1>حوّل فيديوك إلى <span>جودة احترافية</span></h1>
+<p>ارفع الفيديو واختر الإعداد المناسب لتحضيره للتحسين بالذكاء الاصطناعي.</p>
 </section>
-
 <label class="upload" for="videoInput">
- <div class="upload-icon">🎬</div>
- <h2>ارفع الفيديو</h2>
- <p>MP4 • MOV • WebM</p>
- <p>اضغط هنا لاختيار فيديو من هاتفك</p>
+<div class="upload-icon">🎬</div>
+<h2>ارفع الفيديو</h2>
+<p>MP4 • MOV • WebM</p>
+<p>اضغط هنا لاختيار فيديو من هاتفك</p>
 </label>
-
 <input id="videoInput" type="file" accept="video/*">
-
 <div id="videoSection" class="card hidden">
-
- <h3>🎥 الفيديو</h3>
-
- <div class="video-wrap">
-  <video id="videoPreview" controls></video>
- </div>
-
- <div class="info" style="margin-top:12px">
-  <div><b id="duration">—</b><span>المدة</span></div>
-  <div><b id="resolution">—</b><span>الدقة</span></div>
-  <div><b id="filesize">—</b><span>الحجم</span></div>
- </div>
-
+<h3>🎥 الفيديو</h3>
+<div class="video-wrap"><video id="videoPreview" controls></video></div>
+<div class="info" style="margin-top:12px">
+<div><b id="duration">—</b><span>المدة</span></div>
+<div><b id="resolution">—</b><span>الدقة</span></div>
+<div><b id="filesize">—</b><span>الحجم</span></div>
 </div>
-
+</div>
 <div class="card">
-
 <h3>🧠 وضع التحسين</h3>
-
 <div class="grid">
-
- <div class="option active" data-mode="auto">
-  <strong>AI Auto</strong>
-  <small>اختيار تلقائي</small>
- </div>
-
- <div class="option" data-mode="tiktok">
-  <strong>🔥 TikTok Ultra</strong>
-  <small>9:16</small>
- </div>
-
- <div class="option" data-mode="2x">
-  <strong>2× Upscale</strong>
-  <small>رفع الدقة</small>
- </div>
-
- <div class="option" data-mode="4x">
-  <strong>4× Upscale</strong>
-  <small>أقصى تكبير</small>
- </div>
-
+<div class="option active" data-mode="auto"><strong>AI Auto</strong><small>اختيار تلقائي</small></div>
+<div class="option" data-mode="tiktok"><strong>🔥 TikTok Ultra</strong><small>9:16</small></div>
+<div class="option" data-mode="2x"><strong>2× Upscale</strong><small>رفع الدقة</small></div>
+<div class="option" data-mode="4x"><strong>4× Upscale</strong><small>أقصى تكبير</small></div>
 </div>
-
 </div>
-
 <div class="card">
-
 <h3>🎯 دقة الإخراج</h3>
-
 <select id="resolutionSelect">
- <option>تلقائي</option>
- <option>1080p</option>
- <option>1440p</option>
- <option>4K</option>
+<option>تلقائي</option>
+<option>1080p</option>
+<option>1440p</option>
+<option>4K</option>
 </select>
-
 <h3 style="margin-top:20px">🎞️ معدل الإطارات</h3>
-
 <select id="fpsSelect">
- <option>تلقائي</option>
- <option>30 FPS</option>
- <option>60 FPS</option>
- <option>120 FPS</option>
+<option>تلقائي</option>
+<option>30 FPS</option>
+<option>60 FPS</option>
+<option>120 FPS</option>
 </select>
-
 </div>
-
 <div class="card">
-
 <h3>✨ التحسينات</h3>
-
 <div class="grid">
-
- <div class="option active">تقليل التشويش</div>
- <div class="option active">استعادة التفاصيل</div>
- <div class="option active">زيادة الحدة</div>
- <div class="option">تثبيت الفيديو</div>
-
+<div class="option active">تقليل التشويش</div>
+<div class="option active">استعادة التفاصيل</div>
+<div class="option active">زيادة الحدة</div>
+<div class="option">تثبيت الفيديو</div>
 </div>
-
 </div>
-
 <div class="card">
-
-<button id="processBtn" disabled>
-🚀 بدء تحسين الفيديو
-</button>
-
-<div class="progress">
- <div class="bar" id="progressBar"></div>
+<button id="processBtn" disabled>🚀 بدء تحسين الفيديو</button>
+<div class="progress"><div class="bar" id="progressBar"></div></div>
+<div class="status" id="status">بانتظار رفع الفيديو</div>
+<div class="note">التحسين يعمل عبر محرك Replicate AI — قد يستغرق من دقيقة إلى عدة دقائق حسب طول الفيديو.</div>
 </div>
-
-<div class="status" id="status">
-بانتظار رفع الفيديو
+<footer>IAF AI Pro © 2026</footer>
 </div>
-
-<div class="note">
-واجهة IAF AI Pro جاهزة للربط بمحرك GPU حقيقي.
-هذه النسخة لا تدّعي تنفيذ تحسين AI حقيقي بدون محرك معالجة متصل.
-</div>
-
-</div>
-
-<footer>
-IAF AI Pro © 2026
-</footer>
-
-</div>
-
 <script>
+const BACKEND_URL = "https://iaf-ai-backend.a12345678kn.workers.dev";
 
 const input = document.getElementById("videoInput");
 const preview = document.getElementById("videoPreview");
@@ -263,93 +127,139 @@ const videoSection = document.getElementById("videoSection");
 const processBtn = document.getElementById("processBtn");
 const progressBar = document.getElementById("progressBar");
 const statusText = document.getElementById("status");
-
 let selectedFile = null;
+let selectedMode = "auto";
 
 input.addEventListener("change", function(){
-
- const file = this.files[0];
-
- if(!file) return;
-
- selectedFile = file;
-
- const url = URL.createObjectURL(file);
-
- preview.src = url;
-
- videoSection.classList.remove("hidden");
-
- processBtn.disabled = false;
-
- document.getElementById("filesize").textContent =
-   formatSize(file.size);
-
- preview.onloadedmetadata = function(){
-
-   document.getElementById("duration").textContent =
-     formatTime(preview.duration);
-
-   document.getElementById("resolution").textContent =
-     preview.videoWidth + "×" + preview.videoHeight;
-
- };
-
- statusText.textContent = "الفيديو جاهز للتحسين";
-
+  const file = this.files[0];
+  if(!file) return;
+  selectedFile = file;
+  const url = URL.createObjectURL(file);
+  preview.src = url;
+  videoSection.classList.remove("hidden");
+  processBtn.disabled = false;
+  document.getElementById("filesize").textContent = formatSize(file.size);
+  preview.onloadedmetadata = function(){
+    document.getElementById("duration").textContent = formatTime(preview.duration);
+    document.getElementById("resolution").textContent = preview.videoWidth + "×" + preview.videoHeight;
+  };
+  setStatus("الفيديو جاهز للتحسين", "");
 });
 
 document.querySelectorAll(".option[data-mode]").forEach(option=>{
-
- option.addEventListener("click",()=>{
-
-   document.querySelectorAll(".option[data-mode]")
-   .forEach(x=>x.classList.remove("active"));
-
-   option.classList.add("active");
-
- });
-
+  option.addEventListener("click",()=>{
+    document.querySelectorAll(".option[data-mode]").forEach(x=>x.classList.remove("active"));
+    option.classList.add("active");
+    selectedMode = option.dataset.mode;
+  });
 });
 
-processBtn.addEventListener("click",()=>{
+processBtn.addEventListener("click", async () => {
+  if(!selectedFile) return;
 
- if(!selectedFile) return;
+  processBtn.disabled = true;
+  processBtn.textContent = "⏳ جارٍ الرفع...";
+  setStatus("رفع الفيديو إلى السيرفر...", "");
+  progressBar.style.width = "5%";
 
- /*
-  IMPORTANT:
-  هذا المكان مخصص لربط API الحقيقي لاحقاً.
-  لا نقوم بتزييف معالجة AI.
- */
+  const oldLink = document.querySelector(".download-link");
+  if(oldLink) oldLink.remove();
 
- statusText.textContent =
-   "محرك GPU غير متصل حاليًا — الواجهة جاهزة للربط.";
+  try {
+    const formData = new FormData();
+    formData.append("video", selectedFile);
+    formData.append("mode", selectedMode);
 
- progressBar.style.width = "0%";
+    const response = await fetch(BACKEND_URL + "/enhance", {
+      method: "POST",
+      body: formData,
+    });
 
+    if(!response.ok){
+      const errText = await response.text();
+      throw new Error("خطأ في السيرفر: " + errText);
+    }
+
+    let prediction = await response.json();
+
+    if(prediction.error){
+      throw new Error(prediction.error);
+    }
+
+    progressBar.style.width = "35%";
+    setStatus("المعالجة جارية...", "");
+    processBtn.textContent = "⏳ معالجة...";
+
+    let attempts = 0;
+    const maxAttempts = 360;
+
+    while(
+      prediction.status !== "succeeded" &&
+      prediction.status !== "failed" &&
+      prediction.status !== "canceled" &&
+      attempts < maxAttempts
+    ){
+      await new Promise(r => setTimeout(r, 5000));
+      attempts++;
+
+      const pollRes = await fetch(BACKEND_URL + "/status/" + prediction.id);
+      prediction = await pollRes.json();
+
+      const progress = Math.min(35 + attempts * 0.3, 95);
+      progressBar.style.width = progress + "%";
+      setStatus("الحالة: " + translateStatus(prediction.status) + " (" + (attempts * 5) + " ثانية)", "");
+    }
+
+    if(prediction.status === "succeeded"){
+      progressBar.style.width = "100%";
+      setStatus("✅ تم التحسين بنجاح!", "success");
+
+      const outputUrl = Array.isArray(prediction.output) ? prediction.output[0] : prediction.output;
+
+      const link = document.createElement("a");
+      link.href = outputUrl;
+      link.textContent = "🎬 تحميل الفيديو المحسّن";
+      link.target = "_blank";
+      link.className = "download-link";
+      processBtn.parentElement.appendChild(link);
+
+    } else if(prediction.status === "failed"){
+      throw new Error("فشلت المعالجة: " + (prediction.error || "خطأ غير معروف"));
+    } else {
+      throw new Error("انتهى الوقت — حاول مجدداً");
+    }
+
+  } catch (err) {
+    console.error(err);
+    setStatus("❌ " + err.message, "error");
+    progressBar.style.width = "0%";
+  } finally {
+    processBtn.disabled = false;
+    processBtn.textContent = "🚀 بدء تحسين الفيديو";
+  }
 });
+
+function setStatus(text, type){
+  statusText.textContent = text;
+  statusText.className = "status" + (type ? " " + type : "");
+}
+
+function translateStatus(s){
+  const map = {"starting":"بدء","processing":"معالجة","succeeded":"نجح","failed":"فشل","canceled":"ألغي"};
+  return map[s] || s;
+}
 
 function formatSize(bytes){
-
- if(bytes < 1024*1024)
-   return (bytes/1024).toFixed(1)+" KB";
-
- return (bytes/(1024*1024)).toFixed(1)+" MB";
-
+  if(bytes < 1024*1024) return (bytes/1024).toFixed(1)+" KB";
+  return (bytes/(1024*1024)).toFixed(1)+" MB";
 }
 
 function formatTime(seconds){
-
- if(!isFinite(seconds)) return "—";
-
- const m = Math.floor(seconds/60);
- const s = Math.floor(seconds%60);
-
- return m + ":" + String(s).padStart(2,"0");
-
+  if(!isFinite(seconds)) return "—";
+  const m = Math.floor(seconds/60);
+  const s = Math.floor(seconds%60);
+  return m + ":" + String(s).padStart(2,"0");
 }
-
 </script>
-
 </body>
 </html>
