@@ -2,3022 +2,2224 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#06080c">
-<title>IAF VideoFix — AI Video Doctor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>IAF VideoFix — Video Compressor</title>
 
 <style>
 *{
- box-sizing:border-box;
- margin:0;
- padding:0
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 :root{
- --bg:#06080c;
- --panel:#0c1118;
- --panel2:#101722;
- --line:#202b38;
- --text:#fff;
- --muted:#8d9aaa;
- --cyan:#00e5ff;
- --cyan2:#00a8ff;
- --green:#22e6a8;
- --red:#ff526d;
- --yellow:#ffd166;
-}
-
-html{
- scroll-behavior:smooth
+    --bg:#050505;
+    --bg2:#0a0a0a;
+    --card:#101010;
+    --card2:#151515;
+    --line:#242424;
+    --text:#f5f5f5;
+    --muted:#858585;
+    --green:#c7ff00;
+    --green2:#9fd900;
 }
 
 body{
- background:
- radial-gradient(circle at 50% -10%,#09202b 0,#06080c 38%),
- #06080c;
- color:var(--text);
- font-family:Arial,Tahoma,sans-serif;
- min-height:100vh
+    background:
+        radial-gradient(circle at 50% -10%,#202020 0,#080808 32%,#050505 65%);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+    overflow-x:hidden;
 }
 
 button,
 input,
 select{
- font:inherit
+    font-family:inherit;
 }
 
 button{
- cursor:pointer
+    cursor:pointer;
 }
 
-.app{
- width:min(1250px,94%);
- margin:auto
-}
+/* ================= HEADER ================= */
 
-header{
- padding:20px 0
-}
-
-.nav{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px
+.header{
+    height:76px;
+    border-bottom:1px solid #1b1b1b;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 5%;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(5,5,5,.88);
+    backdrop-filter:blur(20px);
 }
 
 .logo{
- font-size:25px;
- font-weight:1000;
- letter-spacing:-1px
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:900;
+    letter-spacing:-1px;
+    font-size:21px;
+}
+
+.logo-mark{
+    width:35px;
+    height:35px;
+    background:var(--green);
+    color:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:1000;
+    border-radius:9px;
+    box-shadow:0 0 30px rgba(199,255,0,.15);
 }
 
 .logo span{
- color:var(--cyan)
+    color:#777;
+    font-weight:500;
 }
 
-.live{
- display:flex;
- align-items:center;
- gap:8px;
- color:#8d9aaa;
- font-size:12px;
- border:1px solid var(--line);
- padding:8px 13px;
- border-radius:50px;
- background:#0b1016
+.nav{
+    display:flex;
+    gap:30px;
+    align-items:center;
 }
 
-.dot{
- width:7px;
- height:7px;
- border-radius:50%;
- background:var(--green);
- box-shadow:0 0 12px var(--green)
+.nav a{
+    color:#888;
+    text-decoration:none;
+    font-size:13px;
+    transition:.2s;
 }
+
+.nav a:hover{
+    color:#fff;
+}
+
+.nav .active{
+    color:#fff;
+}
+
+.nav-button{
+    background:#fff;
+    color:#000;
+    padding:11px 18px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:800;
+}
+
+/* ================= HERO ================= */
 
 .hero{
- text-align:center;
- padding:55px 0 35px
+    text-align:center;
+    max-width:1050px;
+    margin:0 auto;
+    padding:100px 20px 50px;
 }
 
-.hero .mini{
- display:inline-block;
- color:var(--cyan);
- border:1px solid #104652;
- background:#07171c;
- padding:8px 14px;
- border-radius:50px;
- font-size:12px;
- font-weight:800;
- margin-bottom:20px
+.eyebrow{
+    color:var(--green);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:3px;
+    margin-bottom:20px;
 }
 
 .hero h1{
- font-size:clamp(40px,8vw,82px);
- line-height:.98;
- letter-spacing:-4px;
- margin-bottom:22px
+    font-size:clamp(42px,7vw,92px);
+    line-height:.92;
+    letter-spacing:-5px;
+    font-weight:1000;
+    text-transform:uppercase;
 }
 
 .hero h1 span{
- color:var(--cyan)
+    color:#555;
 }
 
 .hero p{
- max-width:760px;
- margin:auto;
- color:var(--muted);
- font-size:17px;
- line-height:1.9
+    max-width:580px;
+    margin:28px auto 0;
+    color:#777;
+    font-size:15px;
+    line-height:1.8;
 }
 
-.main-card{
- background:linear-gradient(180deg,#0d131b,#090d13);
- border:1px solid var(--line);
- border-radius:28px;
- padding:24px;
- box-shadow:0 30px 100px #000b
+/* ================= UPLOAD ================= */
+
+.upload-section{
+    width:min(1100px,92%);
+    margin:30px auto 100px;
 }
 
-.drop{
- border:2px dashed #2a3948;
- border-radius:22px;
- padding:70px 20px;
- text-align:center;
- transition:.25s;
- background:#080d13
+.upload-box{
+    position:relative;
+    min-height:390px;
+    border:1px solid #292929;
+    border-radius:20px;
+    background:
+        linear-gradient(145deg,#111,#080808);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+    transition:.25s;
 }
 
-.drop:hover,
-.drop.drag{
- border-color:var(--cyan);
- background:#07151b;
- box-shadow:0 0 50px #00e5ff0d
+.upload-box:before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:
+        linear-gradient(#ffffff05 1px,transparent 1px),
+        linear-gradient(90deg,#ffffff05 1px,transparent 1px);
+    background-size:45px 45px;
+    mask-image:linear-gradient(to bottom,#000,transparent);
+    pointer-events:none;
+}
+
+.upload-box.dragging{
+    border-color:var(--green);
+    box-shadow:0 0 60px rgba(199,255,0,.08);
+    transform:scale(1.005);
+}
+
+.upload-content{
+    position:relative;
+    z-index:2;
 }
 
 .upload-icon{
- font-size:65px;
- margin-bottom:15px
+    width:72px;
+    height:72px;
+    border:1px solid #303030;
+    border-radius:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:0 auto 25px;
+    font-size:29px;
+    background:#0d0d0d;
 }
 
-.drop h2{
- font-size:25px;
- margin-bottom:10px
+.upload-title{
+    font-size:28px;
+    font-weight:900;
+    margin-bottom:10px;
 }
 
-.drop p{
- color:var(--muted);
- margin-bottom:24px;
- line-height:1.7
+.upload-sub{
+    color:#666;
+    font-size:13px;
+    margin-bottom:28px;
 }
 
-input[type=file]{
- display:none
+.choose-btn{
+    border:0;
+    background:var(--green);
+    color:#000;
+    font-weight:1000;
+    padding:16px 30px;
+    border-radius:9px;
+    font-size:14px;
+    box-shadow:0 10px 40px rgba(199,255,0,.08);
 }
 
-.primary{
- border:0;
- background:linear-gradient(135deg,var(--cyan),#00b6ff);
- color:#001116;
- padding:14px 24px;
- border-radius:13px;
- font-weight:1000;
- transition:.2s
+.choose-btn:hover{
+    background:#d8ff4d;
+    transform:translateY(-2px);
 }
 
-.primary:hover{
- transform:translateY(-2px);
- box-shadow:0 12px 30px #00e5ff22
+.formats{
+    margin-top:18px;
+    color:#555;
+    font-size:11px;
 }
 
-.primary:disabled{
- opacity:.5;
- cursor:not-allowed;
- transform:none
+#fileInput{
+    display:none;
 }
 
-.secondary{
- border:1px solid #2a3542;
- background:#111822;
- color:#fff;
- padding:13px 20px;
- border-radius:13px
-}
-
-.secondary:disabled{
- opacity:.45;
- cursor:not-allowed
-}
-
-.hidden{
- display:none!important
-}
+/* ================= DASHBOARD ================= */
 
 .dashboard{
- display:none;
- margin-top:25px
+    display:none;
 }
 
-.video-preview{
- background:#000;
- border-radius:20px;
- overflow:hidden;
- position:relative
+.file-card{
+    border:1px solid var(--line);
+    background:#0c0c0c;
+    border-radius:16px;
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:15px;
 }
 
-.video-preview video{
- width:100%;
- max-height:620px;
- display:block
+.file-thumb{
+    width:105px;
+    height:70px;
+    border-radius:9px;
+    object-fit:cover;
+    background:#151515;
 }
 
-.video-overlay{
- position:absolute;
- top:15px;
- right:15px;
- background:#000b;
- border:1px solid #ffffff20;
- padding:7px 11px;
- border-radius:9px;
- font-size:11px;
- backdrop-filter:blur(10px)
+.file-info{
+    flex:1;
+    min-width:0;
 }
 
-.stats{
- display:grid;
- grid-template-columns:repeat(6,1fr);
- gap:10px;
- margin-top:15px
+.file-name{
+    font-weight:800;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    margin-bottom:7px;
 }
 
-.stat{
- background:#080d13;
- border:1px solid var(--line);
- border-radius:15px;
- padding:15px
+.file-meta{
+    color:#666;
+    font-size:12px;
 }
 
-.stat small{
- color:#748192;
- display:block;
- margin-bottom:7px
+.remove-btn{
+    width:35px;
+    height:35px;
+    border:1px solid #292929;
+    background:#111;
+    color:#888;
+    border-radius:8px;
 }
 
-.stat b{
- font-size:16px
+.remove-btn:hover{
+    color:#fff;
+    border-color:#555;
 }
 
-.tabs{
- display:flex;
- gap:8px;
- overflow:auto;
- margin-top:20px;
- padding-bottom:4px
-}
-
-.tab{
- white-space:nowrap;
- border:1px solid var(--line);
- background:#0b1118;
- color:#aab5c1;
- padding:11px 16px;
- border-radius:11px
-}
-
-.tab.active{
- color:#001116;
- background:var(--cyan);
- border-color:var(--cyan);
- font-weight:900
-}
+/* ================= CONTROLS ================= */
 
 .controls{
- margin-top:15px;
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:15px
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:14px;
+    margin-top:15px;
 }
 
 .control{
- background:#090e15;
- border:1px solid var(--line);
- border-radius:18px;
- padding:18px
+    border:1px solid var(--line);
+    background:#0d0d0d;
+    padding:20px;
+    border-radius:14px;
 }
 
-.control h3{
- font-size:15px;
- margin-bottom:13px
-}
-
-.control p{
- color:#778494;
- font-size:12px;
- line-height:1.6;
- margin-top:8px
-}
-
-.range-row{
- display:flex;
- align-items:center;
- gap:12px
-}
-
-.range-row span{
- min-width:45px;
- text-align:center;
- color:var(--cyan);
- font-weight:900
-}
-
-input[type=range]{
- width:100%;
- accent-color:var(--cyan)
+.control-label{
+    color:#777;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    margin-bottom:12px;
+    display:block;
 }
 
 select{
- width:100%;
- border:1px solid #293542;
- background:#111822;
- color:#fff;
- border-radius:10px;
- padding:11px
+    width:100%;
+    background:#151515;
+    color:#fff;
+    border:1px solid #292929;
+    padding:13px;
+    border-radius:8px;
+    outline:none;
 }
 
-.toggle{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
- padding:11px 0;
- border-bottom:1px solid #17212c
+select:focus{
+    border-color:#555;
 }
 
-.toggle:last-child{
- border:0
+.quality-buttons{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:7px;
 }
 
-.switch{
- width:46px;
- height:25px;
- border-radius:20px;
- background:#26313d;
- position:relative;
- flex:none
+.q-btn{
+    background:#151515;
+    color:#777;
+    border:1px solid #292929;
+    padding:12px 5px;
+    border-radius:7px;
+    font-size:11px;
+    font-weight:700;
 }
 
-.switch i{
- position:absolute;
- width:19px;
- height:19px;
- border-radius:50%;
- background:#788492;
- top:3px;
- right:24px;
- transition:.2s
+.q-btn.active{
+    background:var(--green);
+    border-color:var(--green);
+    color:#000;
 }
 
-.switch.on{
- background:#005767
+.range-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
 }
 
-.switch.on i{
- right:3px;
- background:var(--cyan)
+input[type=range]{
+    width:100%;
+    accent-color:var(--green);
 }
 
-.ai-models{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:10px;
- margin-top:15px
+.range-value{
+    width:48px;
+    color:var(--green);
+    font-size:12px;
+    font-weight:bold;
 }
 
-.model{
- border:1px solid var(--line);
- background:#090e14;
- border-radius:15px;
- padding:15px;
- cursor:pointer;
- transition:.2s
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:15px;
 }
 
-.model:hover{
- border-color:#38505e
+.stat{
+    background:#0d0d0d;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px;
 }
 
-.model.active{
- border-color:var(--cyan);
- background:#07171d
+.stat small{
+    display:block;
+    color:#555;
+    font-size:10px;
+    margin-bottom:8px;
 }
 
-.model .icon{
- font-size:28px;
- margin-bottom:10px
+.stat strong{
+    font-size:17px;
 }
 
-.model b{
- display:block;
- margin-bottom:5px
+/* ================= PROCESS ================= */
+
+.process-box{
+    margin-top:15px;
+    background:#0d0d0d;
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:24px;
 }
 
-.model small{
- color:#748191;
- line-height:1.5
+.process-head{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
 }
 
-.actions{
- display:flex;
- flex-wrap:wrap;
- gap:10px;
- margin-top:20px
+.process-head span:first-child{
+    font-size:13px;
+    font-weight:800;
 }
 
-.full{
- flex:1;
- min-width:220px
-}
-
-.status{
- display:none;
- margin-top:15px;
- padding:15px;
- border-radius:14px;
- background:#07171c;
- border:1px solid #12434e;
- color:var(--cyan);
- line-height:1.7
+#progressPercent{
+    color:var(--green);
+    font-weight:900;
 }
 
 .progress{
- display:none;
- height:9px;
- background:#18212c;
- border-radius:20px;
- overflow:hidden;
- margin-top:15px
+    height:7px;
+    background:#202020;
+    border-radius:10px;
+    overflow:hidden;
 }
 
-.progress i{
- display:block;
- width:0;
- height:100%;
- background:linear-gradient(90deg,var(--cyan),#6af5ff);
- transition:.3s
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:var(--green);
+    box-shadow:0 0 15px rgba(199,255,0,.3);
+    transition:.2s;
 }
 
-.analysis{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:15px;
- margin-top:15px
+.process-status{
+    color:#555;
+    font-size:11px;
+    margin-top:12px;
 }
 
-.panel{
- background:#090e14;
- border:1px solid var(--line);
- border-radius:18px;
- padding:20px
+/* ================= ACTIONS ================= */
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
 }
 
-.panel h3{
- margin-bottom:15px
+.main-action{
+    height:55px;
+    border:0;
+    background:var(--green);
+    color:#000;
+    border-radius:9px;
+    font-weight:1000;
+    font-size:14px;
 }
 
-.list{
- list-style:none
+.secondary-action{
+    height:55px;
+    border:1px solid #303030;
+    background:#101010;
+    color:#fff;
+    border-radius:9px;
+    font-weight:800;
 }
 
-.list li{
- padding:11px 0;
- border-bottom:1px solid #17212b;
- color:#aab5c0;
- line-height:1.5
+.main-action:disabled,
+.secondary-action:disabled{
+    opacity:.35;
+    cursor:not-allowed;
 }
 
-.list li:last-child{
- border:0
+/* ================= RESULT ================= */
+
+.result{
+    display:none;
+    margin-top:25px;
 }
 
-.good{
- color:var(--green)!important
-}
-
-.warn{
- color:var(--yellow)!important
-}
-
-.bad{
- color:var(--red)!important
-}
-
-.score-box{
- margin-top:15px;
- display:grid;
- grid-template-columns:180px 1fr;
- gap:20px;
- align-items:center
-}
-
-.score{
- width:155px;
- height:155px;
- border-radius:50%;
- display:grid;
- place-items:center;
- background:
- radial-gradient(circle at center,#090e14 58%,transparent 59%),
- conic-gradient(var(--cyan) 0deg,#00e5ff 280deg,#18212b 280deg);
- font-size:36px;
- font-weight:1000
-}
-
-.score span{
- font-size:13px;
- color:#8c98a7
+.result-title{
+    font-size:12px;
+    color:#666;
+    letter-spacing:2px;
+    font-weight:900;
+    margin-bottom:12px;
 }
 
 .compare{
- display:none;
- margin-top:20px
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
 
-.compare-grid{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:15px
+.video-card{
+    background:#0c0c0c;
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
 }
 
-.compare-card{
- border:1px solid var(--line);
- border-radius:18px;
- overflow:hidden;
- background:#080d12
+.video-label{
+    padding:12px 15px;
+    color:#777;
+    font-size:11px;
+    font-weight:bold;
+    border-bottom:1px solid #1c1c1c;
 }
 
-.compare-card h3{
- padding:13px 16px
+.video-card video{
+    display:block;
+    width:100%;
+    max-height:450px;
+    background:#000;
 }
 
-.compare-card video{
- width:100%;
- display:block
+.result-stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:10px;
 }
+
+.result-stat{
+    border:1px solid var(--line);
+    background:#0c0c0c;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.result-stat small{
+    display:block;
+    color:#555;
+    margin-bottom:6px;
+    font-size:10px;
+}
+
+.result-stat strong{
+    font-size:18px;
+}
+
+.download{
+    width:100%;
+    height:58px;
+    margin-top:12px;
+    border:0;
+    border-radius:9px;
+    background:#fff;
+    color:#000;
+    font-weight:1000;
+    font-size:14px;
+}
+
+/* ================= FEATURES ================= */
 
 .features{
- padding:80px 0 40px
+    width:min(1100px,92%);
+    margin:0 auto 100px;
 }
 
-.features-title{
- text-align:center;
- margin-bottom:30px
+.section-heading{
+    text-align:center;
+    margin-bottom:35px;
 }
 
-.features-title h2{
- font-size:38px;
- margin-bottom:10px
+.section-heading small{
+    color:var(--green);
+    font-size:10px;
+    letter-spacing:3px;
 }
 
-.features-title p{
- color:var(--muted)
+.section-heading h2{
+    font-size:clamp(30px,5vw,55px);
+    margin-top:12px;
+    letter-spacing:-2px;
 }
 
 .feature-grid{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:14px
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
 }
 
 .feature{
- background:#0b1017;
- border:1px solid var(--line);
- border-radius:20px;
- padding:22px;
- min-height:190px
+    min-height:190px;
+    padding:25px;
+    border:1px solid #1d1d1d;
+    border-radius:14px;
+    background:#090909;
 }
 
-.feature-icon{
- font-size:35px;
- margin-bottom:16px
+.feature-number{
+    color:var(--green);
+    font-size:11px;
+    font-weight:900;
 }
 
 .feature h3{
- margin-bottom:8px
+    margin:35px 0 10px;
+    font-size:19px;
 }
 
 .feature p{
- color:#788594;
- line-height:1.7;
- font-size:13px
+    color:#666;
+    line-height:1.7;
+    font-size:12px;
 }
 
-.footer{
- text-align:center;
- color:#586575;
- padding:50px 0
+/* ================= FOOTER ================= */
+
+footer{
+    border-top:1px solid #171717;
+    padding:40px 5%;
+    display:flex;
+    justify-content:space-between;
+    color:#444;
+    font-size:11px;
 }
 
-@media(max-width:1000px){
-
- .stats{
-  grid-template-columns:repeat(3,1fr)
- }
-
- .feature-grid{
-  grid-template-columns:repeat(2,1fr)
- }
-
- .ai-models{
-  grid-template-columns:repeat(2,1fr)
- }
-
+footer strong{
+    color:#777;
 }
 
-@media(max-width:750px){
+/* ================= MOBILE ================= */
 
- .controls,
- .analysis{
-  grid-template-columns:1fr
- }
+@media(max-width:800px){
 
- .score-box{
-  grid-template-columns:1fr
- }
+    .header{
+        height:65px;
+        padding:0 20px;
+    }
 
- .score{
-  margin:auto
- }
+    .nav a:not(.nav-button){
+        display:none;
+    }
 
+    .hero{
+        padding-top:65px;
+    }
+
+    .hero h1{
+        letter-spacing:-3px;
+    }
+
+    .upload-box{
+        min-height:330px;
+    }
+
+    .controls{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .compare{
+        grid-template-columns:1fr;
+    }
+
+    .feature-grid{
+        grid-template-columns:1fr;
+    }
+
+    footer{
+        flex-direction:column;
+        gap:10px;
+    }
 }
 
-@media(max-width:550px){
+@media(max-width:500px){
 
- .hero h1{
-  letter-spacing:-2px
- }
+    .logo{
+        font-size:16px;
+    }
 
- .main-card{
-  padding:13px
- }
+    .logo-mark{
+        width:30px;
+        height:30px;
+    }
 
- .stats{
-  grid-template-columns:1fr 1fr
- }
+    .nav-button{
+        padding:9px 12px;
+        font-size:10px;
+    }
 
- .feature-grid,
- .compare-grid{
-  grid-template-columns:1fr
- }
+    .hero h1{
+        font-size:42px;
+    }
 
- .ai-models{
-  grid-template-columns:1fr 1fr
- }
+    .upload-title{
+        font-size:23px;
+    }
 
- .drop{
-  padding:50px 15px
- }
+    .file-card{
+        align-items:flex-start;
+    }
 
- .actions button{
-  width:100%;
- }
+    .file-thumb{
+        width:85px;
+        height:60px;
+    }
 
+    .actions{
+        grid-template-columns:1fr;
+    }
+
+    .result-stats{
+        grid-template-columns:1fr;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<!-- HEADER -->
+<header class="header">
 
-<header>
-<div class="nav">
+    <div class="logo">
+        <div class="logo-mark">I</div>
+        IAF <span>VideoFix</span>
+    </div>
 
-<div class="logo">
-IAF <span>VideoFix</span>
-</div>
+    <nav class="nav">
+        <a class="active" href="#">COMPRESSOR</a>
+        <a href="#features">FEATURES</a>
+        <a href="#about">ABOUT</a>
 
-<div class="live">
-<i class="dot"></i>
-AI VIDEO DOCTOR
-</div>
+        <a class="nav-button" href="#upload">
+            UPLOAD ↗
+        </a>
+    </nav>
 
-</div>
 </header>
 
+
+<!-- HERO -->
 <section class="hero">
 
-<div class="mini">
-NEXT-GEN VIDEO ENHANCEMENT
-</div>
-
-<h1>
-حوّل فيديوك إلى<br>
-<span>جودة احترافية</span>
-</h1>
-
-<p>
-Upscale • Denoise • Sharpen • Stabilize • Interpolate • Deblur • HDR
-</p>
-
-</section>
-
-<section class="main-card">
-
-<div class="drop" id="drop">
-
-<div class="upload-icon">
-🎬
-</div>
-
-<h2>
-ارفع الفيديو
-</h2>
-
-<p>
-MP4 / MOV / WebM<br>
-اسحب الفيديو هنا أو اختره من جهازك
-</p>
-
-<button class="primary" id="choose">
-اختيار الفيديو
-</button>
-
-<input
- id="file"
- type="file"
- accept="video/mp4,video/quicktime,video/webm"
->
-
-</div>
-
-
-<div class="dashboard" id="dashboard">
-
-<div class="video-preview">
-
-<div class="video-overlay" id="formatBadge">
-VIDEO
-</div>
-
-<video
- id="preview"
- controls
- playsinline
-></video>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-<small>Resolution</small>
-<b id="resolution">—</b>
-</div>
-
-<div class="stat">
-<small>FPS</small>
-<b id="fps">—</b>
-</div>
-
-<div class="stat">
-<small>Duration</small>
-<b id="duration">—</b>
-</div>
-
-<div class="stat">
-<small>Size</small>
-<b id="size">—</b>
-</div>
-
-<div class="stat">
-<small>Aspect</small>
-<b id="aspect">—</b>
-</div>
-
-<div class="stat">
-<small>Format</small>
-<b id="format">—</b>
-</div>
-
-</div>
-
-
-<div class="tabs">
-
-<button class="tab active" data-tab="enhance">
-✨ Enhancement
-</button>
-
-<button class="tab" data-tab="motion">
-🎞️ Motion
-</button>
-
-<button class="tab" data-tab="color">
-🎨 Color
-</button>
-
-<button class="tab" data-tab="restore">
-🧬 Restore
-</button>
-
-<button class="tab" data-tab="social">
-📱 Social
-</button>
-
-</div>
-
-
-<div class="controls">
-
-<div class="control">
-
-<h3>
-🎯 Output Resolution
-</h3>
-
-<select id="resolutionSelect">
-
-<option value="original">
-Original
-</option>
-
-<option value="720">
-720p
-</option>
-
-<option value="1080">
-1080p Full HD
-</option>
-
-<option value="1440">
-1440p 2K
-</option>
-
-<option value="2160">
-2160p 4K
-</option>
-
-</select>
-
-<p>
-اختر الدقة المستهدفة للفيديو.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🤖 AI Model
-</h3>
-
-<select id="modelSelect">
-
-<option value="proteus">
-Proteus — General Enhance
-</option>
-
-<option value="iris">
-Iris — Faces & Details
-</option>
-
-<option value="nyx">
-Nyx — Denoise
-</option>
-
-<option value="rhea">
-Rhea — 4× Upscale
-</option>
-
-<option value="gaia">
-Gaia — Natural Upscale
-</option>
-
-<option value="theia">
-Theia — Clarity
-</option>
-
-</select>
-
-<p>
-اختيار الموديل المناسب حسب نوع الفيديو.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🔬 Enhancement
-</h3>
-
-<div class="range-row">
-
-<input
- id="enhanceRange"
- type="range"
- min="0"
- max="100"
- value="50"
->
-
-<span id="enhanceValue">
-50
-</span>
-
-</div>
-
-<p>
-قوة التحسين وإظهار التفاصيل.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="ai-models">
-
-<div class="model active" data-model="proteus">
-
-<div class="icon">
-🧠
-</div>
-
-<b>
-Proteus
-</b>
-
-<small>
-تحسين عام وضغط وضوضاء.
-</small>
-
-</div>
-
-
-<div class="model" data-model="iris">
-
-<div class="icon">
-👤
-</div>
-
-<b>
-Iris
-</b>
-
-<small>
-الوجوه والتفاصيل الدقيقة.
-</small>
-
-</div>
-
-
-<div class="model" data-model="nyx">
-
-<div class="icon">
-🌙
-</div>
-
-<b>
-Nyx
-</b>
-
-<small>
-إزالة الضوضاء والإضاءة الضعيفة.
-</small>
-
-</div>
-
-
-<div class="model" data-model="rhea">
-
-<div class="icon">
-💎
-</div>
-
-<b>
-Rhea
-</b>
-
-<small>
-رفع دقة قوي وتفاصيل دقيقة.
-</small>
-
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<div class="control">
-
-<h3>
-🔪 Sharpen
-</h3>
-
-<div class="range-row">
-
-<input
- id="sharpRange"
- type="range"
- min="0"
- max="100"
- value="35"
->
-
-<span id="sharpValue">
-35
-</span>
-
-</div>
-
-<p>
-إظهار الحواف والتفاصيل بدون مبالغة.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🌫️ Denoise
-</h3>
-
-<div class="range-row">
-
-<input
- id="noiseRange"
- type="range"
- min="0"
- max="100"
- value="30"
->
-
-<span id="noiseValue">
-30
-</span>
-
-</div>
-
-<p>
-تقليل التشويش والـISO noise.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🎯 Recover Detail
-</h3>
-
-<div class="range-row">
-
-<input
- id="detailRange"
- type="range"
- min="0"
- max="100"
- value="40"
->
-
-<span id="detailValue">
-40
-</span>
-
-</div>
-
-<p>
-إرجاع جزء من تفاصيل المصدر الأصلي.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<div class="control">
-
-<h3>
-🎞️ Frame Interpolation
-</h3>
-
-<select id="fpsSelect">
-
-<option value="original">
-Original FPS
-</option>
-
-<option value="30">
-30 FPS
-</option>
-
-<option value="60">
-60 FPS
-</option>
-
-<option value="90">
-90 FPS
-</option>
-
-<option value="120">
-120 FPS
-</option>
-
-</select>
-
-<p>
-إنشاء إطارات جديدة لحركة أكثر سلاسة.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🌀 Stabilization
-</h3>
-
-<div class="toggle" data-toggle="stabilize">
-
-<span>
-تثبيت الاهتزاز
-</span>
-
-<div class="switch">
-<i></i>
-</div>
-
-</div>
-
-<div class="toggle" data-toggle="rolling">
-
-<span>
-Rolling Shutter
-</span>
-
-<div class="switch">
-<i></i>
-</div>
-
-</div>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🐌 Slow Motion
-</h3>
-
-<select id="slowSelect">
-
-<option value="1">
-Normal
-</option>
-
-<option value="2">
-2× Slow Motion
-</option>
-
-<option value="4">
-4× Slow Motion
-</option>
-
-<option value="8">
-8× Slow Motion
-</option>
-
-<option value="16">
-16× Slow Motion
-</option>
-
-</select>
-
-<p>
-إنشاء حركة بطيئة بواسطة Frame Interpolation.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<div class="control">
-
-<h3>
-🌈 SDR → HDR
-</h3>
-
-<div class="toggle" data-toggle="hdr">
-
-<span>
-تحويل HDR
-</span>
-
-<div class="switch">
-<i></i>
-</div>
-
-</div>
-
-<p>
-توسيع التباين والإضاءة والألوان.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🌫️ Motion Deblur
-</h3>
-
-<div class="range-row">
-
-<input
- id="deblurRange"
- type="range"
- min="0"
- max="100"
- value="25"
->
-
-<span id="deblurValue">
-25
-</span>
-
-</div>
-
-<p>
-تقليل ضبابية الحركة.
-</p>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🎞️ Film Grain
-</h3>
-
-<div class="range-row">
-
-<input
- id="grainRange"
- type="range"
- min="0"
- max="100"
- value="0"
->
-
-<span id="grainValue">
-0
-</span>
-
-</div>
-
-<p>
-إضافة ملمس سينمائي طبيعي عند الحاجة.
-</p>
-
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<div class="control">
-
-<h3>
-💡 Exposure
-</h3>
-
-<div class="range-row">
-
-<input
- id="exposureRange"
- type="range"
- min="-100"
- max="100"
- value="0"
->
-
-<span id="exposureValue">
-0
-</span>
-
-</div>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🎨 Contrast
-</h3>
-
-<div class="range-row">
-
-<input
- id="contrastRange"
- type="range"
- min="-100"
- max="100"
- value="0"
->
-
-<span id="contrastValue">
-0
-</span>
-
-</div>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-🌈 Saturation
-</h3>
-
-<div class="range-row">
-
-<input
- id="saturationRange"
- type="range"
- min="-100"
- max="100"
- value="0"
->
-
-<span id="saturationValue">
-0
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="controls">
-
-<div class="control">
-
-<h3>
-📱 Social Preset
-</h3>
-
-<select id="socialSelect">
-
-<option value="none">
-None
-</option>
-
-<option value="tiktok">
-TikTok — 1080×1920
-</option>
-
-<option value="instagram">
-Instagram Reels — 1080×1920
-</option>
-
-<option value="youtube">
-YouTube — 1080p
-</option>
-
-<option value="youtube4k">
-YouTube — 4K
-</option>
-
-<option value="shorts">
-YouTube Shorts — 1080×1920
-</option>
-
-</select>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-📐 Crop
-</h3>
-
-<select id="cropSelect">
-
-<option value="original">
-Original
-</option>
-
-<option value="9:16">
-9:16 Vertical
-</option>
-
-<option value="16:9">
-16:9 Landscape
-</option>
-
-<option value="1:1">
-1:1 Square
-</option>
-
-<option value="4:5">
-4:5 Instagram
-</option>
-
-</select>
-
-</div>
-
-
-<div class="control">
-
-<h3>
-📦 Output Quality
-</h3>
-
-<select id="qualitySelect">
-
-<option value="high">
-High Quality
-</option>
-
-<option value="balanced">
-Balanced
-</option>
-
-<option value="small">
-Small File
-</option>
-
-</select>
-
-</div>
-
-</div>
-
-
-<div class="actions">
-
-<button
- class="primary full"
- id="autoFix"
->
-🚀 AI AUTO ENHANCE
-</button>
-
-<button
- class="secondary"
- id="analyzeBtn"
->
-🔬 تحليل ذكي
-</button>
-
-<button
- class="secondary"
- id="resetBtn"
->
-↩ إعادة ضبط
-</button>
-
-<button
- class="primary"
- id="saveBtn"
- disabled
->
-⬇️ حفظ الفيديو
-</button>
-
-<button
- class="secondary"
- id="shareBtn"
- disabled
->
-📤 مشاركة
-</button>
-
-</div>
-
-
-<div class="status" id="status"></div>
-
-
-<div class="progress" id="progress">
-
-<i id="progressBar"></i>
-
-</div>
-
-
-<div class="analysis">
-
-<div class="panel">
-
-<h3>
-🔎 AI Diagnosis
-</h3>
-
-<ul class="list" id="diagnosis">
-
-<li>
-ارفع فيديو لبدء التحليل.
-</li>
-
-</ul>
-
-</div>
-
-
-<div class="panel">
-
-<h3>
-💡 Smart Recommendations
-</h3>
-
-<ul class="list" id="recommendations">
-
-<li>
-سيتم اختيار الإعدادات المناسبة تلقائياً.
-</li>
-
-</ul>
-
-</div>
-
-</div>
-
-
-<div class="panel" style="margin-top:15px">
-
-<h3>
-🏆 Video Quality Score
-</h3>
-
-<div class="score-box">
-
-<div class="score" id="score">
-0
-</div>
-
-<div>
-
-<h3 id="scoreTitle">
-جاهز للتحليل
-</h3>
-
-<p
- id="scoreText"
- style="color:#7f8c9b;line-height:1.8"
->
-سيتم تقييم الدقة والضوضاء والحركة وحجم الفيديو والأبعاد.
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="compare" id="compare">
-
-<h3 style="margin-bottom:15px">
-⚡ Before / After
-</h3>
-
-<div class="compare-grid">
-
-<div class="compare-card">
-
-<h3>
-قبل
-</h3>
-
-<video
- id="beforeVideo"
- controls
- playsinline
-></video>
-
-</div>
-
-
-<div class="compare-card">
-
-<h3>
-بعد
-</h3>
-
-<video
- id="afterVideo"
- controls
- playsinline
-></video>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
+    <div class="eyebrow">
+        IAF VIDEO PROCESSING
+    </div>
+
+    <h1>
+        DON'T LET THE<br>
+        <span>UPLOAD DESTROY</span><br>
+        THE EDIT
+    </h1>
+
+    <p>
+        ضغط وتحسين الفيديو مع الحفاظ على أكبر قدر ممكن من الجودة والحركة.
+        ارفع الفيديو، اختر الإعدادات، ودع IAF VideoFix يتولى الباقي.
+    </p>
 
 </section>
 
 
-<section class="features">
+<!-- UPLOAD -->
+<section class="upload-section" id="upload">
 
-<div class="features-title">
+    <div class="upload-box" id="uploadBox">
 
-<h2>
-AI Video Doctor
-</h2>
+        <div class="upload-content">
 
-<p>
-أدوات احترافية مستوحاة من فئة برامج تحسين الفيديو الاحترافية.
-</p>
+            <div class="upload-icon">
+                ↑
+            </div>
 
-</div>
+            <div class="upload-title">
+                DROP YOUR VIDEO
+            </div>
 
+            <div class="upload-sub">
+                اسحب الفيديو هنا أو اختره من جهازك
+            </div>
 
-<div class="feature-grid">
+            <button class="choose-btn" id="chooseBtn">
+                CHOOSE VIDEO
+            </button>
 
-<div class="feature">
+            <div class="formats">
+                MP4 · MOV · WEBM · MAX 2GB
+            </div>
 
-<div class="feature-icon">
-⬆️
-</div>
+        </div>
 
-<h3>
-AI Upscale
-</h3>
+    </div>
 
-<p>
-رفع الفيديو إلى 720p و1080p و1440p و4K مع الحفاظ على التفاصيل قدر الإمكان.
-</p>
+    <input
+        type="file"
+        id="fileInput"
+        accept="video/mp4,video/quicktime,video/webm"
+    >
 
-</div>
 
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard">
 
-<div class="feature">
+        <!-- FILE -->
+        <div class="file-card">
 
-<div class="feature-icon">
-🌫️
-</div>
+            <video
+                id="thumbVideo"
+                class="file-thumb"
+                muted
+                playsinline
+            ></video>
 
-<h3>
-AI Denoise
-</h3>
+            <div class="file-info">
 
-<p>
-تقليل التشويش والضوضاء خصوصاً في الفيديوهات المصورة بإضاءة ضعيفة.
-</p>
+                <div class="file-name" id="fileName">
+                    video.mp4
+                </div>
 
-</div>
+                <div class="file-meta" id="fileMeta">
+                    Loading...
+                </div>
 
+            </div>
 
-<div class="feature">
+            <button class="remove-btn" id="removeBtn">
+                ×
+            </button>
 
-<div class="feature-icon">
-🔪
-</div>
+        </div>
 
-<h3>
-Sharpen
-</h3>
 
-<p>
-إبراز الحواف والتفاصيل الدقيقة مع التحكم بدرجة الحدة.
-</p>
+        <!-- CONTROLS -->
+        <div class="controls">
 
-</div>
+            <div class="control">
 
+                <span class="control-label">
+                    OUTPUT RESOLUTION
+                </span>
 
-<div class="feature">
+                <select id="resolution">
 
-<div class="feature-icon">
-👤
-</div>
+                    <option value="original">
+                        Original
+                    </option>
 
-<h3>
-Face Restore
-</h3>
+                    <option value="540">
+                        540P
+                    </option>
 
-<p>
-وضع مخصص للقطات التي تحتوي على وجوه وتفاصيل بشرية.
-</p>
+                    <option value="720">
+                        720P
+                    </option>
 
-</div>
+                    <option value="1080" selected>
+                        1080P
+                    </option>
 
+                    <option value="1440">
+                        1440P
+                    </option>
 
-<div class="feature">
+                    <option value="2160">
+                        2160P / 4K
+                    </option>
 
-<div class="feature-icon">
-🌀
-</div>
+                </select>
 
-<h3>
-Stabilization
-</h3>
+            </div>
 
-<p>
-تقليل اهتزاز الكاميرا والحركة غير المرغوبة.
-</p>
 
-</div>
+            <div class="control">
 
+                <span class="control-label">
+                    FRAME RATE
+                </span>
 
-<div class="feature">
+                <select id="fps">
 
-<div class="feature-icon">
-🎞️
-</div>
+                    <option value="original">
+                        Original FPS
+                    </option>
 
-<h3>
-Frame Interpolation
-</h3>
+                    <option value="30">
+                        30 FPS
+                    </option>
 
-<p>
-إنشاء إطارات إضافية للحصول على حركة أكثر سلاسة ومعدلات FPS أعلى.
-</p>
+                    <option value="60" selected>
+                        60 FPS
+                    </option>
 
-</div>
+                    <option value="90">
+                        90 FPS
+                    </option>
 
+                    <option value="120">
+                        120 FPS
+                    </option>
 
-<div class="feature">
+                </select>
 
-<div class="feature-icon">
-🐌
-</div>
+            </div>
 
-<h3>
-AI Slow Motion
-</h3>
 
-<p>
-إبطاء الفيديو مع إنشاء إطارات جديدة بدلاً من مجرد تكرار الإطارات.
-</p>
+            <div class="control">
 
-</div>
+                <span class="control-label">
+                    QUALITY
+                </span>
 
+                <div class="quality-buttons">
 
-<div class="feature">
+                    <button class="q-btn" data-quality="small">
+                        SMALL
+                    </button>
 
-<div class="feature-icon">
-🎯
-</div>
+                    <button class="q-btn active" data-quality="balanced">
+                        BALANCED
+                    </button>
 
-<h3>
-Motion Deblur
-</h3>
+                    <button class="q-btn" data-quality="max">
+                        MAX
+                    </button>
 
-<p>
-تقليل ضبابية الحركة وتحسين وضوح اللقطات السريعة.
-</p>
+                </div>
 
-</div>
+            </div>
 
 
-<div class="feature">
+            <div class="control">
 
-<div class="feature-icon">
-🌈
-</div>
+                <span class="control-label">
+                    COMPRESSION
+                </span>
 
-<h3>
-SDR → HDR
-</h3>
+                <div class="range-row">
 
-<p>
-تحسين النطاق الديناميكي والإضاءة والتباين للفيديو المدعوم.
-</p>
+                    <input
+                        type="range"
+                        id="compression"
+                        min="10"
+                        max="90"
+                        value="45"
+                    >
 
-</div>
+                    <div
+                        class="range-value"
+                        id="compressionValue"
+                    >
+                        45%
+                    </div>
 
+                </div>
 
-<div class="feature">
+            </div>
 
-<div class="feature-icon">
-🧬
-</div>
 
-<h3>
-Detail Recovery
-</h3>
+            <div class="control">
 
-<p>
-التحكم بكمية التفاصيل الأصلية التي يتم إرجاعها إلى النتيجة.
-</p>
+                <span class="control-label">
+                    SHARPNESS
+                </span>
 
-</div>
+                <div class="range-row">
 
+                    <input
+                        type="range"
+                        id="sharpness"
+                        min="0"
+                        max="100"
+                        value="25"
+                    >
 
-<div class="feature">
+                    <div
+                        class="range-value"
+                        id="sharpnessValue"
+                    >
+                        25%
+                    </div>
 
-<div class="feature-icon">
-📱
-</div>
+                </div>
 
-<h3>
-Social Ready
-</h3>
+            </div>
 
-<p>
-إعدادات جاهزة للفيديو العمودي وReels وShorts والمنصات الاجتماعية.
-</p>
 
-</div>
+            <div class="control">
 
+                <span class="control-label">
+                    MOTION MODE
+                </span>
 
-<div class="feature">
+                <select id="motion">
 
-<div class="feature-icon">
-🎬
-</div>
+                    <option value="standard">
+                        Standard
+                    </option>
 
-<h3>
-Auto AI Mode
-</h3>
+                    <option value="smooth">
+                        Smooth Motion
+                    </option>
 
-<p>
-اختيار إعدادات التحسين تلقائياً بناءً على خصائص الفيديو.
-</p>
+                    <option value="max">
+                        Maximum Motion
+                    </option>
 
-</div>
+                </select>
 
-</div>
+            </div>
+
+        </div>
+
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat">
+                <small>INPUT SIZE</small>
+                <strong id="inputSize">—</strong>
+            </div>
+
+            <div class="stat">
+                <small>RESOLUTION</small>
+                <strong id="inputResolution">—</strong>
+            </div>
+
+            <div class="stat">
+                <small>FPS</small>
+                <strong id="inputFPS">—</strong>
+            </div>
+
+            <div class="stat">
+                <small>DURATION</small>
+                <strong id="inputDuration">—</strong>
+            </div>
+
+        </div>
+
+
+        <!-- PROCESS -->
+        <div class="process-box">
+
+            <div class="process-head">
+
+                <span id="processTitle">
+                    READY TO PROCESS
+                </span>
+
+                <span id="progressPercent">
+                    0%
+                </span>
+
+            </div>
+
+            <div class="progress">
+
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+
+            </div>
+
+            <div
+                class="process-status"
+                id="processStatus"
+            >
+                اختر إعداداتك ثم اضغط PROCESS VIDEO
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="actions">
+
+            <button
+                class="main-action"
+                id="processBtn"
+            >
+                PROCESS VIDEO ↗
+            </button>
+
+            <button
+                class="secondary-action"
+                id="resetBtn"
+            >
+                RESET
+            </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+        <div
+            class="result"
+            id="result"
+        >
+
+            <div class="result-title">
+                PROCESS RESULT
+            </div>
+
+            <div class="compare">
+
+                <div class="video-card">
+
+                    <div class="video-label">
+                        ORIGINAL
+                    </div>
+
+                    <video
+                        id="originalVideo"
+                        controls
+                        playsinline
+                    ></video>
+
+                </div>
+
+
+                <div class="video-card">
+
+                    <div class="video-label">
+                        IAF OUTPUT
+                    </div>
+
+                    <video
+                        id="outputVideo"
+                        controls
+                        playsinline
+                    ></video>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-stats">
+
+                <div class="result-stat">
+
+                    <small>
+                        ORIGINAL
+                    </small>
+
+                    <strong id="beforeSize">
+                        —
+                    </strong>
+
+                </div>
+
+                <div class="result-stat">
+
+                    <small>
+                        OUTPUT
+                    </small>
+
+                    <strong id="afterSize">
+                        —
+                    </strong>
+
+                </div>
+
+                <div class="result-stat">
+
+                    <small>
+                        SAVED
+                    </small>
+
+                    <strong id="savedPercent">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <button
+                class="download"
+                id="downloadBtn"
+            >
+                ⬇ DOWNLOAD VIDEO
+            </button>
+
+        </div>
+
+    </div>
 
 </section>
 
 
-<footer class="footer">
-IAF VideoFix — AI VIDEO DOCTOR © 2026
+<!-- FEATURES -->
+<section class="features" id="features">
+
+    <div class="section-heading">
+
+        <small>
+            BUILT AROUND BETTER MOTION
+        </small>
+
+        <h2>
+            KEEP YOUR EDIT<br>
+            LOOKING LIKE YOUR EDIT
+        </h2>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+        <div class="feature">
+
+            <div class="feature-number">
+                01 / QUALITY
+            </div>
+
+            <h3>
+                KEEP MAX QUALITY
+            </h3>
+
+            <p>
+                إعدادات مخصصة للحفاظ على التفاصيل
+                وتقليل خسارة الجودة أثناء التصدير.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-number">
+                02 / MOTION
+            </div>
+
+            <h3>
+                MAX FPS
+            </h3>
+
+            <p>
+                اختر حتى 120 FPS حسب إعدادات
+                الفيديو والمنصة المستهدفة.
+            </p>
+
+        </div>
+
+
+        <div class="feature">
+
+            <div class="feature-number">
+                03 / DELIVERY
+            </div>
+
+            <h3>
+                CLEAN UPLOAD
+            </h3>
+
+            <p>
+                جهّز الفيديو قبل رفعه للمنصات
+                الاجتماعية مع التحكم بالحجم والجودة.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer id="about">
+
+    <div>
+        <strong>IAF VideoFix</strong>
+        — AI VIDEO PROCESSING
+    </div>
+
+    <div>
+        © 2026 IAF
+    </div>
+
 </footer>
-
-</div>
 
 
 <script>
 
-const $=id=>document.getElementById(id);
+/* ==========================================
+   IAF VIDEOFIX
+   ========================================== */
 
-const fileInput=$("file");
-const choose=$("choose");
-const drop=$("drop");
-const dashboard=$("dashboard");
-const preview=$("preview");
-const statusBox=$("status");
-const progress=$("progress");
-const progressBar=$("progressBar");
+const $ = id => document.getElementById(id);
 
-const saveBtn=$("saveBtn");
-const shareBtn=$("shareBtn");
+const fileInput = $("fileInput");
+const chooseBtn = $("chooseBtn");
+const uploadBox = $("uploadBox");
 
-let file=null;
-let data=null;
-let selectedModel="proteus";
-let previewURL=null;
+const dashboard = $("dashboard");
 
+const thumbVideo = $("thumbVideo");
+const originalVideo = $("originalVideo");
+const outputVideo = $("outputVideo");
 
-// ============================
-// اختيار الفيديو
-// ============================
+const fileName = $("fileName");
+const fileMeta = $("fileMeta");
 
-choose.onclick=e=>{
- e.stopPropagation();
- fileInput.click();
-};
+const inputSize = $("inputSize");
+const inputResolution = $("inputResolution");
+const inputFPS = $("inputFPS");
+const inputDuration = $("inputDuration");
 
+const compression = $("compression");
+const compressionValue = $("compressionValue");
 
-drop.onclick=e=>{
+const sharpness = $("sharpness");
+const sharpnessValue = $("sharpnessValue");
 
- if(
-  e.target!==choose &&
-  e.target!==fileInput
- ){
-  fileInput.click();
- }
+const processBtn = $("processBtn");
+const resetBtn = $("resetBtn");
+const removeBtn = $("removeBtn");
 
-};
+const progressBar = $("progressBar");
+const progressPercent = $("progressPercent");
+const processTitle = $("processTitle");
+const processStatus = $("processStatus");
 
+const result = $("result");
 
-fileInput.onchange=e=>{
+const beforeSize = $("beforeSize");
+const afterSize = $("afterSize");
+const savedPercent = $("savedPercent");
 
- const f=e.target.files[0];
+const downloadBtn = $("downloadBtn");
 
- if(f){
-  loadFile(f);
- }
+let currentFile = null;
+let currentURL = null;
+let outputURL = null;
 
-};
+let videoWidth = 0;
+let videoHeight = 0;
+let videoDuration = 0;
+let videoFPS = 30;
 
 
-// ============================
-// Drag & Drop
-// ============================
+/* ==========================================
+   OPEN FILE
+   ========================================== */
 
-drop.ondragover=e=>{
-
- e.preventDefault();
-
- drop.classList.add("drag");
-
-};
-
-
-drop.ondragleave=()=>{
-
- drop.classList.remove("drag");
-
-};
-
-
-drop.ondrop=e=>{
-
- e.preventDefault();
-
- drop.classList.remove("drag");
-
- const f=e.dataTransfer.files[0];
-
- if(f){
-  loadFile(f);
- }
-
-};
-
-
-// ============================
-// تحميل الفيديو
-// ============================
-
-function loadFile(f){
-
- if(!f.type.startsWith("video/")){
-
-  alert("اختار ملف فيديو.");
-
-  return;
-
- }
-
- file=f;
-
- if(previewURL){
-
-  URL.revokeObjectURL(previewURL);
-
- }
-
- previewURL=URL.createObjectURL(f);
-
- preview.src=previewURL;
-
- $("beforeVideo").src=previewURL;
-
- dashboard.style.display="block";
-
- saveBtn.disabled=false;
- shareBtn.disabled=false;
-
- preview.onloadedmetadata=()=>{
-
-  data={
-
-   width:preview.videoWidth,
-
-   height:preview.videoHeight,
-
-   duration:preview.duration,
-
-   size:f.size,
-
-   type:f.type,
-
-   name:f.name
-
-  };
-
-
-  $("resolution").textContent=
-   data.width+" × "+data.height;
-
-
-  $("fps").textContent=
-   "30 FPS";
-
-
-  $("duration").textContent=
-   duration(data.duration);
-
-
-  $("size").textContent=
-   size(data.size);
-
-
-  $("aspect").textContent=
-   aspect(data.width,data.height);
-
-
-  $("format").textContent=
-   f.type
-   .replace("video/","")
-   .toUpperCase();
-
-
-  $("formatBadge").textContent=
-   f.type
-   .replace("video/","")
-   .toUpperCase();
-
-
-  analyze();
-
- };
-
-
- window.scrollTo({
-
-  top:dashboard.offsetTop-20,
-
-  behavior:"smooth"
-
- });
-
-}
-
-
-// ============================
-// حجم الملف
-// ============================
-
-function size(n){
-
- if(n<1024)
-  return n+" B";
-
- if(n<1024*1024)
-  return (n/1024).toFixed(1)+" KB";
-
- if(n<1024*1024*1024)
-  return (n/1024/1024).toFixed(1)+" MB";
-
- return (n/1024/1024/1024).toFixed(2)+" GB";
-
-}
-
-
-// ============================
-// مدة الفيديو
-// ============================
-
-function duration(s){
-
- if(!isFinite(s))
-  return "—";
-
- const h=Math.floor(s/3600);
-
- const m=Math.floor((s%3600)/60);
-
- const sec=Math.floor(s%60)
-  .toString()
-  .padStart(2,"0");
-
- if(h)
-  return `${h}:${String(m).padStart(2,"0")}:${sec}`;
-
- return `${m}:${sec}`;
-
-}
-
-
-// ============================
-// Aspect Ratio
-// ============================
-
-function aspect(w,h){
-
- const g=gcd(w,h);
-
- return `${w/g}:${h/g}`;
-
-}
-
-
-function gcd(a,b){
-
- while(b){
-
-  let t=b;
-
-  b=a%b;
-
-  a=t;
-
- }
-
- return a;
-
-}
-
-
-// ============================
-// تحليل الفيديو
-// ============================
-
-function analyze(){
-
- if(!data)
-  return;
-
- let score=100;
-
- const diagnosis=[];
- const recommendations=[];
-
- const pixels=data.width*data.height;
-
-
- if(pixels<640*480){
-
-  score-=30;
-
-  diagnosis.push([
-   "bad",
-   "❌ دقة منخفضة جداً"
-  ]);
-
-  recommendations.push(
-   "⬆️ Upscale قوي إلى 1080p"
-  );
-
- }else if(pixels<1280*720){
-
-  score-=20;
-
-  diagnosis.push([
-   "warn",
-   "⚠️ الفيديو أقل من HD"
-  ]);
-
-  recommendations.push(
-   "⬆️ Upscale إلى 1080p"
-  );
-
- }else if(pixels<1920*1080){
-
-  score-=8;
-
-  diagnosis.push([
-   "warn",
-   "⚠️ الفيديو أقل من Full HD"
-  ]);
-
-  recommendations.push(
-   "✨ تجربة 1080p أو 2K"
-  );
-
- }else{
-
-  diagnosis.push([
-   "good",
-   "✅ الدقة Full HD أو أعلى"
-  ]);
-
- }
-
-
- if(data.size>100*1024*1024){
-
-  score-=15;
-
-  diagnosis.push([
-   "bad",
-   "❌ حجم الملف كبير جداً"
-  ]);
-
-  recommendations.push(
-   "📦 Smart Compression"
-  );
-
- }else if(data.size>50*1024*1024){
-
-  score-=7;
-
-  diagnosis.push([
-   "warn",
-   "⚠️ حجم الملف مرتفع"
-  ]);
-
-  recommendations.push(
-   "📦 ضغط متوازن"
-  );
-
- }else{
-
-  diagnosis.push([
-   "good",
-   "✅ حجم مناسب"
-  ]);
-
- }
-
-
- const ratio=data.width/data.height;
-
-
- if(ratio>1.8){
-
-  recommendations.push(
-   "📱 تجهيز 9:16 للسوشيال"
-  );
-
- }
-
-
- if(ratio<.65){
-
-  recommendations.push(
-   "📐 يمكن إعادة تأطير الفيديو"
-  );
-
- }
-
-
- if(data.duration>600){
-
-  score-=5;
-
-  diagnosis.push([
-   "warn",
-   "⚠️ الفيديو طويل"
-  ]);
-
- }
-
-
- if(!recommendations.length){
-
-  recommendations.push(
-   "✨ Enhance + Sharpen"
-  );
-
- }
-
-
- score=Math.max(
-  0,
-  Math.min(100,score)
- );
-
-
- renderList(
-  $("diagnosis"),
-  diagnosis
- );
-
-
- renderList(
-  $("recommendations"),
-  recommendations.map(x=>["",x])
- );
-
-
- $("score").textContent=score;
-
-
- if(score>=90){
-
-  $("scoreTitle").textContent=
-   "ممتاز";
-
-  $("scoreText").textContent=
-   "الفيديو بحالة جيدة ويمكن استخدام تحسينات خفيفة.";
-
- }else if(score>=75){
-
-  $("scoreTitle").textContent=
-   "جيد";
-
-  $("scoreText").textContent=
-   "الفيديو جيد ويستفيد من تحسينات بسيطة.";
-
- }else if(score>=50){
-
-  $("scoreTitle").textContent=
-   "يحتاج تحسين";
-
-  $("scoreText").textContent=
-   "ننصح باستخدام Upscale وDenoise وSharpen.";
-
- }else{
-
-  $("scoreTitle").textContent=
-   "يحتاج معالجة قوية";
-
-  $("scoreText").textContent=
-   "يفضل استخدام Restore + Upscale + Denoise.";
-
- }
-
-}
-
-
-// ============================
-// القوائم
-// ============================
-
-function renderList(el,items){
-
- el.innerHTML="";
-
- items.forEach(item=>{
-
-  const li=document.createElement("li");
-
-  if(Array.isArray(item)){
-
-   li.textContent=item[1];
-
-   if(item[0]){
-    li.classList.add(item[0]);
-   }
-
-  }else{
-
-   li.textContent=item;
-
-  }
-
-  el.appendChild(li);
-
- });
-
-}
-
-
-// ============================
-// اختيار AI Model
-// ============================
-
-document.querySelectorAll(".model")
-.forEach(model=>{
-
- model.onclick=()=>{
-
-  document.querySelectorAll(".model")
-   .forEach(x=>
-    x.classList.remove("active")
-   );
-
-  model.classList.add("active");
-
-  selectedModel=
-   model.dataset.model;
-
-  $("modelSelect").value=
-   selectedModel;
-
- };
-
+chooseBtn.addEventListener("click", () => {
+    fileInput.click();
 });
 
-
-$("modelSelect").onchange=e=>{
-
- selectedModel=e.target.value;
-
- document.querySelectorAll(".model")
- .forEach(x=>{
-
-  x.classList.toggle(
-   "active",
-   x.dataset.model===selectedModel
-  );
-
- });
-
-};
-
-
-// ============================
-// Tabs
-// ============================
-
-document.querySelectorAll(".tab")
-.forEach(tab=>{
-
- tab.onclick=()=>{
-
-  document.querySelectorAll(".tab")
-   .forEach(x=>
-    x.classList.remove("active")
-   );
-
-  tab.classList.add("active");
-
-  const t=tab.dataset.tab;
-
-
-  if(t==="enhance"){
-
-   window.scrollTo({
-
-    top:
-    $("resolutionSelect")
-    .closest(".controls")
-    .offsetTop,
-
-    behavior:"smooth"
-
-   });
-
-  }
-
-
-  if(t==="motion"){
-
-   window.scrollTo({
-
-    top:
-    $("fpsSelect")
-    .closest(".controls")
-    .offsetTop,
-
-    behavior:"smooth"
-
-   });
-
-  }
-
-
-  if(t==="color"){
-
-   window.scrollTo({
-
-    top:
-    $("exposureRange")
-    .closest(".controls")
-    .offsetTop,
-
-    behavior:"smooth"
-
-   });
-
-  }
-
- };
-
-});
-
-
-// ============================
-// Sliders
-// ============================
-
-function bindRange(id,out){
-
- const input=$(id);
-
- const value=$(out);
-
- input.oninput=()=>{
-
-  value.textContent=
-   input.value;
-
- };
-
-}
-
-
-bindRange(
- "enhanceRange",
- "enhanceValue"
-);
-
-bindRange(
- "sharpRange",
- "sharpValue"
-);
-
-bindRange(
- "noiseRange",
- "noiseValue"
-);
-
-bindRange(
- "detailRange",
- "detailValue"
-);
-
-bindRange(
- "deblurRange",
- "deblurValue"
-);
-
-bindRange(
- "grainRange",
- "grainValue"
-);
-
-bindRange(
- "exposureRange",
- "exposureValue"
-);
-
-bindRange(
- "contrastRange",
- "contrastValue"
-);
-
-bindRange(
- "saturationRange",
- "saturationValue"
-);
-
-
-// ============================
-// Toggle
-// ============================
-
-document.querySelectorAll("[data-toggle]")
-.forEach(row=>{
-
- row.onclick=()=>{
-
-  const sw=
-   row.querySelector(".switch");
-
-  sw.classList.toggle("on");
-
- };
-
-});
-
-
-// ============================
-// Social Presets
-// ============================
-
-$("socialSelect").onchange=e=>{
-
- const v=e.target.value;
-
-
- if(
-  v==="tiktok"||
-  v==="instagram"||
-  v==="shorts"
- ){
-
-  $("cropSelect").value="9:16";
-
-  $("resolutionSelect").value="1080";
-
- }
-
-
- if(v==="youtube"){
-
-  $("cropSelect").value="16:9";
-
-  $("resolutionSelect").value="1080";
-
- }
-
-
- if(v==="youtube4k"){
-
-  $("cropSelect").value="16:9";
-
-  $("resolutionSelect").value="2160";
-
- }
-
-};
-
-
-// ============================
-// تحليل يدوي
-// ============================
-
-$("analyzeBtn").onclick=()=>{
-
- if(!file){
-
-  showStatus(
-   "⚠️ ارفع فيديو أولاً."
-  );
-
-  return;
-
- }
-
- analyze();
-
- showStatus(
-  "🔬 تم تحليل الفيديو واختيار توصيات التحسين."
- );
-
-};
-
-
-// ============================
-// AI AUTO ENHANCE
-// ============================
-
-$("autoFix").onclick=async()=>{
-
- if(!file){
-
-  showStatus(
-   "⚠️ ارفع فيديو أولاً."
-  );
-
-  return;
-
- }
-
- $("autoFix").disabled=true;
-
- showStatus(
-  "🧠 AI يقوم بتحليل الفيديو واختيار أفضل إعدادات..."
- );
-
- progress.style.display="block";
-
- await processStep(20);
-
-
- showStatus(
-  "🔍 تحليل الدقة والضوضاء والحركة..."
- );
-
- await processStep(40);
-
-
- showStatus(
-  "✨ تطبيق إعدادات Upscale + Denoise + Sharpen..."
- );
-
- await processStep(65);
-
-
- showStatus(
-  "🎞️ تجهيز Motion / FPS..."
- );
-
- await processStep(85);
-
-
- showStatus(
-  "📦 تجهيز النتيجة..."
- );
-
- await processStep(100);
-
-
- analyze();
-
-
- $("scoreText").textContent=
-  "تم تجهيز إعدادات AI. المعالجة الفعلية للفيديو تحتاج محرك AI متصل بالخادم.";
-
-
- $("autoFix").disabled=false;
-
-};
-
-
-async function processStep(value){
-
- await new Promise(
-  resolve=>
-   setTimeout(resolve,500)
- );
-
- progressBar.style.width=
-  value+"%";
-
-}
-
-
-// ============================
-// Status
-// ============================
-
-function showStatus(text){
-
- statusBox.style.display=
-  "block";
-
- statusBox.textContent=
-  text;
-
-}
-
-
-// ============================
-// حفظ الفيديو
-// ============================
-
-saveBtn.onclick=async()=>{
-
- if(!file){
-
-  showStatus(
-   "⚠️ ارفع فيديو أولاً."
-  );
-
-  return;
-
- }
-
-
- try{
-
-  showStatus(
-   "📦 تجهيز الفيديو للحفظ..."
-  );
-
-
-  const url=
-   URL.createObjectURL(file);
-
-
-  const a=
-   document.createElement("a");
-
-
-  a.href=url;
-
-
-  let extension="mp4";
-
-
-  if(file.type==="video/webm"){
-
-   extension="webm";
-
-  }
-
-
-  if(file.type==="video/quicktime"){
-
-   extension="mov";
-
-  }
-
-
-  const name=
-   "IAF-VideoFix-" +
-   Date.now() +
-   "." +
-   extension;
-
-
-  a.download=name;
-
-
-  a.style.display="none";
-
-
-  document.body.appendChild(a);
-
-
-  a.click();
-
-
-  document.body.removeChild(a);
-
-
-  setTimeout(()=>{
-
-   URL.revokeObjectURL(url);
-
-  },5000);
-
-
-  showStatus(
-   "✅ تم إرسال الفيديو للحفظ. ستجده غالباً في مجلد التنزيلات."
-  );
-
-
- }catch(error){
-
-  console.error(error);
-
-  showStatus(
-   "❌ حدث خطأ أثناء حفظ الفيديو."
-  );
-
- }
-
-};
-
-
-// ============================
-// مشاركة الفيديو
-// ============================
-
-shareBtn.onclick=async()=>{
-
- if(!file){
-
-  showStatus(
-   "⚠️ ارفع فيديو أولاً."
-  );
-
-  return;
-
- }
-
-
- try{
-
-  showStatus(
-   "📤 تجهيز الفيديو للمشاركة..."
-  );
-
-
-  const shareFile=
-   new File(
-    [file],
-    file.name,
-    {
-     type:file.type
+uploadBox.addEventListener("click", e => {
+
+    if(
+        e.target === chooseBtn ||
+        e.target.closest(".choose-btn")
+    ){
+        return;
     }
-   );
 
+    if(!currentFile){
+        fileInput.click();
+    }
 
-  if(
-   navigator.share &&
-   navigator.canShare &&
-   navigator.canShare({
-    files:[shareFile]
-   })
-  ){
+});
 
-   await navigator.share({
 
-    title:
-     "IAF VideoFix",
+/* ==========================================
+   FILE SELECT
+   ========================================== */
 
-    text:
-     "فيديو تم تجهيزه بواسطة IAF VideoFix",
+fileInput.addEventListener("change", e => {
 
-    files:[
-     shareFile
-    ]
+    const file = e.target.files[0];
 
-   });
+    if(file){
+        loadFile(file);
+    }
 
+});
 
-   showStatus(
-    "✅ تم فتح قائمة المشاركة."
-   );
 
+/* ==========================================
+   DRAG DROP
+   ========================================== */
 
-  }else{
+["dragenter","dragover"].forEach(event => {
 
-   showStatus(
-    "⚠️ جهازك أو المتصفح لا يدعم مشاركة الفيديو مباشرة. استخدم زر حفظ الفيديو."
-   );
+    uploadBox.addEventListener(event, e => {
 
-  }
+        e.preventDefault();
 
+        uploadBox.classList.add("dragging");
 
- }catch(error){
+    });
 
-  if(error.name==="AbortError"){
+});
 
-   showStatus(
-    "تم إلغاء المشاركة."
-   );
 
-  }else{
+["dragleave","drop"].forEach(event => {
 
-   console.error(error);
+    uploadBox.addEventListener(event, e => {
 
-   showStatus(
-    "❌ تعذر مشاركة الفيديو."
-   );
+        e.preventDefault();
 
-  }
+        uploadBox.classList.remove("dragging");
 
- }
+    });
 
-};
+});
 
 
-// ============================
-// إعادة ضبط
-// ============================
+uploadBox.addEventListener("drop", e => {
 
-$("resetBtn").onclick=()=>{
+    const files = e.dataTransfer.files;
 
- if(previewURL){
+    if(files && files.length){
 
-  URL.revokeObjectURL(
-   previewURL
-  );
+        const file = files[0];
 
-  previewURL=null;
+        if(file.type.startsWith("video/")){
 
- }
+            loadFile(file);
 
+        }else{
 
- file=null;
+            alert("اختر ملف فيديو صالح.");
 
- data=null;
+        }
 
- fileInput.value="";
+    }
 
+});
 
- preview.removeAttribute("src");
 
- preview.load();
+/* ==========================================
+   LOAD FILE
+   ========================================== */
 
+function loadFile(file){
 
- $("beforeVideo")
-  .removeAttribute("src");
+    if(!file.type.startsWith("video/")){
 
+        alert("الملف يجب أن يكون فيديو.");
 
- $("beforeVideo").load();
+        return;
 
+    }
 
- $("afterVideo")
-  .removeAttribute("src");
+    currentFile = file;
 
+    if(currentURL){
+        URL.revokeObjectURL(currentURL);
+    }
 
- $("afterVideo").load();
+    currentURL = URL.createObjectURL(file);
 
+    thumbVideo.src = currentURL;
+    originalVideo.src = currentURL;
 
- dashboard.style.display=
-  "none";
+    fileName.textContent = file.name;
 
+    inputSize.textContent = formatBytes(file.size);
 
- progress.style.display=
-  "none";
+    dashboard.style.display = "block";
 
+    uploadBox.style.display = "none";
 
- progressBar.style.width=
-  "0%";
+    result.style.display = "none";
 
+    processBtn.disabled = false;
 
- statusBox.style.display=
-  "none";
+    processTitle.textContent = "READY TO PROCESS";
 
+    processStatus.textContent =
+        "اختر الإعدادات ثم اضغط PROCESS VIDEO";
 
- saveBtn.disabled=true;
+    setProgress(0);
 
- shareBtn.disabled=true;
+    thumbVideo.onloadedmetadata = () => {
 
-};
+        videoWidth = thumbVideo.videoWidth;
+        videoHeight = thumbVideo.videoHeight;
+        videoDuration = thumbVideo.duration;
 
+        inputResolution.textContent =
+            videoWidth + " × " + videoHeight;
 
-// ============================
-// تنظيف عند إغلاق الصفحة
-// ============================
+        inputDuration.textContent =
+            formatDuration(videoDuration);
 
-window.addEventListener(
- "beforeunload",
- ()=>{
+        /*
+         Browser video metadata normally does not
+         expose reliable source FPS.
+        */
 
-  if(previewURL){
+        inputFPS.textContent =
+            "AUTO";
 
-   URL.revokeObjectURL(
-    previewURL
-   );
+        fileMeta.textContent =
+            formatBytes(file.size)
+            + " · "
+            + videoWidth + "×" + videoHeight
+            + " · "
+            + formatDuration(videoDuration);
 
-  }
+    };
 
- }
-);
+}
+
+
+/* ==========================================
+   QUALITY
+   ========================================== */
+
+document.querySelectorAll(".q-btn").forEach(btn => {
+
+    btn.addEventListener("click", () => {
+
+        document.querySelectorAll(".q-btn")
+            .forEach(b => b.classList.remove("active"));
+
+        btn.classList.add("active");
+
+    });
+
+});
+
+
+/* ==========================================
+   SLIDERS
+   ========================================== */
+
+compression.addEventListener("input", () => {
+
+    compressionValue.textContent =
+        compression.value + "%";
+
+});
+
+
+sharpness.addEventListener("input", () => {
+
+    sharpnessValue.textContent =
+        sharpness.value + "%";
+
+});
+
+
+/* ==========================================
+   PROCESS
+   ========================================== */
+
+processBtn.addEventListener("click", async () => {
+
+    if(!currentFile){
+
+        alert("ارفع فيديو أولاً.");
+
+        return;
+
+    }
+
+    processBtn.disabled = true;
+
+    result.style.display = "none";
+
+    setProgress(0);
+
+    processTitle.textContent =
+        "PROCESSING VIDEO";
+
+    processStatus.textContent =
+        "Preparing video...";
+
+    /*
+       Browser-side MediaRecorder.
+       This creates a real browser-generated
+       output file without a server.
+    */
+
+    try{
+
+        await processVideo();
+
+    }catch(error){
+
+        console.error(error);
+
+        processStatus.textContent =
+            "تعذر معالجة الفيديو بهذا المتصفح.";
+
+        processTitle.textContent =
+            "PROCESS FAILED";
+
+        processBtn.disabled = false;
+
+    }
+
+});
+
+
+/* ==========================================
+   PROCESS VIDEO
+   ========================================== */
+
+async function processVideo(){
+
+    const video = document.createElement("video");
+
+    video.src = currentURL;
+
+    video.muted = true;
+
+    video.playsInline = true;
+
+    await waitForVideo(video);
+
+
+    const resolution =
+        $("resolution").value;
+
+    const fpsValue =
+        $("fps").value;
+
+    const quality =
+        document.querySelector(".q-btn.active")
+        ?.dataset.quality || "balanced";
+
+
+    let targetWidth =
+        video.videoWidth;
+
+    let targetHeight =
+        video.videoHeight;
+
+
+    /* Resolution */
+
+    if(resolution !== "original"){
+
+        const target =
+            parseInt(resolution);
+
+        const ratio =
+            video.videoWidth /
+            video.videoHeight;
+
+        targetHeight = target;
+
+        targetWidth =
+            Math.round(target * ratio);
+
+        if(targetWidth % 2){
+            targetWidth++;
+        }
+
+    }
+
+
+    /* Quality bitrate */
+
+    let bitrate = 5000000;
+
+    if(quality === "small"){
+        bitrate = 2200000;
+    }
+
+    if(quality === "balanced"){
+        bitrate = 5000000;
+    }
+
+    if(quality === "max"){
+        bitrate = 10000000;
+    }
+
+
+    /*
+       Compression slider:
+       higher = more compression
+    */
+
+    const compressionLevel =
+        parseInt(compression.value);
+
+    bitrate =
+        bitrate *
+        (1 - compressionLevel / 150);
+
+
+    bitrate =
+        Math.max(800000, bitrate);
+
+
+    const canvas =
+        document.createElement("canvas");
+
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+
+    const ctx =
+        canvas.getContext("2d", {
+            alpha:false
+        });
+
+
+    /*
+       Output FPS.
+
+       Note:
+       Browser MediaRecorder cannot magically
+       create true new frames for 120 FPS.
+       The selected FPS is therefore used as
+       the rendering target when supported.
+    */
+
+    let targetFPS =
+        fpsValue === "original"
+        ? 30
+        : parseInt(fpsValue);
+
+
+    const stream =
+        canvas.captureStream(targetFPS);
+
+
+    /*
+       Add audio if browser supports it.
+    */
+
+    try{
+
+        const audioContext =
+            new AudioContext();
+
+        const source =
+            audioContext.createMediaElementSource(video);
+
+        const destination =
+            audioContext.createMediaStreamDestination();
+
+        source.connect(destination);
+
+        const audioTracks =
+            destination.stream.getAudioTracks();
+
+        audioTracks.forEach(track => {
+
+            stream.addTrack(track);
+
+        });
+
+    }catch(e){
+
+        console.log(
+            "Audio stream unavailable",
+            e
+        );
+
+    }
+
+
+    let mimeType =
+        "video/webm;codecs=vp9";
+
+    if(!MediaRecorder.isTypeSupported(mimeType)){
+
+        mimeType =
+            "video/webm;codecs=vp8";
+
+    }
+
+    if(!MediaRecorder.isTypeSupported(mimeType)){
+
+        mimeType =
+            "video/webm";
+
+    }
+
+
+    const recorder =
+        new MediaRecorder(
+            stream,
+            {
+                mimeType,
+                videoBitsPerSecond:
+                    Math.round(bitrate)
+            }
+        );
+
+
+    const chunks = [];
+
+
+    recorder.ondataavailable = event => {
+
+        if(event.data && event.data.size){
+
+            chunks.push(event.data);
+
+        }
+
+    };
+
+
+    const recordingFinished =
+        new Promise(resolve => {
+
+            recorder.onstop = () => {
+
+                resolve();
+
+            };
+
+        });
+
+
+    recorder.start(250);
+
+
+    processStatus.textContent =
+        "Rendering video...";
+
+
+    /*
+       Render loop
+    */
+
+    await new Promise(resolve => {
+
+        const startTime =
+            performance.now();
+
+        function draw(){
+
+            if(video.ended){
+
+                resolve();
+
+                return;
+
+            }
+
+
+            ctx.drawImage(
+                video,
+                0,
+                0,
+                targetWidth,
+                targetHeight
+            );
+
+
+            const elapsed =
+                performance.now() -
+                startTime;
+
+
+            const progress =
+                Math.min(
+                    99,
+                    (video.currentTime /
+                    video.duration) * 100
+                );
+
+
+            setProgress(progress);
+
+
+            processStatus.textContent =
+                "Rendering "
+                + Math.round(progress)
+                + "%";
+
+
+            if(video.paused){
+
+                video.play().catch(()=>{});
+
+            }
+
+
+            requestAnimationFrame(draw);
+
+        }
+
+
+        video.currentTime = 0;
+
+        video.play()
+            .then(draw)
+            .catch(() => resolve());
+
+    });
+
+
+    recorder.stop();
+
+    await recordingFinished;
+
+
+    stream.getTracks()
+        .forEach(track => track.stop());
+
+
+    const blob =
+        new Blob(
+            chunks,
+            {
+                type:mimeType
+            }
+        );
+
+
+    if(!blob.size){
+
+        throw new Error(
+            "Output file is empty."
+        );
+
+    }
+
+
+    outputURL =
+        URL.createObjectURL(blob);
+
+    outputVideo.src =
+        outputURL;
+
+
+    setProgress(100);
+
+
+    processTitle.textContent =
+        "PROCESS COMPLETE";
+
+    processStatus.textContent =
+        "Your video is ready.";
+
+
+    beforeSize.textContent =
+        formatBytes(currentFile.size);
+
+    afterSize.textContent =
+        formatBytes(blob.size);
+
+
+    const saved =
+        ((currentFile.size - blob.size) /
+        currentFile.size) * 100;
+
+
+    savedPercent.textContent =
+        (saved > 0 ? saved : 0).toFixed(1)
+        + "%";
+
+
+    result.style.display =
+        "block";
+
+
+    processBtn.disabled =
+        false;
+
+
+    outputVideo.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+    });
+
+}
+
+
+/* ==========================================
+   WAIT VIDEO
+   ========================================== */
+
+function waitForVideo(video){
+
+    return new Promise((resolve,reject) => {
+
+        if(video.readyState >= 2){
+
+            resolve();
+
+            return;
+
+        }
+
+        video.onloadedmetadata =
+            () => resolve();
+
+        video.onerror =
+            () => reject(
+                new Error("Video could not load.")
+            );
+
+    });
+
+}
+
+
+/* ==========================================
+   PROGRESS
+   ========================================== */
+
+function setProgress(value){
+
+    value =
+        Math.max(
+            0,
+            Math.min(100,value)
+        );
+
+    progressBar.style.width =
+        value + "%";
+
+    progressPercent.textContent =
+        Math.round(value) + "%";
+
+}
+
+
+/* ==========================================
+   DOWNLOAD
+   ========================================== */
+
+downloadBtn.addEventListener("click", () => {
+
+    if(!outputURL){
+
+        alert("قم بمعالجة الفيديو أولاً.");
+
+        return;
+
+    }
+
+    const a =
+        document.createElement("a");
+
+    a.href =
+        outputURL;
+
+    a.download =
+        makeOutputName(
+            currentFile?.name ||
+            "IAF-video.mp4"
+        );
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+});
+
+
+/* ==========================================
+   RESET
+   ========================================== */
+
+resetBtn.addEventListener("click", resetAll);
+
+removeBtn.addEventListener("click", resetAll);
+
+
+function resetAll(){
+
+    if(currentURL){
+
+        URL.revokeObjectURL(
+            currentURL
+        );
+
+    }
+
+    if(outputURL){
+
+        URL.revokeObjectURL(
+            outputURL
+        );
+
+    }
+
+    currentURL = null;
+
+    outputURL = null;
+
+    currentFile = null;
+
+    fileInput.value = "";
+
+    dashboard.style.display =
+        "none";
+
+    uploadBox.style.display =
+        "flex";
+
+    result.style.display =
+        "none";
+
+    setProgress(0);
+
+    processTitle.textContent =
+        "READY TO PROCESS";
+
+    processStatus.textContent =
+        "اختر إعداداتك ثم اضغط PROCESS VIDEO";
+
+    processBtn.disabled =
+        false;
+
+}
+
+
+/* ==========================================
+   HELPERS
+   ========================================== */
+
+function formatBytes(bytes){
+
+    if(!bytes || bytes <= 0){
+
+        return "0 B";
+
+    }
+
+    const units =
+        ["B","KB","MB","GB"];
+
+    const i =
+        Math.floor(
+            Math.log(bytes) /
+            Math.log(1024)
+        );
+
+    return (
+        bytes /
+        Math.pow(1024,i)
+    ).toFixed(i === 0 ? 0 : 2)
+    + " "
+    + units[i];
+
+}
+
+
+function formatDuration(seconds){
+
+    if(!isFinite(seconds)){
+
+        return "—";
+
+    }
+
+    seconds =
+        Math.floor(seconds);
+
+    const m =
+        Math.floor(seconds / 60);
+
+    const s =
+        seconds % 60;
+
+    return (
+        String(m).padStart(2,"0")
+        + ":"
+        + String(s).padStart(2,"0")
+    );
+
+}
+
+
+function makeOutputName(name){
+
+    const clean =
+        name.replace(
+            /\.[^/.]+$/,
+            ""
+        );
+
+    return clean +
+        "_IAF_VideoFix.webm";
+
+}
+
+
+/* ==========================================
+   KEYBOARD
+   ========================================== */
+
+document.addEventListener("keydown", e => {
+
+    if(
+        e.key === "Escape" &&
+        currentFile
+    ){
+
+        resetAll();
+
+    }
+
+});
 
 </script>
 
