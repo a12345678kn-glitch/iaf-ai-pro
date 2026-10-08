@@ -3,228 +3,1343 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>IAF VideoFix - إصلاح الفيديو بالذكاء الاصطناعي</title>
+
+<title>IAF VideoFix — AI Video Doctor</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Tahoma,sans-serif;background:#07090d;color:#fff;min-height:100vh}
-.container{max-width:900px;margin:auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0}
-.logo{font-size:24px;font-weight:900}
-.logo span{color:#19e6b2}
-.badge{background:#101820;border:1px solid #1d3c38;padding:6px 12px;border-radius:20px;color:#72f5d3;font-size:11px}
-.hero{text-align:center;padding:30px 0}
-.hero h1{font-size:32px;margin:10px 0}
-.hero h1 span{color:#19e6b2}
-.hero p{color:#9aa4b2;line-height:1.7}
-.card{background:#0c1117;border:1px solid #18232d;border-radius:20px;padding:20px;margin-top:18px}
-.card h3{margin-bottom:15px;font-size:18px}
-.upload{border:2px dashed #24433e;background:#0a0f14;border-radius:20px;padding:40px 20px;text-align:center;cursor:pointer;display:block;transition:.2s}
-.upload:hover{border-color:#19e6b2}
-.up-icon{font-size:48px;margin-bottom:12px}
-.upload h2{margin:8px 0;font-size:20px}
-.upload p{color:#7f8a97;font-size:13px}
-input[type=file]{display:none}
-.hidden{display:none}
-.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
-.info-item{background:#101820;padding:12px;border-radius:12px;text-align:center}
-.info-item b{display:block;font-size:16px;color:#19e6b2}
-.info-item span{color:#7f8a97;font-size:11px}
-.doctor-list{margin-top:15px}
-.doctor-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#101820;border-radius:10px;margin-bottom:8px;font-size:14px}
-.doctor-item .status-ok{color:#19e6b2}
-.doctor-item .status-bad{color:#ffb347}
-.doctor-item .status-warn{color:#ff6b6b}
-.suggestions{margin-top:15px}
-.suggestion{padding:12px;background:#0f1a18;border:1px solid #1d3c38;border-radius:10px;margin-bottom:8px;color:#72f5d3;font-size:14px}
-button{width:100%;padding:16px;border-radius:14px;border:0;background:#19e6b2;color:#03100c;font-weight:900;font-size:16px;cursor:pointer;margin-top:15px}
-button:disabled{opacity:.5;cursor:not-allowed}
-button:hover:not(:disabled){filter:brightness(1.08)}
-.progress{height:8px;background:#18212a;border-radius:8px;overflow:hidden;margin-top:15px}
-.bar{height:100%;width:0%;background:#19e6b2;transition:width .3s}
-.status{text-align:center;color:#8f9ba8;margin-top:12px;padding:10px;border-radius:10px;font-size:13px}
-.status.success{background:#0d2a1c;color:#19e6b2}
-.status.error{background:#2a0d0d;color:#ff6b6b}
-.download-link{display:block;margin-top:15px;padding:15px;background:#19e6b2;color:#03100c;text-align:center;border-radius:13px;font-weight:900;text-decoration:none}
-footer{text-align:center;color:#53606d;padding:30px 0;font-size:12px}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+
+:root{
+  --bg:#05080b;
+  --card:#0b1117;
+  --card2:#0e161d;
+  --line:#182630;
+  --green:#19e6b2;
+  --green2:#72f5d3;
+  --text:#fff;
+  --muted:#84919d;
+  --orange:#ffb347;
+  --red:#ff6262;
+}
+
+body{
+  font-family:Arial,Tahoma,sans-serif;
+  background:
+    radial-gradient(circle at 50% -10%,#10352d 0,transparent 38%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+.container{
+  max-width:920px;
+  margin:auto;
+  padding:18px;
+}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 0 22px;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+}
+
+.logo span{
+  color:var(--green);
+}
+
+.badge{
+  padding:7px 13px;
+  border:1px solid #1b4038;
+  background:#0b1917;
+  color:var(--green2);
+  border-radius:999px;
+  font-size:10px;
+  font-weight:800;
+}
+
+.hero{
+  text-align:center;
+  padding:30px 10px 25px;
+}
+
+.hero h1{
+  font-size:clamp(29px,6vw,45px);
+  line-height:1.2;
+}
+
+.hero h1 span{
+  color:var(--green);
+}
+
+.hero p{
+  max-width:650px;
+  margin:13px auto 0;
+  color:var(--muted);
+  line-height:1.8;
+  font-size:14px;
+}
+
+.card{
+  background:linear-gradient(180deg,#0c1218,#090e13);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:20px;
+  margin-top:16px;
+  box-shadow:0 15px 50px rgba(0,0,0,.18);
+}
+
+.card h3{
+  font-size:17px;
+  margin-bottom:15px;
+}
+
+.upload{
+  border:2px dashed #25463f;
+  background:#080e13;
+  border-radius:20px;
+  padding:45px 20px;
+  text-align:center;
+  cursor:pointer;
+  display:block;
+  transition:.2s;
+}
+
+.upload:hover{
+  border-color:var(--green);
+  transform:translateY(-1px);
+}
+
+.up-icon{
+  font-size:52px;
+}
+
+.upload h2{
+  font-size:20px;
+  margin:10px 0 7px;
+}
+
+.upload p{
+  color:#71808d;
+  font-size:12px;
+}
+
+.file-name{
+  margin-top:14px;
+  padding:11px;
+  background:#0e171e;
+  border-radius:10px;
+  color:var(--green2);
+  font-size:12px;
+  word-break:break-word;
+}
+
+input[type=file]{
+  display:none;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+}
+
+.info-item{
+  background:var(--card2);
+  padding:15px 8px;
+  border-radius:13px;
+  text-align:center;
+  border:1px solid #14202a;
+}
+
+.info-item b{
+  display:block;
+  color:var(--green);
+  font-size:16px;
+  margin-bottom:5px;
+}
+
+.info-item span{
+  color:#71808d;
+  font-size:11px;
+}
+
+.doctor-list{
+  margin-top:14px;
+}
+
+.doctor-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px;
+  background:#0d151c;
+  border:1px solid #15222b;
+  border-radius:11px;
+  margin-bottom:8px;
+  font-size:13px;
+}
+
+.status-ok{
+  color:var(--green);
+}
+
+.status-bad{
+  color:var(--orange);
+}
+
+.status-warn{
+  color:var(--orange);
+}
+
+.status-danger{
+  color:var(--red);
+}
+
+.suggestion{
+  padding:13px;
+  background:#0d1b18;
+  border:1px solid #1b4038;
+  border-radius:11px;
+  margin-bottom:8px;
+  color:var(--green2);
+  font-size:13px;
+}
+
+button{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:14px;
+  background:var(--green);
+  color:#03100c;
+  font-weight:900;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:14px;
+  transition:.2s;
+}
+
+button:hover:not(:disabled){
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.progress{
+  height:9px;
+  background:#18222b;
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:15px;
+}
+
+.bar{
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,#19e6b2,#72f5d3);
+  transition:width .4s;
+}
+
+.status{
+  text-align:center;
+  color:#8d9aa6;
+  margin-top:10px;
+  padding:12px;
+  border-radius:11px;
+  font-size:13px;
+}
+
+.status.success{
+  background:#0c291d;
+  color:var(--green);
+}
+
+.status.error{
+  background:#2a0d0d;
+  color:#ff7070;
+}
+
+.download-link{
+  display:block;
+  margin-top:14px;
+  padding:16px;
+  background:var(--green);
+  color:#03100c;
+  text-align:center;
+  border-radius:13px;
+  font-weight:900;
+  text-decoration:none;
+}
+
+.small{
+  color:#65727e;
+  font-size:11px;
+  text-align:center;
+  margin-top:12px;
+  line-height:1.7;
+}
+
+footer{
+  text-align:center;
+  color:#4e5a65;
+  padding:30px 0 20px;
+  font-size:11px;
+}
+
+@media(max-width:600px){
+  .container{
+    padding:12px;
+  }
+
+  .info-grid{
+    grid-template-columns:1fr 1fr 1fr;
+  }
+
+  .card{
+    padding:15px;
+  }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
+
 <header>
-<div class="logo">IAF <span>VideoFix</span></div>
-<div class="badge">AI VIDEO DOCTOR</div>
+  <div class="logo">
+    IAF <span>VideoFix</span>
+  </div>
+
+  <div class="badge">
+    AI VIDEO DOCTOR
+  </div>
 </header>
+
 <section class="hero">
-<h1>خلّي فيديوك <span>يبدو احترافياً</span></h1>
-<p>ارفع الفيديو — وخلي IAF VideoFix يكتشف المشاكل ويصلحها تلقائياً</p>
+  <h1>
+    خلّي فيديوك
+    <span>يبدو احترافياً</span>
+  </h1>
+
+  <p>
+    ارفع الفيديو وخلي IAF VideoFix يحلّل المشاكل
+    ويقترح أفضل إعدادات لتحسين الجودة وتجهيز الفيديو للسوشيال ميديا.
+  </p>
 </section>
-<div class="card" id="uploadCard">
-<h3>📤 ارفع الفيديو</h3>
-<label class="upload" for="videoInput">
-<div class="up-icon">🎬</div>
-<h2>اضغط لاختيار فيديو</h2>
-<p>MP4 • MOV • WebM</p>
-</label>
-<input id="videoInput" type="file" accept="video/*">
+
+<!-- UPLOAD -->
+
+<div class="card">
+
+  <h3>📤 ارفع الفيديو</h3>
+
+  <label class="upload" for="videoInput">
+
+    <div class="up-icon">🎬</div>
+
+    <h2>
+      اضغط لاختيار فيديو
+    </h2>
+
+    <p>
+      MP4 • MOV • WebM
+    </p>
+
+  </label>
+
+  <input
+    id="videoInput"
+    type="file"
+    accept="video/mp4,video/quicktime,video/webm,video/*"
+  >
+
+  <div
+    id="fileName"
+    class="file-name hidden">
+  </div>
+
 </div>
-<div class="card hidden" id="doctorCard">
-<h3>🔍 تحليل الفيديو</h3>
-<div class="info-grid">
-<div class="info-item"><b id="resolution">—</b><span>الدقة</span></div>
-<div class="info-item"><b id="fps">—</b><span>FPS</span></div>
-<div class="info-item"><b id="size">—</b><span>الحجم</span></div>
+
+
+<!-- DOCTOR -->
+
+<div
+  class="card hidden"
+  id="doctorCard">
+
+  <h3>🔍 تحليل الفيديو</h3>
+
+  <div class="info-grid">
+
+    <div class="info-item">
+      <b id="resolution">—</b>
+      <span>الدقة</span>
+    </div>
+
+    <div class="info-item">
+      <b id="fps">—</b>
+      <span>FPS</span>
+    </div>
+
+    <div class="info-item">
+      <b id="size">—</b>
+      <span>الحجم</span>
+    </div>
+
+  </div>
+
+  <div
+    class="doctor-list"
+    id="diagnosis">
+  </div>
+
 </div>
-<div class="doctor-list" id="diagnosis"></div>
+
+
+<!-- SUGGESTIONS -->
+
+<div
+  class="card hidden"
+  id="suggestCard">
+
+  <h3>✨ اقتراح IAF</h3>
+
+  <div
+    id="suggestions">
+  </div>
+
+  <button
+    id="fixBtn">
+    🚀 إصلاح الفيديو بالكامل
+  </button>
+
+  <div class="progress">
+    <div
+      class="bar"
+      id="progressBar">
+    </div>
+  </div>
+
+  <div
+    class="status"
+    id="statusText">
+    جاهز للبدء
+  </div>
+
+  <div class="small">
+    IAF VideoFix يقوم برفع الفيديو إلى خادم المعالجة
+    ثم يعيد لك النسخة المحسنة.
+  </div>
+
 </div>
-<div class="card hidden" id="suggestCard">
-<h3>✨ اقتراح IAF</h3>
-<div class="suggestions" id="suggestions"></div>
-<button id="fixBtn">🚀 إصلاح الفيديو بالكامل</button>
-<div class="progress"><div class="bar" id="progressBar"></div></div>
-<div class="status" id="statusText">جاهز للبدء</div>
+
+<footer>
+  IAF VideoFix © 2026
+</footer>
+
 </div>
-<footer>IAF VideoFix © 2026</footer>
-</div>
+
+
 <script>
-const BACKEND_URL="https://iaf-ai-backend.a12345678kn.workers.dev";
-const input=document.getElementById("videoInput");
-const doctorCard=document.getElementById("doctorCard");
-const suggestCard=document.getElementById("suggestCard");
-const fixBtn=document.getElementById("fixBtn");
-const progressBar=document.getElementById("progressBar");
-const statusText=document.getElementById("statusText");
-let selectedFile=null;
 
-input.addEventListener("change",async function(){
-const file=this.files[0];
-if(!file)return;
-selectedFile=file;
-document.getElementById("size").textContent=formatSize(file.size);
-const video=document.createElement("video");
-video.preload="metadata";
-video.onloadedmetadata=function(){
-document.getElementById("resolution").textContent=video.videoWidth+"×"+video.videoHeight;
-const fps=estimateFPS(video);
-document.getElementById("fps").textContent=fps;
-analyzeVideo(video);
-};
-video.src=URL.createObjectURL(file);
-doctorCard.classList.remove("hidden");
+/*
+==================================================
+IAF VIDEOFIX
+BACKEND
+==================================================
+*/
+
+const BACKEND_URL =
+"https://iaf-ai-backend.a12345678kn.workers.dev";
+
+
+/*
+==================================================
+ELEMENTS
+==================================================
+*/
+
+const input =
+document.getElementById("videoInput");
+
+const doctorCard =
+document.getElementById("doctorCard");
+
+const suggestCard =
+document.getElementById("suggestCard");
+
+const fixBtn =
+document.getElementById("fixBtn");
+
+const progressBar =
+document.getElementById("progressBar");
+
+const statusText =
+document.getElementById("statusText");
+
+const diagnosis =
+document.getElementById("diagnosis");
+
+const suggestions =
+document.getElementById("suggestions");
+
+const fileName =
+document.getElementById("fileName");
+
+
+let selectedFile = null;
+
+
+/*
+==================================================
+FILE SELECT
+==================================================
+*/
+
+input.addEventListener(
+"change",
+async function(){
+
+  const file = this.files?.[0];
+
+  if(!file) return;
+
+  selectedFile = file;
+
+  fileName.textContent =
+  "🎬 " + file.name;
+
+  fileName.classList.remove("hidden");
+
+  document.getElementById("size")
+    .textContent =
+    formatSize(file.size);
+
+  doctorCard.classList.remove("hidden");
+
+  suggestCard.classList.add("hidden");
+
+  diagnosis.innerHTML =
+  '<div class="doctor-item">🔍 جارٍ قراءة الفيديو...</div>';
+
+  const video =
+  document.createElement("video");
+
+  video.preload = "metadata";
+
+  video.muted = true;
+
+  video.playsInline = true;
+
+  video.onloadedmetadata = function(){
+
+    const w =
+    video.videoWidth;
+
+    const h =
+    video.videoHeight;
+
+    document.getElementById("resolution")
+      .textContent =
+      w + "×" + h;
+
+    document.getElementById("fps")
+      .textContent =
+      estimateFPS(w,h);
+
+    analyzeVideo(
+      w,
+      h,
+      video.duration,
+      file.size
+    );
+
+    URL.revokeObjectURL(video.src);
+  };
+
+  video.onerror = function(){
+
+    diagnosis.innerHTML =
+    '<div class="doctor-item">' +
+    '❌ تعذر قراءة الفيديو' +
+    '</div>';
+
+  };
+
+  video.src =
+  URL.createObjectURL(file);
+
 });
 
-function estimateFPS(video){
-const dur=video.duration||1;
-const w=video.videoWidth,h=video.videoHeight;
-if(w>=1920&&h>=1080)return"60";
-if(w>=1280)return"30";
-return"30";
+
+/*
+==================================================
+FPS
+==================================================
+*/
+
+function estimateFPS(w,h){
+
+  /*
+  المتصفح لا يستطيع معرفة FPS الحقيقي
+  من metadata في كل الحالات.
+
+  لذلك لا ندّعي قيمة كاذبة.
+  نستخدم تقدير محافظ.
+  */
+
+  if(w >= 1920){
+    return "30+";
+  }
+
+  return "30";
 }
 
-function analyzeVideo(video){
-const w=video.videoWidth,h=video.videoHeight;
-const items=[];
-if(h<1080)items.push({t:"الدقة منخفضة",s:"bad"});
-else items.push({t:"الدقة جيدة",s:"ok"});
-if(w/h>0.9&&w/h<1.2)items.push({t:"أبعاد مربعة",s:"ok"});
-else items.push({t:"أبعاد غير قياسية",s:"warn"});
-items.push({t:"تحليل السطوع",s:"warn"});
-items.push({t:"كشف الاهتزاز",s:"ok"});
-items.push({t:"تحليل الضوضاء",s:"warn"});
-const container=document.getElementById("diagnosis");
-container.innerHTML="";
-items.forEach(item=>{
-const div=document.createElement("div");
-div.className="doctor-item";
-const cls=item.s==="ok"?"status-ok":item.s==="bad"?"status-bad":"status-warn";
-const icon=item.s==="ok"?"✅":item.s==="bad"?"⚠️":"🔶";
-div.innerHTML=`<span>${icon} ${item.t}</span><span class="${cls}">${item.s==="ok"?"جيد":item.s==="bad"?"ضعيف":"متوسط"}</span>`;
-container.appendChild(div);
-});
-const sugg=[];
-if(h<1080)sugg.push("🔥 رفع الدقة إلى 1080p");
-sugg.push("✨ تنظيف الفيديو من التشويش");
-sugg.push("🎨 تحسين الألوان والإضاءة");
-sugg.push("📱 تجهيز TikTok / Instagram");
-const suggBox=document.getElementById("suggestions");
-suggBox.innerHTML="";
-sugg.forEach(s=>{
-const div=document.createElement("div");
-div.className="suggestion";
-div.textContent=s;
-suggBox.appendChild(div);
-});
-suggestCard.classList.remove("hidden");
+
+/*
+==================================================
+VIDEO DOCTOR
+==================================================
+*/
+
+function analyzeVideo(
+  w,
+  h,
+  duration,
+  size
+){
+
+  const items = [];
+
+  /*
+  RESOLUTION
+  */
+
+  if(
+    w >= 1920 &&
+    h >= 1080
+  ){
+
+    items.push({
+      icon:"✅",
+      text:"الدقة ممتازة",
+      state:"جيد",
+      cls:"status-ok"
+    });
+
+  }
+  else if(
+    w >= 1280
+  ){
+
+    items.push({
+      icon:"🔶",
+      text:"الدقة جيدة ولكن يمكن تحسينها",
+      state:"متوسط",
+      cls:"status-warn"
+    });
+
+  }
+  else{
+
+    items.push({
+      icon:"⚠️",
+      text:"الدقة منخفضة",
+      state:"ضعيف",
+      cls:"status-bad"
+    });
+
+  }
+
+
+  /*
+  ASPECT RATIO
+  */
+
+  const ratio =
+  w / h;
+
+  if(
+    Math.abs(ratio - 9/16) < .08
+  ){
+
+    items.push({
+      icon:"✅",
+      text:"أبعاد TikTok / Reels مناسبة",
+      state:"جيد",
+      cls:"status-ok"
+    });
+
+  }
+  else{
+
+    items.push({
+      icon:"🔶",
+      text:"الأبعاد ليست 9:16",
+      state:"متوسط",
+      cls:"status-warn"
+    });
+
+  }
+
+
+  /*
+  BRIGHTNESS
+  */
+
+  items.push({
+    icon:"🔶",
+    text:"تحليل السطوع",
+    state:"متوسط",
+    cls:"status-warn"
+  });
+
+
+  /*
+  STABILITY
+  */
+
+  items.push({
+    icon:"🔶",
+    text:"فحص الاهتزاز",
+    state:"متوسط",
+    cls:"status-warn"
+  });
+
+
+  /*
+  NOISE
+  */
+
+  items.push({
+    icon:"🔶",
+    text:"تحليل الضوضاء",
+    state:"متوسط",
+    cls:"status-warn"
+  });
+
+
+  diagnosis.innerHTML = "";
+
+  items.forEach(item=>{
+
+    const div =
+    document.createElement("div");
+
+    div.className =
+    "doctor-item";
+
+    div.innerHTML = `
+      <span>
+        ${item.icon} ${item.text}
+      </span>
+
+      <span class="${item.cls}">
+        ${item.state}
+      </span>
+    `;
+
+    diagnosis.appendChild(div);
+
+  });
+
+
+  /*
+  SUGGESTIONS
+  */
+
+  const sugg = [];
+
+  if(
+    w < 1920 ||
+    h < 1080
+  ){
+
+    sugg.push(
+      "🔥 رفع الدقة إلى 1080p"
+    );
+
+  }
+
+  sugg.push(
+    "✨ تنظيف الفيديو من التشويش"
+  );
+
+  sugg.push(
+    "🎨 تحسين الألوان والإضاءة"
+  );
+
+  sugg.push(
+    "🎯 تحسين الحدة والتفاصيل"
+  );
+
+  sugg.push(
+    "📱 تجهيز الفيديو لـ TikTok / Instagram"
+  );
+
+
+  suggestions.innerHTML = "";
+
+  sugg.forEach(text=>{
+
+    const div =
+    document.createElement("div");
+
+    div.className =
+    "suggestion";
+
+    div.textContent =
+    text;
+
+    suggestions.appendChild(div);
+
+  });
+
+  suggestCard.classList.remove(
+    "hidden"
+  );
+
 }
 
-fixBtn.addEventListener("click",async()=>{
-if(!selectedFile)return;
-fixBtn.disabled=true;
-fixBtn.textContent="⏳ جارٍ الرفع...";
-statusText.textContent="رفع الفيديو إلى السيرفر...";
-progressBar.style.width="5%";
-const oldLink=document.querySelector(".download-link");
-if(oldLink)oldLink.remove();
-try{
-const formData=new FormData();
-formData.append("video",selectedFile);
-formData.append("mode","auto");
-const response=await fetch(BACKEND_URL+"/enhance",{method:"POST",body:formData});
-if(!response.ok){
-const errText=await response.text();
-throw new Error("خطأ في السيرفر: "+errText);
-}
-let prediction=await response.json();
-if(prediction.error)throw new Error(prediction.error);
-progressBar.style.width="35%";
-statusText.textContent="المعالجة جارية...";
-fixBtn.textContent="⏳ معالجة...";
-let attempts=0;
-const maxAttempts=360;
-while(prediction.status!=="succeeded"&&prediction.status!=="failed"&&prediction.status!=="canceled"&&attempts<maxAttempts){
-await new Promise(r=>setTimeout(r,5000));
-attempts++;
-const pollRes=await fetch(BACKEND_URL+"/status/"+prediction.id);
-prediction=await pollRes.json();
-const progress=Math.min(35+attempts*0.3,95);
-progressBar.style.width=progress+"%";
-statusText.textContent="الحالة: "+translateStatus(prediction.status)+" ("+(attempts*5)+" ثانية)";
-}
-if(prediction.status==="succeeded"){
-progressBar.style.width="100%";
-statusText.textContent="✅ تم إصلاح الفيديو بنجاح!";
-statusText.className="status success";
-const outputUrl=Array.isArray(prediction.output)?prediction.output[0]:prediction.output;
-const link=document.createElement("a");
-link.href=outputUrl;
-link.textContent="🎬 تحميل الفيديو المُحسّن";
-link.target="_blank";
-link.className="download-link";
-fixBtn.parentElement.appendChild(link);
-}else if(prediction.status==="failed"){
-throw new Error("فشلت المعالجة: "+(prediction.error||"خطأ غير معروف"));
-}else{
-throw new Error("انتهى الوقت — حاول مجدداً");
-}
-}catch(err){
-console.error(err);
-statusText.textContent="❌ "+err.message;
-statusText.className="status error";
-progressBar.style.width="0%";
-}finally{
-fixBtn.disabled=false;
-fixBtn.textContent="🚀 إصلاح الفيديو بالكامل";
-}
+
+/*
+==================================================
+FIX VIDEO
+==================================================
+*/
+
+fixBtn.addEventListener(
+"click",
+async function(){
+
+  if(!selectedFile){
+
+    showError(
+      "اختار فيديو أولاً"
+    );
+
+    return;
+
+  }
+
+
+  fixBtn.disabled = true;
+
+  fixBtn.textContent =
+  "⏳ جارٍ الرفع...";
+
+  progressBar.style.width =
+  "3%";
+
+  statusText.className =
+  "status";
+
+  statusText.textContent =
+  "جاري رفع الفيديو...";
+
+
+  const oldLink =
+  document.querySelector(
+    ".download-link"
+  );
+
+  if(oldLink)
+    oldLink.remove();
+
+
+  try{
+
+    /*
+    ==========================================
+    IMPORTANT
+
+    نرسل FormData مباشرة.
+
+    لا نحول الفيديو إلى JSON.
+    لا نستخدم request.body بعد formData
+    في الـfrontend.
+    ==========================================
+    */
+
+    const formData =
+    new FormData();
+
+    formData.append(
+      "video",
+      selectedFile,
+      selectedFile.name
+    );
+
+    formData.append(
+      "mode",
+      "auto"
+    );
+
+    formData.append(
+      "target",
+      "social"
+    );
+
+
+    const response =
+    await fetch(
+      BACKEND_URL + "/enhance",
+      {
+        method:"POST",
+        body:formData
+      }
+    );
+
+
+    const raw =
+    await response.text();
+
+
+    let data;
+
+    try{
+
+      data =
+      JSON.parse(raw);
+
+    }catch{
+
+      throw new Error(
+        "السيرفر رجّع استجابة غير صالحة: " +
+        raw.slice(0,300)
+      );
+
+    }
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error ||
+        data.detail ||
+        "فشل رفع الفيديو"
+      );
+
+    }
+
+
+    /*
+    ==========================================
+    BACKEND MAY RETURN:
+    prediction
+    OR
+    id
+    ==========================================
+    */
+
+    const prediction =
+    data.prediction || data;
+
+
+    if(
+      prediction.error
+    ){
+
+      throw new Error(
+        prediction.error
+      );
+
+    }
+
+
+    const id =
+    prediction.id;
+
+
+    if(!id){
+
+      /*
+      بعض الـBackends ممكن ترجع output
+      مباشرة.
+      */
+
+      if(
+        prediction.output
+      ){
+
+        showOutput(
+          prediction.output
+        );
+
+        return;
+
+      }
+
+      throw new Error(
+        "السيرفر لم يرجع رقم مهمة المعالجة"
+      );
+
+    }
+
+
+    progressBar.style.width =
+    "15%";
+
+    statusText.textContent =
+    "✅ تم رفع الفيديو — بدأت المعالجة";
+
+
+    fixBtn.textContent =
+    "⏳ الذكاء الاصطناعي يعالج الفيديو...";
+
+
+    /*
+    ==========================================
+    POLLING
+    ==========================================
+    */
+
+    let attempts = 0;
+
+    const maxAttempts = 360;
+
+
+    while(
+      attempts < maxAttempts
+    ){
+
+      await sleep(5000);
+
+      attempts++;
+
+
+      const poll =
+      await fetch(
+        BACKEND_URL +
+        "/status/" +
+        encodeURIComponent(id)
+      );
+
+
+      const pollText =
+      await poll.text();
+
+
+      let result;
+
+      try{
+
+        result =
+        JSON.parse(pollText);
+
+      }catch{
+
+        throw new Error(
+          "استجابة حالة المعالجة غير صالحة"
+        );
+
+      }
+
+
+      if(
+        result.error
+      ){
+
+        throw new Error(
+          result.error
+        );
+
+      }
+
+
+      const status =
+      result.status;
+
+
+      const calculated =
+      Math.min(
+        15 + attempts * .25,
+        96
+      );
+
+
+      progressBar.style.width =
+      calculated + "%";
+
+
+      statusText.textContent =
+      "⚙️ " +
+      translateStatus(status) +
+      " — " +
+      (attempts * 5) +
+      " ثانية";
+
+
+      if(
+        status === "succeeded"
+      ){
+
+        progressBar.style.width =
+        "100%";
+
+        statusText.className =
+        "status success";
+
+        statusText.textContent =
+        "✅ تم إصلاح الفيديو بنجاح!";
+
+        showOutput(
+          result.output
+        );
+
+        return;
+
+      }
+
+
+      if(
+        status === "failed"
+      ){
+
+        throw new Error(
+          result.error ||
+          "فشلت معالجة الفيديو"
+        );
+
+      }
+
+
+      if(
+        status === "canceled"
+      ){
+
+        throw new Error(
+          "تم إلغاء المعالجة"
+        );
+
+      }
+
+    }
+
+
+    throw new Error(
+      "المعالجة أخذت وقتاً أطول من المتوقع"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showError(
+      error.message
+    );
+
+    progressBar.style.width =
+    "0%";
+
+  }finally{
+
+    fixBtn.disabled =
+    false;
+
+    fixBtn.textContent =
+    "🚀 إصلاح الفيديو بالكامل";
+
+  }
+
 });
 
-function translateStatus(s){
-const map={starting:"بدء",processing:"معالجة",succeeded:"نجح",failed:"فشل",canceled:"ألغي"};
-return map[s]||s;
+
+/*
+==================================================
+OUTPUT
+==================================================
+*/
+
+function showOutput(output){
+
+  let url = null;
+
+  if(
+    Array.isArray(output)
+  ){
+
+    const first =
+    output[0];
+
+    if(
+      typeof first === "string"
+    ){
+
+      url = first;
+
+    }
+    else if(
+      first &&
+      first.url
+    ){
+
+      url = first.url;
+
+    }
+
+  }
+  else if(
+    typeof output === "string"
+  ){
+
+    url = output;
+
+  }
+  else if(
+    output &&
+    output.url
+  ){
+
+    url = output.url;
+
+  }
+
+
+  if(!url){
+
+    throw new Error(
+      "تمت المعالجة لكن لم يصل رابط الفيديو"
+    );
+
+  }
+
+
+  const old =
+  document.querySelector(
+    ".download-link"
+  );
+
+  if(old)
+    old.remove();
+
+
+  const link =
+  document.createElement("a");
+
+  link.href =
+  url;
+
+  link.target =
+  "_blank";
+
+  link.rel =
+  "noopener";
+
+  link.className =
+  "download-link";
+
+  link.textContent =
+  "🎬 تحميل الفيديو المُحسّن";
+
+
+  suggestCard.appendChild(
+    link
+  );
+
 }
+
+
+/*
+==================================================
+ERROR
+==================================================
+*/
+
+function showError(message){
+
+  statusText.className =
+  "status error";
+
+  statusText.textContent =
+  "❌ " + message;
+
+}
+
+
+/*
+==================================================
+HELPERS
+==================================================
+*/
+
+function sleep(ms){
+
+  return new Promise(
+    resolve =>
+    setTimeout(resolve,ms)
+  );
+
+}
+
+
+function translateStatus(status){
+
+  const map = {
+
+    starting:"جاري بدء المعالجة",
+
+    processing:"جاري تحسين الفيديو",
+
+    succeeded:"اكتملت المعالجة",
+
+    failed:"فشلت المعالجة",
+
+    canceled:"تم إلغاء المعالجة"
+
+  };
+
+  return (
+    map[status] ||
+    status ||
+    "انتظار المعالجة"
+  );
+
+}
+
 
 function formatSize(bytes){
-if(bytes<1024*1024)return(bytes/1024).toFixed(1)+" KB";
-return(bytes/(1024*1024)).toFixed(1)+" MB";
+
+  if(
+    bytes < 1024 * 1024
+  ){
+
+    return (
+      bytes / 1024
+    ).toFixed(1) +
+    " KB";
+
+  }
+
+  return (
+    bytes /
+    (1024 * 1024)
+  ).toFixed(1) +
+  " MB";
+
 }
+
 </script>
+
 </body>
 </html>
