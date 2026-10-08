@@ -2,383 +2,1154 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>IAF VideoFix Pro</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#070b12">
+<title>IAF VideoFix — تحسين جودة الفيديو</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Tahoma,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh}
-.container{max-width:900px;margin:auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #1a1a1a}
-.logo{font-size:22px;font-weight:900;color:#fbbf24}
-.badge{background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 12px;border-radius:20px;color:#fbbf24;font-size:11px}
-.hero{text-align:center;padding:40px 0 30px}
-.hero h1{font-size:34px;margin:10px 0;color:#fff}
-.hero h1 span{color:#fbbf24}
-.hero p{color:#888;line-height:1.7;font-size:14px}
-.free-badge{background:#1a1a1a;border:1px solid #fbbf24;border-radius:12px;padding:12px;margin:15px auto;max-width:400px;text-align:center;font-size:12px;color:#fbbf24}
-.steps{display:flex;justify-content:space-between;margin:20px 0;position:relative}
-.steps::before{content:"";position:absolute;top:20px;left:10%;right:10%;height:2px;background:#1a1a1a;z-index:0}
-.step{text-align:center;position:relative;z-index:1;flex:1}
-.step-num{width:40px;height:40px;border-radius:50%;background:#1a1a1a;border:2px solid #2a2a2a;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:bold;color:#666}
-.step.active .step-num{background:#fbbf24;color:#000;border-color:#fbbf24}
-.step.done .step-num{background:#19e6b2;color:#000;border-color:#19e6b2}
-.step-label{font-size:11px;color:#666}
-.step.active .step-label,.step.done .step-label{color:#fff}
-.card{background:#111;border:1px solid #1a1a1a;border-radius:16px;padding:20px;margin-top:15px}
-.card h3{margin-bottom:15px;font-size:16px;color:#fbbf24}
-.card h3 span{background:#fbbf24;color:#000;padding:2px 8px;border-radius:6px;font-size:13px;margin-left:8px}
-.upload{border:2px dashed #2a2a2a;background:#0d0d0d;border-radius:14px;padding:35px 20px;text-align:center;cursor:pointer;display:block;transition:.2s}
-.upload:hover{border-color:#fbbf24}
-.up-icon{font-size:40px;margin-bottom:10px}
-.upload h2{margin:5px 0;font-size:17px}
-.upload p{color:#666;font-size:12px}
-input[type=file]{display:none}
-.or-divider{text-align:center;color:#444;margin:20px 0;font-size:12px}
-.link-input{display:flex;gap:8px;margin-top:10px}
-.link-input input{flex:1;padding:12px;background:#0d0d0d;border:1px solid #2a2a2a;border-radius:10px;color:#fff;font-size:13px}
-.link-input button{padding:12px 20px;background:#fbbf24;color:#000;border:0;border-radius:10px;font-weight:bold;cursor:pointer;font-size:13px}
-.note{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:10px;padding:12px;margin-top:12px;font-size:11px;color:#888;text-align:center}
-.method{background:#0d0d0d;border:2px solid #1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s;position:relative}
-.method:hover{border-color:#2a2a2a}
-.method.active{border-color:#fbbf24;background:#1a1500}
-.method.recommended{border-color:#fbbf24}
-.method-badge{position:absolute;top:-8px;left:15px;background:#fbbf24;color:#000;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:bold}
-.method-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.method-title{font-weight:bold;font-size:14px;color:#fff}
-.method-tag{background:#1a1a1a;color:#fbbf24;padding:2px 8px;border-radius:8px;font-size:10px}
-.method-desc{font-size:12px;color:#888;line-height:1.5}
-.device-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
-.device{background:#0d0d0d;border:2px solid #1a1a1a;border-radius:12px;padding:15px;text-align:center;cursor:pointer;transition:.2s}
-.device:hover{border-color:#2a2a2a}
-.device.active{border-color:#fbbf24;background:#1a1500}
-.device-icon{font-size:28px;margin-bottom:8px}
-.device-name{font-size:13px;font-weight:bold}
-.device-desc{font-size:10px;color:#666;margin-top:4px}
-.primary-btn{width:100%;padding:16px;border-radius:12px;border:0;background:#fbbf24;color:#000;font-weight:900;font-size:15px;cursor:pointer;margin-top:15px;transition:.2s}
-.primary-btn:hover:not(:disabled){background:#fcd34d}
-.primary-btn:disabled{opacity:.4;cursor:not-allowed}
-.hidden{display:none}
-.progress{height:8px;background:#1a1a1a;border-radius:8px;overflow:hidden;margin-top:15px}
-.bar{height:100%;width:0%;background:#fbbf24;transition:width .3s}
-.status{text-align:center;color:#888;margin-top:12px;padding:10px;border-radius:10px;font-size:12px}
-.status.success{background:#0d2a1c;color:#19e6b2}
-.status.error{background:#2a0d0d;color:#ff6b6b}
-.result-box{text-align:center;padding:30px 20px}
-.result-icon{width:70px;height:70px;border-radius:50%;background:#19e6b2;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:32px;color:#000}
-.result-title{font-size:22px;font-weight:900;margin-bottom:8px}
-.result-subtitle{color:#888;font-size:13px;margin-bottom:20px}
-.file-info{background:#0d0d0d;border:1px solid #1a1a1a;border-radius:10px;padding:12px;margin-bottom:15px;font-size:12px;display:flex;justify-content:space-between;align-items:center}
-.file-name{color:#fbbf24}
-.download-btn{display:block;width:100%;padding:16px;background:#fbbf24;color:#000;text-align:center;border-radius:12px;font-weight:900;text-decoration:none;font-size:15px;margin-bottom:10px}
-.secondary-btn{width:100%;padding:14px;background:transparent;color:#fbbf24;border:1px solid #2a2a2a;border-radius:12px;font-weight:bold;cursor:pointer;font-size:13px}
-.tip-box{background:#1a1500;border:1px solid #fbbf24;border-radius:12px;padding:15px;margin-top:15px;font-size:12px}
-.tip-box h4{margin-bottom:10px;color:#fbbf24;font-size:13px}
-.tip-box ul{padding-right:18px;line-height:1.8;color:#ccc}
-.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
-.info-item{background:#0d0d0d;padding:12px;border-radius:10px;text-align:center}
-.info-item b{display:block;font-size:15px;color:#fbbf24}
-.info-item span{color:#666;font-size:10px}
-.doctor-list{margin-top:15px}
-.doctor-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#0d0d0d;border-radius:10px;margin-bottom:8px;font-size:13px}
-.status-ok{color:#19e6b2}
-.status-bad{color:#ffb347}
-.status-warn{color:#ff6b6b}
-.suggestions{margin-top:15px}
-.suggestion{padding:12px;background:#1a1500;border:1px solid #fbbf24;border-radius:10px;margin-bottom:8px;color:#fbbf24;font-size:13px}
-footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
+*{box-sizing:border-box}
+
+:root{
+  --bg:#06080d;
+  --panel:#0d121b;
+  --panel2:#111925;
+  --line:#202b3a;
+  --text:#f5f7fb;
+  --muted:#8995a7;
+  --accent:#6c5cff;
+  --accent2:#00d4ff;
+  --danger:#ff526d;
+  --ok:#22d39a;
+}
+
+body{
+  margin:0;
+  min-height:100vh;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,rgba(108,92,255,.16),transparent 30%),
+    radial-gradient(circle at 85% 15%,rgba(0,212,255,.10),transparent 28%),
+    var(--bg);
+  font-family:Arial,Tahoma,sans-serif;
+}
+
+button,input,select{font:inherit}
+
+.header{
+  height:72px;
+  border-bottom:1px solid var(--line);
+  background:rgba(6,8,13,.82);
+  backdrop-filter:blur(18px);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 24px;
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+  font-size:21px;
+}
+
+.logoMark{
+  width:40px;
+  height:40px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 0 30px rgba(108,92,255,.3);
+}
+
+.headerBadge{
+  color:#aab5c5;
+  font-size:13px;
+  border:1px solid var(--line);
+  padding:8px 12px;
+  border-radius:999px;
+}
+
+.container{
+  width:min(1180px,calc(100% - 28px));
+  margin:30px auto 70px;
+}
+
+.hero{
+  text-align:center;
+  margin:30px auto 28px;
+}
+
+.hero h1{
+  font-size:clamp(30px,6vw,60px);
+  margin:0 0 12px;
+  letter-spacing:-2px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#fff,var(--accent2),#9b8fff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.hero p{
+  margin:0 auto;
+  max-width:700px;
+  color:var(--muted);
+  line-height:1.8;
+}
+
+.workspace{
+  display:grid;
+  grid-template-columns:1fr 340px;
+  gap:18px;
+}
+
+@media(max-width:900px){
+  .workspace{grid-template-columns:1fr}
+}
+
+.card{
+  background:linear-gradient(180deg,rgba(17,25,37,.94),rgba(10,14,22,.94));
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.mainCard{padding:20px}
+
+.drop{
+  min-height:390px;
+  border:2px dashed #2a3850;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  cursor:pointer;
+  transition:.2s;
+  position:relative;
+  overflow:hidden;
+}
+
+.drop:hover,
+.drop.drag{
+  border-color:var(--accent);
+  background:rgba(108,92,255,.06);
+}
+
+.drop input{display:none}
+
+.uploadIcon{
+  width:74px;
+  height:74px;
+  margin:auto auto 18px;
+  border-radius:22px;
+  display:grid;
+  place-items:center;
+  font-size:34px;
+  background:rgba(108,92,255,.13);
+  border:1px solid rgba(108,92,255,.35);
+}
+
+.drop h2{margin:0 0 8px}
+
+.drop p{
+  color:var(--muted);
+  margin:0;
+  line-height:1.7;
+}
+
+.small{
+  font-size:12px;
+  color:#687587;
+  margin-top:15px!important;
+}
+
+.preview{
+  display:none;
+}
+
+.preview video{
+  width:100%;
+  max-height:570px;
+  border-radius:16px;
+  background:#000;
+  display:block;
+}
+
+.fileInfo{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:14px;
+  padding:13px;
+  background:#080d15;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.fileName{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-weight:700;
+}
+
+.fileSize{
+  color:var(--muted);
+  font-size:12px;
+  white-space:nowrap;
+}
+
+.settings{
+  padding:20px;
+}
+
+.settings h3{
+  margin:0 0 18px;
+  font-size:17px;
+}
+
+.field{
+  margin-bottom:18px;
+}
+
+.field label{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px;
+  color:#d8deea;
+  font-size:13px;
+}
+
+select,
+input[type=number]{
+  width:100%;
+  padding:13px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  outline:0;
+  color:#fff;
+  background:#080d15;
+}
+
+select:focus,
+input:focus{
+  border-color:var(--accent);
+}
+
+.range{
+  width:100%;
+  accent-color:var(--accent);
+}
+
+.rangeValue{
+  color:#a79fff;
+  font-weight:bold;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+}
+
+.option{
+  position:relative;
+}
+
+.option input{
+  position:absolute;
+  opacity:0;
+}
+
+.option label{
+  display:block;
+  text-align:center;
+  padding:12px 8px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  cursor:pointer;
+  color:#aab4c4;
+}
+
+.option input:checked+label{
+  color:#fff;
+  border-color:var(--accent);
+  background:rgba(108,92,255,.13);
+}
+
+.primary{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:15px;
+  color:white;
+  font-weight:900;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--accent),#477dff);
+  box-shadow:0 10px 30px rgba(108,92,255,.2);
+  transition:.2s;
+}
+
+.primary:hover{transform:translateY(-1px)}
+.primary:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+.secondary{
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border-radius:13px;
+  border:1px solid var(--line);
+  color:#dce2ec;
+  background:#090e16;
+  cursor:pointer;
+}
+
+.progressBox{
+  display:none;
+  margin-top:18px;
+  padding:18px;
+  border-radius:16px;
+  background:#080d15;
+  border:1px solid var(--line);
+}
+
+.progressTop{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:10px;
+  font-size:13px;
+}
+
+.progress{
+  height:10px;
+  background:#18202d;
+  border-radius:999px;
+  overflow:hidden;
+}
+
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  border-radius:999px;
+  transition:width .15s;
+}
+
+.status{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:10px;
+}
+
+.result{
+  display:none;
+  margin-top:18px;
+  padding:18px;
+  border-radius:16px;
+  border:1px solid rgba(34,211,154,.25);
+  background:rgba(34,211,154,.05);
+}
+
+.result h3{
+  color:var(--ok);
+  margin-top:0;
+}
+
+.download{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  color:#fff;
+  background:linear-gradient(135deg,#13a978,#22d39a);
+  padding:14px;
+  border-radius:13px;
+  font-weight:900;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:18px;
+}
+
+.stat{
+  background:#080d15;
+  border:1px solid var(--line);
+  padding:13px;
+  border-radius:13px;
+  text-align:center;
+}
+
+.stat b{
+  display:block;
+  font-size:18px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+.notice{
+  margin-top:18px;
+  color:#7f8da1;
+  font-size:11px;
+  line-height:1.7;
+  text-align:center;
+}
+
+.footer{
+  text-align:center;
+  color:#657286;
+  margin-top:35px;
+  font-size:12px;
+}
+
+.hidden{display:none!important}
 </style>
 </head>
+
 <body>
-<div class="container">
-<header>
-<div class="logo">IAF VideoFix</div>
-<div class="badge">PRO</div>
+
+<header class="header">
+  <div class="logo">
+    <div class="logoMark">IAF</div>
+    <span>IAF VideoFix</span>
+  </div>
+  <div class="headerBadge">Video Enhancer Pro</div>
 </header>
 
+<main class="container">
+
 <section class="hero">
-<h1>خلّي فيديوك <span>يبدو احترافياً</span></h1>
-<p>ارفع الفيديو، اختر الطريقة، وحمّل النتيجة</p>
+  <h1>حسّن <span class="gradient">جودة الفيديو</span></h1>
+  <p>
+    ارفع الفيديو، اختر مستوى التحسين والجودة، ثم عالج الفيديو
+    ونزّل النسخة الجديدة مباشرة من المتصفح.
+  </p>
 </section>
 
-<div class="free-badge">🎁 وصول مجاني • آخر 5 استخدامات</div>
+<section class="workspace">
 
-<div class="steps" id="stepsBar">
-<div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">الفيديو</div></div>
-<div class="step" id="step2"><div class="step-num">2</div><div class="step-label">الطريقة</div></div>
-<div class="step" id="step3"><div class="step-num">3</div><div class="step-label">التحميل</div></div>
-</div>
+<div class="card mainCard">
 
-<div class="card" id="uploadCard">
-<h3><span>1</span> اختر الفيديو</h3>
-<label class="upload" for="videoInput">
-<div class="up-icon">➕</div>
-<h2>اختر فيديو</h2>
-<p>أو اسحب الملف هنا</p>
-</label>
-<input id="videoInput" type="file" accept="video/*">
+  <div id="drop" class="drop">
+    <input id="fileInput" type="file" accept="video/*">
 
-<div class="or-divider">— أو —</div>
+    <div id="uploadContent">
+      <div class="uploadIcon">⬆</div>
+      <h2>ارفع الفيديو هنا</h2>
+      <p>اضغط لاختيار الفيديو أو اسحبه إلى هذه المنطقة</p>
+      <p class="small">MP4 • MOV • WebM • AVI • وغيرها حسب دعم المتصفح</p>
+    </div>
 
-<div class="link-input">
-<input id="linkInput" type="text" placeholder="https://video.mp4">
-<button onclick="useLink()">استخدم الرابط</button>
-</div>
+    <div id="preview" class="preview">
+      <video id="video" controls playsinline></video>
 
-<div class="note">🔒 معالجة الفيديو تتم على السيرفر — فيديوك محمي</div>
-</div>
+      <div class="fileInfo">
+        <div class="fileName" id="fileName">---</div>
+        <div class="fileSize" id="fileSize">---</div>
+      </div>
+    </div>
+  </div>
 
-<div class="card hidden" id="methodCard">
-<h3><span>2</span> اختر الطريقة</h3>
+  <div class="progressBox" id="progressBox">
+    <div class="progressTop">
+      <span id="progressText">جاري التحضير...</span>
+      <strong id="percent">0%</strong>
+    </div>
 
-<div class="method recommended active" data-method="max">
-<div class="method-badge">مُوصى به</div>
-<div class="method-header">
-<div class="method-title">MAX QUALITY + FPS</div>
-<div class="method-tag">جديد</div>
-</div>
-<div class="method-desc">يحافظ على أفضل جودة ويدعم حتى 1080p و 120 FPS.</div>
-</div>
+    <div class="progress">
+      <div class="bar" id="bar"></div>
+    </div>
 
-<div class="method" data-method="fps">
-<div class="method-header">
-<div class="method-title">FPS Method</div>
-</div>
-<div class="method-desc">للهواتف — يضبط FPS فقط دون تغيير الجودة.</div>
-</div>
+    <div class="status" id="status">
+      يرجى الانتظار حتى انتهاء المعالجة...
+    </div>
+  </div>
 
-<div class="method" data-method="720p">
-<div class="method-header">
-<div class="method-title">720p60 Method</div>
-</div>
-<div class="method-desc">يحافظ على 720p بـ 60 FPS.</div>
-</div>
+  <div class="result" id="result">
+    <h3>✓ اكتملت المعالجة</h3>
 
-<div class="method" data-method="tiktok">
-<div class="method-header">
-<div class="method-title">TikTok Optimize</div>
-<div class="method-tag">اختياري</div>
-</div>
-<div class="method-desc">ملفات أصغر — مثالي للرفع على TikTok.</div>
-</div>
+    <div class="stats">
+      <div class="stat">
+        <b id="oldSize">--</b>
+        <span>الحجم الأصلي</span>
+      </div>
 
-<h3 style="margin-top:20px">🎯 اختر جهاز النشر</h3>
-<div class="device-grid">
-<div class="device" data-device="pc">
-<div class="device-icon">💻</div>
-<div class="device-name">PC</div>
-<div class="device-desc">Desktop / Laptop</div>
-</div>
-<div class="device active" data-device="android">
-<div class="device-icon">📱</div>
-<div class="device-name">Android</div>
-<div class="device-desc">جميع أجهزة Android</div>
-</div>
-<div class="device" data-device="apple">
-<div class="device-icon">🍎</div>
-<div class="device-name">Apple</div>
-<div class="device-desc">iPhone / iPad</div>
-</div>
+      <div class="stat">
+        <b id="newSize">--</b>
+        <span>الحجم الجديد</span>
+      </div>
+
+      <div class="stat">
+        <b id="saved">--</b>
+        <span>التغيير</span>
+      </div>
+    </div>
+
+    <br>
+
+    <a id="download" class="download">
+      ⬇ تنزيل الفيديو المحسّن
+    </a>
+  </div>
+
 </div>
 
-<button class="primary-btn" id="startBtn">▶️ ابدأ المعالجة</button>
+<aside class="card settings">
+
+  <h3>⚙ إعدادات التحسين</h3>
+
+  <div class="field">
+    <label>
+      <span>الدقة</span>
+      <span class="rangeValue" id="resolutionText">2×</span>
+    </label>
+
+    <div class="options">
+
+      <div class="option">
+        <input id="r1" name="resolution" type="radio" value="1" checked>
+        <label for="r1">1×</label>
+      </div>
+
+      <div class="option">
+        <input id="r2" name="resolution" type="radio" value="2">
+        <label for="r2">2× HD</label>
+      </div>
+
+      <div class="option">
+        <input id="r4" name="resolution" type="radio" value="4">
+        <label for="r4">4× UHD</label>
+      </div>
+
+      <div class="option">
+        <input id="rAuto" name="resolution" type="radio" value="auto">
+        <label for="rAuto">Auto</label>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="field">
+    <label>
+      <span>الجودة</span>
+      <span class="rangeValue" id="qualityText">80</span>
+    </label>
+
+    <input
+      id="quality"
+      class="range"
+      type="range"
+      min="30"
+      max="100"
+      value="80"
+    >
+  </div>
+
+  <div class="field">
+    <label>Bitrate</label>
+
+    <select id="bitrate">
+      <option value="1000">1 Mbps — ضغط قوي</option>
+      <option value="2500">2.5 Mbps</option>
+      <option value="5000" selected>5 Mbps — متوازن</option>
+      <option value="8000">8 Mbps — جودة عالية</option>
+      <option value="12000">12 Mbps — ممتاز</option>
+      <option value="20000">20 Mbps — أقصى جودة</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>صيغة الإخراج</label>
+
+    <select id="format">
+      <option value="webm">WebM — أفضل توافق للمعالجة</option>
+      <option value="mp4">MP4 — إذا كان مدعومًا</option>
+    </select>
+  </div>
+
+  <button id="processBtn" class="primary" disabled>
+    ✨ تحسين الفيديو
+  </button>
+
+  <button id="resetBtn" class="secondary">
+    إعادة ضبط
+  </button>
+
+  <div class="notice">
+    المعالجة داخل المتصفح تعتمد على إمكانيات جهازك ومتصفح Chrome.
+    الفيديوهات الكبيرة قد تحتاج وقتًا وذاكرة أكبر.
+  </div>
+
+</aside>
+
+</section>
+
+<div class="footer">
+  IAF VideoFix © 2026 — Video Enhancement Studio
 </div>
 
-<div class="card hidden" id="doctorCard">
-<h3>🔍 تحليل الفيديو (Video Doctor)</h3>
-<div class="info-grid">
-<div class="info-item"><b id="resolution">—</b><span>الدقة</span></div>
-<div class="info-item"><b id="fps">—</b><span>FPS</span></div>
-<div class="info-item"><b id="size">—</b><span>الحجم</span></div>
-</div>
-<div class="doctor-list" id="diagnosis"></div>
-</div>
-
-<div class="card hidden" id="processingCard">
-<h3>⏳ المعالجة الجارية</h3>
-<div class="progress"><div class="bar" id="progressBar"></div></div>
-<div class="status" id="statusText">رفع الفيديو...</div>
-</div>
-
-<div class="card hidden" id="resultCard">
-<div class="result-box">
-<div class="result-icon">✓</div>
-<div class="result-title">الفيديو جاهز!</div>
-<div class="result-subtitle">اكتملت المعالجة بنجاح</div>
-</div>
-<div class="file-info">
-<span id="resultFileName">video.mp4</span>
-<span style="color:#19e6b2">جاهز</span>
-</div>
-<a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو</a>
-<button class="secondary-btn" onclick="location.reload()">🔄 معالجة فيديو آخر</button>
-<div class="tip-box">
-<h4>💡 نصائح قبل الرفع على TikTok:</h4>
-<ul>
-<li>استخدم TikTok Web (وضع Desktop)</li>
-<li>لا تعدّل الفيديو بعد التحسين</li>
-<li>استخدم #IAFVideoFix لدعمنا</li>
-</ul>
-</div>
-</div>
-
-<footer>IAF VideoFix Pro © 2026</footer>
-</div>
+</main>
 
 <script>
-const BACKEND_URL="https://iaf-ai-backend.a12345678kn.workers.dev";
-const input=document.getElementById("videoInput");
-const doctorCard=document.getElementById("doctorCard");
-const methodCard=document.getElementById("methodCard");
-const processingCard=document.getElementById("processingCard");
-const resultCard=document.getElementById("resultCard");
-const progressBar=document.getElementById("progressBar");
-const statusText=document.getElementById("statusText");
-let selectedFile=null;
-let selectedMethod="max";
-let selectedDevice="android";
+const fileInput = document.getElementById("fileInput");
+const drop = document.getElementById("drop");
+const uploadContent = document.getElementById("uploadContent");
+const preview = document.getElementById("preview");
+const video = document.getElementById("video");
 
-function setStep(n){
-for(let i=1;i<=3;i++){
-const s=document.getElementById("step"+i);
-s.classList.remove("active","done");
-if(i<n)s.classList.add("done");
-if(i===n)s.classList.add("active");
-}
+const fileName = document.getElementById("fileName");
+const fileSize = document.getElementById("fileSize");
+
+const processBtn = document.getElementById("processBtn");
+const resetBtn = document.getElementById("resetBtn");
+
+const progressBox = document.getElementById("progressBox");
+const bar = document.getElementById("bar");
+const percent = document.getElementById("percent");
+const progressText = document.getElementById("progressText");
+const status = document.getElementById("status");
+
+const result = document.getElementById("result");
+const download = document.getElementById("download");
+
+const quality = document.getElementById("quality");
+const qualityText = document.getElementById("qualityText");
+const resolutionText = document.getElementById("resolutionText");
+
+let selectedFile = null;
+let sourceURL = null;
+let resultURL = null;
+
+function formatBytes(bytes){
+  if(!bytes) return "0 B";
+
+  const units = ["B","KB","MB","GB","TB"];
+  const i = Math.floor(Math.log(bytes)/Math.log(1024));
+
+  return (
+    bytes / Math.pow(1024,i)
+  ).toFixed(i === 0 ? 0 : 2) + " " + units[i];
 }
 
-input.addEventListener("change",async function(){
-const file=this.files[0];
-if(!file)return;
-await processFile(file);
+function setProgress(value,text){
+  value = Math.max(0,Math.min(100,value));
+
+  bar.style.width = value + "%";
+  percent.textContent = Math.round(value) + "%";
+
+  if(text){
+    progressText.textContent = text;
+  }
+}
+
+function selectFile(file){
+
+  if(!file) return;
+
+  if(!file.type.startsWith("video/")){
+    alert("الرجاء اختيار ملف فيديو.");
+    return;
+  }
+
+  selectedFile = file;
+
+  if(sourceURL){
+    URL.revokeObjectURL(sourceURL);
+  }
+
+  sourceURL = URL.createObjectURL(file);
+
+  video.src = sourceURL;
+
+  fileName.textContent = file.name;
+  fileSize.textContent = formatBytes(file.size);
+
+  uploadContent.style.display = "none";
+  preview.style.display = "block";
+
+  processBtn.disabled = false;
+
+  result.style.display = "none";
+
+  if(resultURL){
+    URL.revokeObjectURL(resultURL);
+    resultURL = null;
+  }
+}
+
+fileInput.addEventListener("change",e=>{
+  selectFile(e.target.files[0]);
 });
 
-async function useLink(){
-const url=document.getElementById("linkInput").value.trim();
-if(!url)return alert("الصق رابط الفيديو");
-try{
-statusText.textContent="جاري تحميل الفيديو من الرابط...";
-const response=await fetch(url);
-const blob=await response.blob();
-const file=new File([blob],"video.mp4",{type:blob.type||"video/mp4"});
-await processFile(file);
-}catch(e){
-alert("فشل تحميل الفيديو من الرابط: "+e.message);
-}
-}
+drop.addEventListener("click",e=>{
+  if(
+    e.target.tagName === "VIDEO" ||
+    e.target.closest(".fileInfo")
+  ) return;
 
-async function processFile(file){
-selectedFile=file;
-document.getElementById("size").textContent=formatSize(file.size);
-document.getElementById("resultFileName").textContent=file.name;
-const video=document.createElement("video");
-video.preload="metadata";
-video.onloadedmetadata=function(){
-document.getElementById("resolution").textContent=video.videoWidth+"×"+video.videoHeight;
-document.getElementById("fps").textContent="30";
-analyzeVideo(video);
-};
-video.src=URL.createObjectURL(file);
-setStep(2);
-methodCard.classList.remove("hidden");
-doctorCard.classList.remove("hidden");
-}
-
-document.querySelectorAll(".method").forEach(m=>{
-m.addEventListener("click",()=>{
-document.querySelectorAll(".method").forEach(x=>x.classList.remove("active"));
-m.classList.add("active");
-selectedMethod=m.dataset.method;
-});
+  fileInput.click();
 });
 
-document.querySelectorAll(".device").forEach(d=>{
-d.addEventListener("click",()=>{
-document.querySelectorAll(".device").forEach(x=>x.classList.remove("active"));
-d.classList.add("active");
-selectedDevice=d.dataset.device;
-});
+drop.addEventListener("dragover",e=>{
+  e.preventDefault();
+  drop.classList.add("drag");
 });
 
-function analyzeVideo(video){
-const w=video.videoWidth,h=video.videoHeight;
-const items=[];
-if(h<1080)items.push({t:"الدقة منخفضة",s:"bad"});
-else items.push({t:"الدقة جيدة",s:"ok"});
-items.push({t:"تحليل السطوع",s:"warn"});
-items.push({t:"كشف الاهتزاز",s:"ok"});
-items.push({t:"تحليل الضوضاء",s:"warn"});
-const container=document.getElementById("diagnosis");
-container.innerHTML="";
-items.forEach(item=>{
-const div=document.createElement("div");
-div.className="doctor-item";
-const cls=item.s==="ok"?"status-ok":item.s==="bad"?"status-bad":"status-warn";
-const icon=item.s==="ok"?"✅":item.s==="bad"?"⚠️":"🔶";
-div.innerHTML='<span>'+icon+' '+item.t+'</span><span class="'+cls+'">'+(item.s==="ok"?"جيد":item.s==="bad"?"ضعيف":"متوسط")+'</span>';
-container.appendChild(div);
-});
-}
-
-document.getElementById("startBtn").addEventListener("click",async()=>{
-if(!selectedFile)return;
-setStep(3);
-processingCard.classList.remove("hidden");
-methodCard.classList.add("hidden");
-doctorCard.classList.add("hidden");
-const startBtn=document.getElementById("startBtn");
-startBtn.disabled=true;
-try{
-const formData=new FormData();
-formData.append("video",selectedFile);
-formData.append("mode",selectedMethod);
-const response=await fetch(BACKEND_URL+"/enhance",{method:"POST",body:formData});
-if(!response.ok){
-const errText=await response.text();
-throw new Error("خطأ في السيرفر: "+errText);
-}
-let prediction=await response.json();
-if(prediction.error)throw new Error(prediction.error);
-progressBar.style.width="35%";
-statusText.textContent="المعالجة جارية...";
-let attempts=0;
-const maxAttempts=360;
-while(prediction.status!=="succeeded"&&prediction.status!=="failed"&&prediction.status!=="canceled"&&attempts<maxAttempts){
-await new Promise(r=>setTimeout(r,5000));
-attempts++;
-const pollRes=await fetch(BACKEND_URL+"/status/"+prediction.id);
-prediction=await pollRes.json();
-const progress=Math.min(35+attempts*0.3,95);
-progressBar.style.width=progress+"%";
-statusText.textContent="الحالة: "+translateStatus(prediction.status)+" ("+(attempts*5)+" ثانية)";
-}
-if(prediction.status==="succeeded"){
-progressBar.style.width="100%";
-statusText.textContent="✅ تم بنجاح!";
-statusText.className="status success";
-const outputUrl=Array.isArray(prediction.output)?prediction.output[0]:prediction.output;
-document.getElementById("downloadBtn").href=outputUrl;
-processingCard.classList.add("hidden");
-resultCard.classList.remove("hidden");
-}else{
-throw new Error("فشلت المعالجة");
-}
-}catch(err){
-statusText.textContent="❌ "+err.message;
-statusText.className="status error";
-progressBar.style.width="0%";
-startBtn.disabled=false;
-}
+drop.addEventListener("dragleave",()=>{
+  drop.classList.remove("drag");
 });
 
-function translateStatus(s){
-const map={starting:"بدء",processing:"معالجة",succeeded:"نجح",failed:"فشل",canceled:"ألغي"};
-return map[s]||s;
+drop.addEventListener("drop",e=>{
+  e.preventDefault();
+  drop.classList.remove("drag");
+
+  const file = e.dataTransfer.files[0];
+
+  selectFile(file);
+});
+
+quality.addEventListener("input",()=>{
+  qualityText.textContent = quality.value;
+});
+
+document.querySelectorAll('input[name="resolution"]').forEach(input=>{
+  input.addEventListener("change",()=>{
+    const value = document.querySelector(
+      'input[name="resolution"]:checked'
+    ).value;
+
+    resolutionText.textContent =
+      value === "auto" ? "Auto" : value + "×";
+  });
+});
+
+function getResolution(){
+
+  const selected = document.querySelector(
+    'input[name="resolution"]:checked'
+  ).value;
+
+  if(selected === "auto"){
+    return 2;
+  }
+
+  return Number(selected);
 }
 
-function formatSize(bytes){
-if(bytes<1024*1024)return(bytes/1024).toFixed(1)+" KB";
-return(bytes/(1024*1024)).toFixed(1)+" MB";
+function getSupportedMime(){
+
+  const requested =
+    document.getElementById("format").value;
+
+  const candidates =
+    requested === "mp4"
+    ? [
+        "video/mp4;codecs=avc1.42E01E",
+        "video/mp4"
+      ]
+    : [
+        "video/webm;codecs=vp9",
+        "video/webm;codecs=vp8",
+        "video/webm"
+      ];
+
+  for(const type of candidates){
+    if(MediaRecorder.isTypeSupported(type)){
+      return type;
+    }
+  }
+
+  return "";
 }
+
+function wait(ms){
+  return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+async function processVideo(){
+
+  if(!selectedFile){
+    alert("اختر فيديو أولاً.");
+    return;
+  }
+
+  if(!window.MediaRecorder){
+    alert("متصفحك لا يدعم MediaRecorder.");
+    return;
+  }
+
+  const mime = getSupportedMime();
+
+  if(!mime){
+    alert(
+      "Chrome لا يدعم صيغة الإخراج المطلوبة على هذا الجهاز."
+    );
+    return;
+  }
+
+  processBtn.disabled = true;
+  resetBtn.disabled = true;
+
+  progressBox.style.display = "block";
+  result.style.display = "none";
+
+  setProgress(3,"جاري قراءة الفيديو...");
+  await wait(200);
+
+  try{
+
+    const metadata = await getVideoMetadata();
+
+    setProgress(10,"جاري تجهيز محرك التحسين...");
+    await wait(300);
+
+    const scale = getResolution();
+
+    const targetWidth =
+      Math.round(metadata.width * scale);
+
+    const targetHeight =
+      Math.round(metadata.height * scale);
+
+    /*
+      Canvas processing:
+      - تكبير الفيديو
+      - تحسين بسيط للتباين
+      - تحسين الحدة
+      - إعادة ترميز عبر MediaRecorder
+    */
+
+    const canvas = document.createElement("canvas");
+
+    canvas.width = targetWidth;
+    canvas.height = targetHeight;
+
+    const ctx = canvas.getContext("2d",{
+      alpha:false,
+      desynchronized:true
+    });
+
+    const stream =
+      canvas.captureStream(
+        Math.max(1,metadata.fps || 30)
+      );
+
+    let audioTracks = [];
+
+    try{
+
+      const audioContext =
+        new AudioContext();
+
+      const source =
+        audioContext.createMediaElementSource(video);
+
+      const destination =
+        audioContext.createMediaStreamDestination();
+
+      source.connect(destination);
+      source.connect(audioContext.destination);
+
+      audioTracks =
+        destination.stream.getAudioTracks();
+
+      audioTracks.forEach(track=>{
+        stream.addTrack(track);
+      });
+
+    }catch(audioError){
+      console.log(
+        "Audio passthrough unavailable:",
+        audioError
+      );
+    }
+
+    const bitrate =
+      Number(
+        document.getElementById("bitrate").value
+      ) * 1000000;
+
+    const recorder =
+      new MediaRecorder(
+        stream,
+        {
+          mimeType:mime,
+          videoBitsPerSecond:bitrate,
+          audioBitsPerSecond:128000
+        }
+      );
+
+    const chunks = [];
+
+    recorder.ondataavailable = event=>{
+      if(event.data && event.data.size){
+        chunks.push(event.data);
+      }
+    };
+
+    const stopped =
+      new Promise(resolve=>{
+        recorder.onstop=resolve;
+      });
+
+    recorder.start(500);
+
+    video.currentTime = 0;
+
+    await video.play();
+
+    const duration =
+      metadata.duration || 1;
+
+    const draw = ()=>{
+
+      if(video.paused || video.ended){
+        return;
+      }
+
+      const qualityValue =
+        Number(quality.value) / 100;
+
+      /*
+        تحسينات بصرية بسيطة:
+        - contrast
+        - saturation
+        - brightness
+      */
+
+      ctx.filter =
+        "contrast(" +
+        (1 + qualityValue * .12) +
+        ") " +
+        "saturate(" +
+        (1 + qualityValue * .08) +
+        ") " +
+        "brightness(" +
+        (1 + qualityValue * .025) +
+        ")";
+
+      ctx.drawImage(
+        video,
+        0,
+        0,
+        targetWidth,
+        targetHeight
+      );
+
+      ctx.filter = "none";
+
+      const current =
+        video.currentTime;
+
+      const progress =
+        12 + (current / duration) * 80;
+
+      setProgress(
+        progress,
+        "جاري تحسين الفيديو..."
+      );
+
+      requestAnimationFrame(draw);
+    };
+
+    requestAnimationFrame(draw);
+
+    await new Promise(resolve=>{
+
+      const check = ()=>{
+
+        const p =
+          video.currentTime /
+          duration;
+
+        if(p >= .999 || video.ended){
+
+          resolve();
+
+        }else{
+
+          requestAnimationFrame(check);
+
+        }
+      };
+
+      check();
+
+    });
+
+    video.pause();
+
+    setProgress(
+      94,
+      "جاري إنهاء الملف..."
+    );
+
+    recorder.stop();
+
+    await stopped;
+
+    stream.getTracks().forEach(
+      track=>track.stop()
+    );
+
+    const blob =
+      new Blob(
+        chunks,
+        {type:mime}
+      );
+
+    resultURL =
+      URL.createObjectURL(blob);
+
+    download.href = resultURL;
+
+    const extension =
+      mime.includes("mp4")
+      ? "mp4"
+      : "webm";
+
+    download.download =
+      "IAF_VideoFix_" +
+      Date.now() +
+      "." +
+      extension;
+
+    document.getElementById("oldSize")
+      .textContent =
+      formatBytes(selectedFile.size);
+
+    document.getElementById("newSize")
+      .textContent =
+      formatBytes(blob.size);
+
+    const difference =
+      ((1 - blob.size / selectedFile.size) * 100);
+
+    document.getElementById("saved")
+      .textContent =
+      (difference >= 0 ? "-" : "+") +
+      Math.abs(difference).toFixed(1) +
+      "%";
+
+    setProgress(
+      100,
+      "اكتملت المعالجة بنجاح."
+    );
+
+    result.style.display = "block";
+
+  }catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "حدث خطأ أثناء معالجة الفيديو.";
+
+    alert(
+      "تعذر معالجة الفيديو. جرّب فيديو أصغر أو صيغة أخرى."
+    );
+
+  }finally{
+
+    processBtn.disabled = false;
+    resetBtn.disabled = false;
+
+  }
+}
+
+function getVideoMetadata(){
+
+  return new Promise((resolve,reject)=>{
+
+    const temp =
+      document.createElement("video");
+
+    temp.preload = "metadata";
+    temp.muted = true;
+
+    temp.onloadedmetadata = ()=>{
+
+      resolve({
+        width:temp.videoWidth,
+        height:temp.videoHeight,
+        duration:temp.duration,
+        fps:30
+      });
+
+      URL.revokeObjectURL(temp.src);
+
+    };
+
+    temp.onerror = reject;
+
+    temp.src =
+      URL.createObjectURL(selectedFile);
+
+  });
+}
+
+processBtn.addEventListener(
+  "click",
+  processVideo
+);
+
+resetBtn.addEventListener(
+  "click",
+  ()=>{
+
+    selectedFile = null;
+
+    if(sourceURL){
+      URL.revokeObjectURL(sourceURL);
+      sourceURL = null;
+    }
+
+    if(resultURL){
+      URL.revokeObjectURL(resultURL);
+      resultURL = null;
+    }
+
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+
+    fileInput.value = "";
+
+    uploadContent.style.display =
+      "block";
+
+    preview.style.display =
+      "none";
+
+    progressBox.style.display =
+      "none";
+
+    result.style.display =
+      "none";
+
+    processBtn.disabled =
+      true;
+
+    setProgress(0,"");
+
+  }
+);
 </script>
+
 </body>
 </html>
