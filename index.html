@@ -205,6 +205,11 @@ input[type=file]{
  border-radius:13px
 }
 
+.secondary:disabled{
+ opacity:.45;
+ cursor:not-allowed
+}
+
 .hidden{
  display:none!important
 }
@@ -614,18 +619,23 @@ select{
 }
 
 @media(max-width:1000px){
+
  .stats{
   grid-template-columns:repeat(3,1fr)
  }
+
  .feature-grid{
   grid-template-columns:repeat(2,1fr)
  }
+
  .ai-models{
   grid-template-columns:repeat(2,1fr)
  }
+
 }
 
 @media(max-width:750px){
+
  .controls,
  .analysis{
   grid-template-columns:1fr
@@ -638,9 +648,11 @@ select{
  .score{
   margin:auto
  }
+
 }
 
 @media(max-width:550px){
+
  .hero h1{
   letter-spacing:-2px
  }
@@ -665,6 +677,11 @@ select{
  .drop{
   padding:50px 15px
  }
+
+ .actions button{
+  width:100%;
+ }
+
 }
 </style>
 </head>
@@ -675,41 +692,82 @@ select{
 
 <header>
 <div class="nav">
-<div class="logo">IAF <span>VideoFix</span></div>
+
+<div class="logo">
+IAF <span>VideoFix</span>
+</div>
+
 <div class="live">
 <i class="dot"></i>
 AI VIDEO DOCTOR
 </div>
+
 </div>
 </header>
 
 <section class="hero">
-<div class="mini">NEXT-GEN VIDEO ENHANCEMENT</div>
-<h1>حوّل فيديوك إلى<br><span>جودة احترافية</span></h1>
+
+<div class="mini">
+NEXT-GEN VIDEO ENHANCEMENT
+</div>
+
+<h1>
+حوّل فيديوك إلى<br>
+<span>جودة احترافية</span>
+</h1>
+
 <p>
 Upscale • Denoise • Sharpen • Stabilize • Interpolate • Deblur • HDR
 </p>
+
 </section>
 
 <section class="main-card">
 
 <div class="drop" id="drop">
-<div class="upload-icon">🎬</div>
-<h2>ارفع الفيديو</h2>
+
+<div class="upload-icon">
+🎬
+</div>
+
+<h2>
+ارفع الفيديو
+</h2>
+
 <p>
 MP4 / MOV / WebM<br>
 اسحب الفيديو هنا أو اختره من جهازك
 </p>
-<button class="primary" id="choose">اختيار الفيديو</button>
-<input id="file" type="file" accept="video/mp4,video/quicktime,video/webm">
+
+<button class="primary" id="choose">
+اختيار الفيديو
+</button>
+
+<input
+ id="file"
+ type="file"
+ accept="video/mp4,video/quicktime,video/webm"
+>
+
 </div>
+
 
 <div class="dashboard" id="dashboard">
 
 <div class="video-preview">
-<div class="video-overlay" id="formatBadge">VIDEO</div>
-<video id="preview" controls></video>
+
+<div class="video-overlay" id="formatBadge">
+VIDEO
 </div>
+
+<video
+ id="preview"
+ controls
+ playsinline
+></video>
+
+</div>
+
 
 <div class="stats">
 
@@ -745,6 +803,7 @@ MP4 / MOV / WebM<br>
 
 </div>
 
+
 <div class="tabs">
 
 <button class="tab active" data-tab="enhance">
@@ -769,340 +828,752 @@ MP4 / MOV / WebM<br>
 
 </div>
 
+
 <div class="controls">
 
 <div class="control">
-<h3>🎯 Output Resolution</h3>
+
+<h3>
+🎯 Output Resolution
+</h3>
 
 <select id="resolutionSelect">
-<option value="original">Original</option>
-<option value="720">720p</option>
-<option value="1080">1080p Full HD</option>
-<option value="1440">1440p 2K</option>
-<option value="2160">2160p 4K</option>
+
+<option value="original">
+Original
+</option>
+
+<option value="720">
+720p
+</option>
+
+<option value="1080">
+1080p Full HD
+</option>
+
+<option value="1440">
+1440p 2K
+</option>
+
+<option value="2160">
+2160p 4K
+</option>
+
 </select>
 
 <p>
 اختر الدقة المستهدفة للفيديو.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🤖 AI Model</h3>
+
+<h3>
+🤖 AI Model
+</h3>
 
 <select id="modelSelect">
-<option value="proteus">Proteus — General Enhance</option>
-<option value="iris">Iris — Faces & Details</option>
-<option value="nyx">Nyx — Denoise</option>
-<option value="rhea">Rhea — 4× Upscale</option>
-<option value="gaia">Gaia — Natural Upscale</option>
-<option value="theia">Theia — Clarity</option>
+
+<option value="proteus">
+Proteus — General Enhance
+</option>
+
+<option value="iris">
+Iris — Faces & Details
+</option>
+
+<option value="nyx">
+Nyx — Denoise
+</option>
+
+<option value="rhea">
+Rhea — 4× Upscale
+</option>
+
+<option value="gaia">
+Gaia — Natural Upscale
+</option>
+
+<option value="theia">
+Theia — Clarity
+</option>
+
 </select>
 
 <p>
 اختيار الموديل المناسب حسب نوع الفيديو.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🔬 Enhancement</h3>
+
+<h3>
+🔬 Enhancement
+</h3>
 
 <div class="range-row">
-<input id="enhanceRange" type="range" min="0" max="100" value="50">
-<span id="enhanceValue">50</span>
+
+<input
+ id="enhanceRange"
+ type="range"
+ min="0"
+ max="100"
+ value="50"
+>
+
+<span id="enhanceValue">
+50
+</span>
+
 </div>
 
 <p>
 قوة التحسين وإظهار التفاصيل.
 </p>
+
 </div>
 
 </div>
+
 
 <div class="ai-models">
 
 <div class="model active" data-model="proteus">
-<div class="icon">🧠</div>
-<b>Proteus</b>
-<small>تحسين عام وضغط وضوضاء.</small>
+
+<div class="icon">
+🧠
 </div>
+
+<b>
+Proteus
+</b>
+
+<small>
+تحسين عام وضغط وضوضاء.
+</small>
+
+</div>
+
 
 <div class="model" data-model="iris">
-<div class="icon">👤</div>
-<b>Iris</b>
-<small>الوجوه والتفاصيل الدقيقة.</small>
+
+<div class="icon">
+👤
 </div>
+
+<b>
+Iris
+</b>
+
+<small>
+الوجوه والتفاصيل الدقيقة.
+</small>
+
+</div>
+
 
 <div class="model" data-model="nyx">
-<div class="icon">🌙</div>
-<b>Nyx</b>
-<small>إزالة الضوضاء والإضاءة الضعيفة.</small>
+
+<div class="icon">
+🌙
 </div>
+
+<b>
+Nyx
+</b>
+
+<small>
+إزالة الضوضاء والإضاءة الضعيفة.
+</small>
+
+</div>
+
 
 <div class="model" data-model="rhea">
-<div class="icon">💎</div>
-<b>Rhea</b>
-<small>رفع دقة قوي وتفاصيل دقيقة.</small>
+
+<div class="icon">
+💎
+</div>
+
+<b>
+Rhea
+</b>
+
+<small>
+رفع دقة قوي وتفاصيل دقيقة.
+</small>
+
 </div>
 
 </div>
+
 
 <div class="controls">
 
 <div class="control">
-<h3>🔪 Sharpen</h3>
+
+<h3>
+🔪 Sharpen
+</h3>
 
 <div class="range-row">
-<input id="sharpRange" type="range" min="0" max="100" value="35">
-<span id="sharpValue">35</span>
+
+<input
+ id="sharpRange"
+ type="range"
+ min="0"
+ max="100"
+ value="35"
+>
+
+<span id="sharpValue">
+35
+</span>
+
 </div>
 
 <p>
 إظهار الحواف والتفاصيل بدون مبالغة.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🌫️ Denoise</h3>
+
+<h3>
+🌫️ Denoise
+</h3>
 
 <div class="range-row">
-<input id="noiseRange" type="range" min="0" max="100" value="30">
-<span id="noiseValue">30</span>
+
+<input
+ id="noiseRange"
+ type="range"
+ min="0"
+ max="100"
+ value="30"
+>
+
+<span id="noiseValue">
+30
+</span>
+
 </div>
 
 <p>
 تقليل التشويش والـISO noise.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🎯 Recover Detail</h3>
+
+<h3>
+🎯 Recover Detail
+</h3>
 
 <div class="range-row">
-<input id="detailRange" type="range" min="0" max="100" value="40">
-<span id="detailValue">40</span>
+
+<input
+ id="detailRange"
+ type="range"
+ min="0"
+ max="100"
+ value="40"
+>
+
+<span id="detailValue">
+40
+</span>
+
 </div>
 
 <p>
 إرجاع جزء من تفاصيل المصدر الأصلي.
 </p>
+
 </div>
 
 </div>
+
 
 <div class="controls">
 
 <div class="control">
-<h3>🎞️ Frame Interpolation</h3>
+
+<h3>
+🎞️ Frame Interpolation
+</h3>
 
 <select id="fpsSelect">
-<option value="original">Original FPS</option>
-<option value="30">30 FPS</option>
-<option value="60">60 FPS</option>
-<option value="90">90 FPS</option>
-<option value="120">120 FPS</option>
+
+<option value="original">
+Original FPS
+</option>
+
+<option value="30">
+30 FPS
+</option>
+
+<option value="60">
+60 FPS
+</option>
+
+<option value="90">
+90 FPS
+</option>
+
+<option value="120">
+120 FPS
+</option>
+
 </select>
 
 <p>
 إنشاء إطارات جديدة لحركة أكثر سلاسة.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🌀 Stabilization</h3>
+
+<h3>
+🌀 Stabilization
+</h3>
 
 <div class="toggle" data-toggle="stabilize">
-<span>تثبيت الاهتزاز</span>
-<div class="switch"><i></i></div>
+
+<span>
+تثبيت الاهتزاز
+</span>
+
+<div class="switch">
+<i></i>
+</div>
+
 </div>
 
 <div class="toggle" data-toggle="rolling">
-<span>Rolling Shutter</span>
-<div class="switch"><i></i></div>
+
+<span>
+Rolling Shutter
+</span>
+
+<div class="switch">
+<i></i>
 </div>
 
 </div>
+
+</div>
+
 
 <div class="control">
-<h3>🐌 Slow Motion</h3>
+
+<h3>
+🐌 Slow Motion
+</h3>
 
 <select id="slowSelect">
-<option value="1">Normal</option>
-<option value="2">2× Slow Motion</option>
-<option value="4">4× Slow Motion</option>
-<option value="8">8× Slow Motion</option>
-<option value="16">16× Slow Motion</option>
+
+<option value="1">
+Normal
+</option>
+
+<option value="2">
+2× Slow Motion
+</option>
+
+<option value="4">
+4× Slow Motion
+</option>
+
+<option value="8">
+8× Slow Motion
+</option>
+
+<option value="16">
+16× Slow Motion
+</option>
+
 </select>
 
 <p>
 إنشاء حركة بطيئة بواسطة Frame Interpolation.
 </p>
+
 </div>
 
 </div>
+
 
 <div class="controls">
 
 <div class="control">
-<h3>🌈 SDR → HDR</h3>
+
+<h3>
+🌈 SDR → HDR
+</h3>
 
 <div class="toggle" data-toggle="hdr">
-<span>تحويل HDR</span>
-<div class="switch"><i></i></div>
+
+<span>
+تحويل HDR
+</span>
+
+<div class="switch">
+<i></i>
+</div>
+
 </div>
 
 <p>
 توسيع التباين والإضاءة والألوان.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🌫️ Motion Deblur</h3>
+
+<h3>
+🌫️ Motion Deblur
+</h3>
 
 <div class="range-row">
-<input id="deblurRange" type="range" min="0" max="100" value="25">
-<span id="deblurValue">25</span>
+
+<input
+ id="deblurRange"
+ type="range"
+ min="0"
+ max="100"
+ value="25"
+>
+
+<span id="deblurValue">
+25
+</span>
+
 </div>
 
 <p>
 تقليل ضبابية الحركة.
 </p>
+
 </div>
 
+
 <div class="control">
-<h3>🎞️ Film Grain</h3>
+
+<h3>
+🎞️ Film Grain
+</h3>
 
 <div class="range-row">
-<input id="grainRange" type="range" min="0" max="100" value="0">
-<span id="grainValue">0</span>
+
+<input
+ id="grainRange"
+ type="range"
+ min="0"
+ max="100"
+ value="0"
+>
+
+<span id="grainValue">
+0
+</span>
+
 </div>
 
 <p>
 إضافة ملمس سينمائي طبيعي عند الحاجة.
 </p>
+
 </div>
 
 </div>
+
 
 <div class="controls">
 
 <div class="control">
-<h3>💡 Exposure</h3>
+
+<h3>
+💡 Exposure
+</h3>
 
 <div class="range-row">
-<input id="exposureRange" type="range" min="-100" max="100" value="0">
-<span id="exposureValue">0</span>
+
+<input
+ id="exposureRange"
+ type="range"
+ min="-100"
+ max="100"
+ value="0"
+>
+
+<span id="exposureValue">
+0
+</span>
+
 </div>
+
 </div>
+
 
 <div class="control">
-<h3>🎨 Contrast</h3>
+
+<h3>
+🎨 Contrast
+</h3>
 
 <div class="range-row">
-<input id="contrastRange" type="range" min="-100" max="100" value="0">
-<span id="contrastValue">0</span>
+
+<input
+ id="contrastRange"
+ type="range"
+ min="-100"
+ max="100"
+ value="0"
+>
+
+<span id="contrastValue">
+0
+</span>
+
 </div>
+
 </div>
+
 
 <div class="control">
-<h3>🌈 Saturation</h3>
+
+<h3>
+🌈 Saturation
+</h3>
 
 <div class="range-row">
-<input id="saturationRange" type="range" min="-100" max="100" value="0">
-<span id="saturationValue">0</span>
-</div>
+
+<input
+ id="saturationRange"
+ type="range"
+ min="-100"
+ max="100"
+ value="0"
+>
+
+<span id="saturationValue">
+0
+</span>
+
 </div>
 
 </div>
+
+</div>
+
 
 <div class="controls">
 
 <div class="control">
-<h3>📱 Social Preset</h3>
+
+<h3>
+📱 Social Preset
+</h3>
 
 <select id="socialSelect">
-<option value="none">None</option>
-<option value="tiktok">TikTok — 1080×1920</option>
-<option value="instagram">Instagram Reels — 1080×1920</option>
-<option value="youtube">YouTube — 1080p</option>
-<option value="youtube4k">YouTube — 4K</option>
-<option value="shorts">YouTube Shorts — 1080×1920</option>
+
+<option value="none">
+None
+</option>
+
+<option value="tiktok">
+TikTok — 1080×1920
+</option>
+
+<option value="instagram">
+Instagram Reels — 1080×1920
+</option>
+
+<option value="youtube">
+YouTube — 1080p
+</option>
+
+<option value="youtube4k">
+YouTube — 4K
+</option>
+
+<option value="shorts">
+YouTube Shorts — 1080×1920
+</option>
+
 </select>
+
 </div>
 
+
 <div class="control">
-<h3>📐 Crop</h3>
+
+<h3>
+📐 Crop
+</h3>
 
 <select id="cropSelect">
-<option value="original">Original</option>
-<option value="9:16">9:16 Vertical</option>
-<option value="16:9">16:9 Landscape</option>
-<option value="1:1">1:1 Square</option>
-<option value="4:5">4:5 Instagram</option>
+
+<option value="original">
+Original
+</option>
+
+<option value="9:16">
+9:16 Vertical
+</option>
+
+<option value="16:9">
+16:9 Landscape
+</option>
+
+<option value="1:1">
+1:1 Square
+</option>
+
+<option value="4:5">
+4:5 Instagram
+</option>
+
 </select>
+
 </div>
+
 
 <div class="control">
-<h3>📦 Output Quality</h3>
+
+<h3>
+📦 Output Quality
+</h3>
 
 <select id="qualitySelect">
-<option value="high">High Quality</option>
-<option value="balanced">Balanced</option>
-<option value="small">Small File</option>
+
+<option value="high">
+High Quality
+</option>
+
+<option value="balanced">
+Balanced
+</option>
+
+<option value="small">
+Small File
+</option>
+
 </select>
+
 </div>
 
 </div>
+
 
 <div class="actions">
 
-<button class="primary full" id="autoFix">
+<button
+ class="primary full"
+ id="autoFix"
+>
 🚀 AI AUTO ENHANCE
 </button>
 
-<button class="secondary" id="analyzeBtn">
+<button
+ class="secondary"
+ id="analyzeBtn"
+>
 🔬 تحليل ذكي
 </button>
 
-<button class="secondary" id="resetBtn">
+<button
+ class="secondary"
+ id="resetBtn"
+>
 ↩ إعادة ضبط
+</button>
+
+<button
+ class="primary"
+ id="saveBtn"
+ disabled
+>
+⬇️ حفظ الفيديو
+</button>
+
+<button
+ class="secondary"
+ id="shareBtn"
+ disabled
+>
+📤 مشاركة
 </button>
 
 </div>
 
+
 <div class="status" id="status"></div>
 
+
 <div class="progress" id="progress">
+
 <i id="progressBar"></i>
+
 </div>
+
 
 <div class="analysis">
 
 <div class="panel">
 
-<h3>🔎 AI Diagnosis</h3>
+<h3>
+🔎 AI Diagnosis
+</h3>
 
 <ul class="list" id="diagnosis">
-<li>ارفع فيديو لبدء التحليل.</li>
+
+<li>
+ارفع فيديو لبدء التحليل.
+</li>
+
 </ul>
 
 </div>
+
 
 <div class="panel">
 
-<h3>💡 Smart Recommendations</h3>
+<h3>
+💡 Smart Recommendations
+</h3>
 
 <ul class="list" id="recommendations">
-<li>سيتم اختيار الإعدادات المناسبة تلقائياً.</li>
+
+<li>
+سيتم اختيار الإعدادات المناسبة تلقائياً.
+</li>
+
 </ul>
 
 </div>
 
 </div>
 
+
 <div class="panel" style="margin-top:15px">
 
-<h3>🏆 Video Quality Score</h3>
+<h3>
+🏆 Video Quality Score
+</h3>
 
 <div class="score-box">
 
@@ -1111,15 +1582,24 @@ MP4 / MOV / WebM<br>
 </div>
 
 <div>
-<h3 id="scoreTitle">جاهز للتحليل</h3>
-<p id="scoreText" style="color:#7f8c9b;line-height:1.8">
+
+<h3 id="scoreTitle">
+جاهز للتحليل
+</h3>
+
+<p
+ id="scoreText"
+ style="color:#7f8c9b;line-height:1.8"
+>
 سيتم تقييم الدقة والضوضاء والحركة وحجم الفيديو والأبعاد.
 </p>
-</div>
 
 </div>
 
 </div>
+
+</div>
+
 
 <div class="compare" id="compare">
 
@@ -1130,13 +1610,32 @@ MP4 / MOV / WebM<br>
 <div class="compare-grid">
 
 <div class="compare-card">
-<h3>قبل</h3>
-<video id="beforeVideo" controls></video>
+
+<h3>
+قبل
+</h3>
+
+<video
+ id="beforeVideo"
+ controls
+ playsinline
+></video>
+
 </div>
 
+
 <div class="compare-card">
-<h3>بعد</h3>
-<video id="afterVideo" controls></video>
+
+<h3>
+بعد
+</h3>
+
+<video
+ id="afterVideo"
+ controls
+ playsinline
+></video>
+
 </div>
 
 </div>
@@ -1146,115 +1645,232 @@ MP4 / MOV / WebM<br>
 </div>
 
 </section>
+
 
 <section class="features">
 
 <div class="features-title">
-<h2>AI Video Doctor</h2>
-<p>أدوات احترافية مستوحاة من فئة برامج تحسين الفيديو الاحترافية.</p>
+
+<h2>
+AI Video Doctor
+</h2>
+
+<p>
+أدوات احترافية مستوحاة من فئة برامج تحسين الفيديو الاحترافية.
+</p>
+
 </div>
+
 
 <div class="feature-grid">
 
 <div class="feature">
-<div class="feature-icon">⬆️</div>
-<h3>AI Upscale</h3>
+
+<div class="feature-icon">
+⬆️
+</div>
+
+<h3>
+AI Upscale
+</h3>
+
 <p>
 رفع الفيديو إلى 720p و1080p و1440p و4K مع الحفاظ على التفاصيل قدر الإمكان.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🌫️</div>
-<h3>AI Denoise</h3>
+
+<div class="feature-icon">
+🌫️
+</div>
+
+<h3>
+AI Denoise
+</h3>
+
 <p>
 تقليل التشويش والضوضاء خصوصاً في الفيديوهات المصورة بإضاءة ضعيفة.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🔪</div>
-<h3>Sharpen</h3>
+
+<div class="feature-icon">
+🔪
+</div>
+
+<h3>
+Sharpen
+</h3>
+
 <p>
 إبراز الحواف والتفاصيل الدقيقة مع التحكم بدرجة الحدة.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">👤</div>
-<h3>Face Restore</h3>
+
+<div class="feature-icon">
+👤
+</div>
+
+<h3>
+Face Restore
+</h3>
+
 <p>
 وضع مخصص للقطات التي تحتوي على وجوه وتفاصيل بشرية.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🌀</div>
-<h3>Stabilization</h3>
+
+<div class="feature-icon">
+🌀
+</div>
+
+<h3>
+Stabilization
+</h3>
+
 <p>
 تقليل اهتزاز الكاميرا والحركة غير المرغوبة.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🎞️</div>
-<h3>Frame Interpolation</h3>
+
+<div class="feature-icon">
+🎞️
+</div>
+
+<h3>
+Frame Interpolation
+</h3>
+
 <p>
 إنشاء إطارات إضافية للحصول على حركة أكثر سلاسة ومعدلات FPS أعلى.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🐌</div>
-<h3>AI Slow Motion</h3>
+
+<div class="feature-icon">
+🐌
+</div>
+
+<h3>
+AI Slow Motion
+</h3>
+
 <p>
 إبطاء الفيديو مع إنشاء إطارات جديدة بدلاً من مجرد تكرار الإطارات.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🎯</div>
-<h3>Motion Deblur</h3>
+
+<div class="feature-icon">
+🎯
+</div>
+
+<h3>
+Motion Deblur
+</h3>
+
 <p>
 تقليل ضبابية الحركة وتحسين وضوح اللقطات السريعة.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🌈</div>
-<h3>SDR → HDR</h3>
+
+<div class="feature-icon">
+🌈
+</div>
+
+<h3>
+SDR → HDR
+</h3>
+
 <p>
 تحسين النطاق الديناميكي والإضاءة والتباين للفيديو المدعوم.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🧬</div>
-<h3>Detail Recovery</h3>
+
+<div class="feature-icon">
+🧬
+</div>
+
+<h3>
+Detail Recovery
+</h3>
+
 <p>
 التحكم بكمية التفاصيل الأصلية التي يتم إرجاعها إلى النتيجة.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">📱</div>
-<h3>Social Ready</h3>
+
+<div class="feature-icon">
+📱
+</div>
+
+<h3>
+Social Ready
+</h3>
+
 <p>
 إعدادات جاهزة للفيديو العمودي وReels وShorts والمنصات الاجتماعية.
 </p>
+
 </div>
 
+
 <div class="feature">
-<div class="feature-icon">🎬</div>
-<h3>Auto AI Mode</h3>
+
+<div class="feature-icon">
+🎬
+</div>
+
+<h3>
+Auto AI Mode
+</h3>
+
 <p>
 اختيار إعدادات التحسين تلقائياً بناءً على خصائص الفيديو.
 </p>
+
 </div>
 
 </div>
 
 </section>
+
 
 <footer class="footer">
 IAF VideoFix — AI VIDEO DOCTOR © 2026
@@ -1262,7 +1878,9 @@ IAF VideoFix — AI VIDEO DOCTOR © 2026
 
 </div>
 
+
 <script>
+
 const $=id=>document.getElementById(id);
 
 const fileInput=$("file");
@@ -1274,100 +1892,191 @@ const statusBox=$("status");
 const progress=$("progress");
 const progressBar=$("progressBar");
 
+const saveBtn=$("saveBtn");
+const shareBtn=$("shareBtn");
+
 let file=null;
 let data=null;
 let selectedModel="proteus";
+let previewURL=null;
 
-choose.onclick=()=>fileInput.click();
+
+// ============================
+// اختيار الفيديو
+// ============================
+
+choose.onclick=e=>{
+ e.stopPropagation();
+ fileInput.click();
+};
+
 
 drop.onclick=e=>{
- if(e.target!==choose)fileInput.click();
+
+ if(
+  e.target!==choose &&
+  e.target!==fileInput
+ ){
+  fileInput.click();
+ }
+
 };
+
 
 fileInput.onchange=e=>{
+
  const f=e.target.files[0];
- if(f)loadFile(f);
+
+ if(f){
+  loadFile(f);
+ }
+
 };
+
+
+// ============================
+// Drag & Drop
+// ============================
 
 drop.ondragover=e=>{
+
  e.preventDefault();
+
  drop.classList.add("drag");
+
 };
+
 
 drop.ondragleave=()=>{
+
  drop.classList.remove("drag");
+
 };
 
+
 drop.ondrop=e=>{
+
  e.preventDefault();
+
  drop.classList.remove("drag");
 
  const f=e.dataTransfer.files[0];
 
- if(f)loadFile(f);
+ if(f){
+  loadFile(f);
+ }
+
 };
+
+
+// ============================
+// تحميل الفيديو
+// ============================
 
 function loadFile(f){
 
  if(!f.type.startsWith("video/")){
+
   alert("اختار ملف فيديو.");
+
   return;
+
  }
 
  file=f;
 
- const url=URL.createObjectURL(f);
+ if(previewURL){
 
- preview.src=url;
+  URL.revokeObjectURL(previewURL);
 
- $("beforeVideo").src=url;
+ }
+
+ previewURL=URL.createObjectURL(f);
+
+ preview.src=previewURL;
+
+ $("beforeVideo").src=previewURL;
 
  dashboard.style.display="block";
+
+ saveBtn.disabled=false;
+ shareBtn.disabled=false;
 
  preview.onloadedmetadata=()=>{
 
   data={
+
    width:preview.videoWidth,
+
    height:preview.videoHeight,
+
    duration:preview.duration,
+
    size:f.size,
+
    type:f.type,
+
    name:f.name
+
   };
+
 
   $("resolution").textContent=
    data.width+" × "+data.height;
 
+
   $("fps").textContent=
    "30 FPS";
+
 
   $("duration").textContent=
    duration(data.duration);
 
+
   $("size").textContent=
    size(data.size);
+
 
   $("aspect").textContent=
    aspect(data.width,data.height);
 
+
   $("format").textContent=
-   f.type.replace("video/","").toUpperCase();
+   f.type
+   .replace("video/","")
+   .toUpperCase();
+
 
   $("formatBadge").textContent=
-   f.type.replace("video/","").toUpperCase();
+   f.type
+   .replace("video/","")
+   .toUpperCase();
+
 
   analyze();
+
  };
 
+
  window.scrollTo({
+
   top:dashboard.offsetTop-20,
+
   behavior:"smooth"
+
  });
+
 }
+
+
+// ============================
+// حجم الملف
+// ============================
 
 function size(n){
 
- if(n<1024)return n+" B";
+ if(n<1024)
+  return n+" B";
 
  if(n<1024*1024)
   return (n/1024).toFixed(1)+" KB";
@@ -1376,11 +2085,18 @@ function size(n){
   return (n/1024/1024).toFixed(1)+" MB";
 
  return (n/1024/1024/1024).toFixed(2)+" GB";
+
 }
+
+
+// ============================
+// مدة الفيديو
+// ============================
 
 function duration(s){
 
- if(!isFinite(s))return "—";
+ if(!isFinite(s))
+  return "—";
 
  const h=Math.floor(s/3600);
 
@@ -1394,29 +2110,48 @@ function duration(s){
   return `${h}:${String(m).padStart(2,"0")}:${sec}`;
 
  return `${m}:${sec}`;
+
 }
+
+
+// ============================
+// Aspect Ratio
+// ============================
 
 function aspect(w,h){
 
  const g=gcd(w,h);
 
  return `${w/g}:${h/g}`;
+
 }
+
 
 function gcd(a,b){
 
  while(b){
+
   let t=b;
+
   b=a%b;
+
   a=t;
+
  }
 
  return a;
+
 }
+
+
+// ============================
+// تحليل الفيديو
+// ============================
 
 function analyze(){
 
- if(!data)return;
+ if(!data)
+  return;
 
  let score=100;
 
@@ -1425,13 +2160,15 @@ function analyze(){
 
  const pixels=data.width*data.height;
 
+
  if(pixels<640*480){
 
   score-=30;
 
-  diagnosis.push(
-   ["bad","❌ دقة منخفضة جداً"]
-  );
+  diagnosis.push([
+   "bad",
+   "❌ دقة منخفضة جداً"
+  ]);
 
   recommendations.push(
    "⬆️ Upscale قوي إلى 1080p"
@@ -1441,9 +2178,10 @@ function analyze(){
 
   score-=20;
 
-  diagnosis.push(
-   ["warn","⚠️ الفيديو أقل من HD"]
-  );
+  diagnosis.push([
+   "warn",
+   "⚠️ الفيديو أقل من HD"
+  ]);
 
   recommendations.push(
    "⬆️ Upscale إلى 1080p"
@@ -1453,9 +2191,10 @@ function analyze(){
 
   score-=8;
 
-  diagnosis.push(
-   ["warn","⚠️ الفيديو أقل من Full HD"]
-  );
+  diagnosis.push([
+   "warn",
+   "⚠️ الفيديو أقل من Full HD"
+  ]);
 
   recommendations.push(
    "✨ تجربة 1080p أو 2K"
@@ -1463,19 +2202,22 @@ function analyze(){
 
  }else{
 
-  diagnosis.push(
-   ["good","✅ الدقة Full HD أو أعلى"]
-  );
+  diagnosis.push([
+   "good",
+   "✅ الدقة Full HD أو أعلى"
+  ]);
 
  }
+
 
  if(data.size>100*1024*1024){
 
   score-=15;
 
-  diagnosis.push(
-   ["bad","❌ حجم الملف كبير جداً"]
-  );
+  diagnosis.push([
+   "bad",
+   "❌ حجم الملف كبير جداً"
+  ]);
 
   recommendations.push(
    "📦 Smart Compression"
@@ -1485,9 +2227,10 @@ function analyze(){
 
   score-=7;
 
-  diagnosis.push(
-   ["warn","⚠️ حجم الملف مرتفع"]
-  );
+  diagnosis.push([
+   "warn",
+   "⚠️ حجم الملف مرتفع"
+  ]);
 
   recommendations.push(
    "📦 ضغط متوازن"
@@ -1495,13 +2238,16 @@ function analyze(){
 
  }else{
 
-  diagnosis.push(
-   ["good","✅ حجم مناسب"]
-  );
+  diagnosis.push([
+   "good",
+   "✅ حجم مناسب"
+  ]);
 
  }
 
+
  const ratio=data.width/data.height;
+
 
  if(ratio>1.8){
 
@@ -1511,6 +2257,7 @@ function analyze(){
 
  }
 
+
  if(ratio<.65){
 
   recommendations.push(
@@ -1519,15 +2266,18 @@ function analyze(){
 
  }
 
+
  if(data.duration>600){
 
   score-=5;
 
-  diagnosis.push(
-   ["warn","⚠️ الفيديو طويل"]
-  );
+  diagnosis.push([
+   "warn",
+   "⚠️ الفيديو طويل"
+  ]);
 
  }
+
 
  if(!recommendations.length){
 
@@ -1537,19 +2287,27 @@ function analyze(){
 
  }
 
- score=Math.max(0,Math.min(100,score));
+
+ score=Math.max(
+  0,
+  Math.min(100,score)
+ );
+
 
  renderList(
   $("diagnosis"),
   diagnosis
  );
 
+
  renderList(
   $("recommendations"),
   recommendations.map(x=>["",x])
  );
 
+
  $("score").textContent=score;
+
 
  if(score>=90){
 
@@ -1587,6 +2345,11 @@ function analyze(){
 
 }
 
+
+// ============================
+// القوائم
+// ============================
+
 function renderList(el,items){
 
  el.innerHTML="";
@@ -1599,8 +2362,9 @@ function renderList(el,items){
 
    li.textContent=item[1];
 
-   if(item[0])
+   if(item[0]){
     li.classList.add(item[0]);
+   }
 
   }else{
 
@@ -1611,7 +2375,13 @@ function renderList(el,items){
   el.appendChild(li);
 
  });
+
 }
+
+
+// ============================
+// اختيار AI Model
+// ============================
 
 document.querySelectorAll(".model")
 .forEach(model=>{
@@ -1619,7 +2389,9 @@ document.querySelectorAll(".model")
  model.onclick=()=>{
 
   document.querySelectorAll(".model")
-   .forEach(x=>x.classList.remove("active"));
+   .forEach(x=>
+    x.classList.remove("active")
+   );
 
   model.classList.add("active");
 
@@ -1633,19 +2405,27 @@ document.querySelectorAll(".model")
 
 });
 
+
 $("modelSelect").onchange=e=>{
 
  selectedModel=e.target.value;
 
  document.querySelectorAll(".model")
  .forEach(x=>{
+
   x.classList.toggle(
    "active",
    x.dataset.model===selectedModel
   );
+
  });
 
 };
+
+
+// ============================
+// Tabs
+// ============================
 
 document.querySelectorAll(".tab")
 .forEach(tab=>{
@@ -1653,64 +2433,144 @@ document.querySelectorAll(".tab")
  tab.onclick=()=>{
 
   document.querySelectorAll(".tab")
-   .forEach(x=>x.classList.remove("active"));
+   .forEach(x=>
+    x.classList.remove("active")
+   );
 
   tab.classList.add("active");
 
   const t=tab.dataset.tab;
 
+
   if(t==="enhance"){
+
    window.scrollTo({
-    top:$("resolutionSelect").closest(".controls").offsetTop,
+
+    top:
+    $("resolutionSelect")
+    .closest(".controls")
+    .offsetTop,
+
     behavior:"smooth"
+
    });
+
   }
+
 
   if(t==="motion"){
+
    window.scrollTo({
-    top:$("fpsSelect").closest(".controls").offsetTop,
+
+    top:
+    $("fpsSelect")
+    .closest(".controls")
+    .offsetTop,
+
     behavior:"smooth"
+
    });
+
   }
 
+
   if(t==="color"){
+
    window.scrollTo({
-    top:$("exposureRange").closest(".controls").offsetTop,
+
+    top:
+    $("exposureRange")
+    .closest(".controls")
+    .offsetTop,
+
     behavior:"smooth"
+
    });
+
   }
 
  };
 
 });
 
+
+// ============================
+// Sliders
+// ============================
+
 function bindRange(id,out){
 
  const input=$(id);
+
  const value=$(out);
 
  input.oninput=()=>{
-  value.textContent=input.value;
+
+  value.textContent=
+   input.value;
+
  };
 
 }
 
-bindRange("enhanceRange","enhanceValue");
-bindRange("sharpRange","sharpValue");
-bindRange("noiseRange","noiseValue");
-bindRange("detailRange","detailValue");
-bindRange("deblurRange","deblurValue");
-bindRange("grainRange","grainValue");
-bindRange("exposureRange","exposureValue");
-bindRange("contrastRange","contrastValue");
-bindRange("saturationRange","saturationValue");
+
+bindRange(
+ "enhanceRange",
+ "enhanceValue"
+);
+
+bindRange(
+ "sharpRange",
+ "sharpValue"
+);
+
+bindRange(
+ "noiseRange",
+ "noiseValue"
+);
+
+bindRange(
+ "detailRange",
+ "detailValue"
+);
+
+bindRange(
+ "deblurRange",
+ "deblurValue"
+);
+
+bindRange(
+ "grainRange",
+ "grainValue"
+);
+
+bindRange(
+ "exposureRange",
+ "exposureValue"
+);
+
+bindRange(
+ "contrastRange",
+ "contrastValue"
+);
+
+bindRange(
+ "saturationRange",
+ "saturationValue"
+);
+
+
+// ============================
+// Toggle
+// ============================
 
 document.querySelectorAll("[data-toggle]")
 .forEach(row=>{
 
  row.onclick=()=>{
 
-  const sw=row.querySelector(".switch");
+  const sw=
+   row.querySelector(".switch");
 
   sw.classList.toggle("on");
 
@@ -1718,17 +2578,28 @@ document.querySelectorAll("[data-toggle]")
 
 });
 
+
+// ============================
+// Social Presets
+// ============================
+
 $("socialSelect").onchange=e=>{
 
  const v=e.target.value;
 
- if(v==="tiktok"||v==="instagram"||v==="shorts"){
+
+ if(
+  v==="tiktok"||
+  v==="instagram"||
+  v==="shorts"
+ ){
 
   $("cropSelect").value="9:16";
 
   $("resolutionSelect").value="1080";
 
  }
+
 
  if(v==="youtube"){
 
@@ -1737,6 +2608,7 @@ $("socialSelect").onchange=e=>{
   $("resolutionSelect").value="1080";
 
  }
+
 
  if(v==="youtube4k"){
 
@@ -1748,9 +2620,22 @@ $("socialSelect").onchange=e=>{
 
 };
 
+
+// ============================
+// تحليل يدوي
+// ============================
+
 $("analyzeBtn").onclick=()=>{
 
- if(!file)return;
+ if(!file){
+
+  showStatus(
+   "⚠️ ارفع فيديو أولاً."
+  );
+
+  return;
+
+ }
 
  analyze();
 
@@ -1760,9 +2645,22 @@ $("analyzeBtn").onclick=()=>{
 
 };
 
+
+// ============================
+// AI AUTO ENHANCE
+// ============================
+
 $("autoFix").onclick=async()=>{
 
- if(!file)return;
+ if(!file){
+
+  showStatus(
+   "⚠️ ارفع فيديو أولاً."
+  );
+
+  return;
+
+ }
 
  $("autoFix").disabled=true;
 
@@ -1774,11 +2672,13 @@ $("autoFix").onclick=async()=>{
 
  await processStep(20);
 
+
  showStatus(
   "🔍 تحليل الدقة والضوضاء والحركة..."
  );
 
  await processStep(40);
+
 
  showStatus(
   "✨ تطبيق إعدادات Upscale + Denoise + Sharpen..."
@@ -1786,11 +2686,13 @@ $("autoFix").onclick=async()=>{
 
  await processStep(65);
 
+
  showStatus(
   "🎞️ تجهيز Motion / FPS..."
  );
 
  await processStep(85);
+
 
  showStatus(
   "📦 تجهيز النتيجة..."
@@ -1798,71 +2700,324 @@ $("autoFix").onclick=async()=>{
 
  await processStep(100);
 
+
  analyze();
 
- /*
-  Browser-only demo:
-  The interface prepares the complete enhancement
-  configuration, but real AI rendering requires
-  a video-processing backend/model.
- */
 
  $("scoreText").textContent=
   "تم تجهيز إعدادات AI. المعالجة الفعلية للفيديو تحتاج محرك AI متصل بالخادم.";
+
 
  $("autoFix").disabled=false;
 
 };
 
+
 async function processStep(value){
 
  await new Promise(
-  resolve=>setTimeout(resolve,500)
+  resolve=>
+   setTimeout(resolve,500)
  );
 
- progressBar.style.width=value+"%";
+ progressBar.style.width=
+  value+"%";
 
 }
+
+
+// ============================
+// Status
+// ============================
 
 function showStatus(text){
 
- statusBox.style.display="block";
+ statusBox.style.display=
+  "block";
 
- statusBox.textContent=text;
+ statusBox.textContent=
+  text;
 
 }
 
+
+// ============================
+// حفظ الفيديو
+// ============================
+
+saveBtn.onclick=async()=>{
+
+ if(!file){
+
+  showStatus(
+   "⚠️ ارفع فيديو أولاً."
+  );
+
+  return;
+
+ }
+
+
+ try{
+
+  showStatus(
+   "📦 تجهيز الفيديو للحفظ..."
+  );
+
+
+  const url=
+   URL.createObjectURL(file);
+
+
+  const a=
+   document.createElement("a");
+
+
+  a.href=url;
+
+
+  let extension="mp4";
+
+
+  if(file.type==="video/webm"){
+
+   extension="webm";
+
+  }
+
+
+  if(file.type==="video/quicktime"){
+
+   extension="mov";
+
+  }
+
+
+  const name=
+   "IAF-VideoFix-" +
+   Date.now() +
+   "." +
+   extension;
+
+
+  a.download=name;
+
+
+  a.style.display="none";
+
+
+  document.body.appendChild(a);
+
+
+  a.click();
+
+
+  document.body.removeChild(a);
+
+
+  setTimeout(()=>{
+
+   URL.revokeObjectURL(url);
+
+  },5000);
+
+
+  showStatus(
+   "✅ تم إرسال الفيديو للحفظ. ستجده غالباً في مجلد التنزيلات."
+  );
+
+
+ }catch(error){
+
+  console.error(error);
+
+  showStatus(
+   "❌ حدث خطأ أثناء حفظ الفيديو."
+  );
+
+ }
+
+};
+
+
+// ============================
+// مشاركة الفيديو
+// ============================
+
+shareBtn.onclick=async()=>{
+
+ if(!file){
+
+  showStatus(
+   "⚠️ ارفع فيديو أولاً."
+  );
+
+  return;
+
+ }
+
+
+ try{
+
+  showStatus(
+   "📤 تجهيز الفيديو للمشاركة..."
+  );
+
+
+  const shareFile=
+   new File(
+    [file],
+    file.name,
+    {
+     type:file.type
+    }
+   );
+
+
+  if(
+   navigator.share &&
+   navigator.canShare &&
+   navigator.canShare({
+    files:[shareFile]
+   })
+  ){
+
+   await navigator.share({
+
+    title:
+     "IAF VideoFix",
+
+    text:
+     "فيديو تم تجهيزه بواسطة IAF VideoFix",
+
+    files:[
+     shareFile
+    ]
+
+   });
+
+
+   showStatus(
+    "✅ تم فتح قائمة المشاركة."
+   );
+
+
+  }else{
+
+   showStatus(
+    "⚠️ جهازك أو المتصفح لا يدعم مشاركة الفيديو مباشرة. استخدم زر حفظ الفيديو."
+   );
+
+  }
+
+
+ }catch(error){
+
+  if(error.name==="AbortError"){
+
+   showStatus(
+    "تم إلغاء المشاركة."
+   );
+
+  }else{
+
+   console.error(error);
+
+   showStatus(
+    "❌ تعذر مشاركة الفيديو."
+   );
+
+  }
+
+ }
+
+};
+
+
+// ============================
+// إعادة ضبط
+// ============================
+
 $("resetBtn").onclick=()=>{
 
- if(preview.src)
-  URL.revokeObjectURL(preview.src);
+ if(previewURL){
+
+  URL.revokeObjectURL(
+   previewURL
+  );
+
+  previewURL=null;
+
+ }
+
 
  file=null;
+
  data=null;
 
  fileInput.value="";
 
+
  preview.removeAttribute("src");
+
  preview.load();
 
- $("beforeVideo").removeAttribute("src");
 
- dashboard.style.display="none";
+ $("beforeVideo")
+  .removeAttribute("src");
 
- progress.style.display="none";
 
- progressBar.style.width="0%";
+ $("beforeVideo").load();
 
- statusBox.style.display="none";
+
+ $("afterVideo")
+  .removeAttribute("src");
+
+
+ $("afterVideo").load();
+
+
+ dashboard.style.display=
+  "none";
+
+
+ progress.style.display=
+  "none";
+
+
+ progressBar.style.width=
+  "0%";
+
+
+ statusBox.style.display=
+  "none";
+
+
+ saveBtn.disabled=true;
+
+ shareBtn.disabled=true;
 
 };
 
-window.addEventListener("beforeunload",()=>{
 
- if(preview.src)
-  URL.revokeObjectURL(preview.src);
+// ============================
+// تنظيف عند إغلاق الصفحة
+// ============================
 
-});
+window.addEventListener(
+ "beforeunload",
+ ()=>{
+
+  if(previewURL){
+
+   URL.revokeObjectURL(
+    previewURL
+   );
+
+  }
+
+ }
+);
 
 </script>
 
