@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#07090d">
+<title>IAF VideoFix — AI VIDEO DOCTOR</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Arial,Tahoma,sans-serif;background:#07090d;color:#fff;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{width:min(1180px,94%);margin:auto}
+header{padding:22px 0}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:25px;font-weight:900}
+.logo span{color:#00e5ff}
+.badge{padding:8px 14px;border:1px solid #202a35;border-radius:999px;color:#8e9aaa;font-size:12px}
+.hero{text-align:center;padding:65px 0 35px}
+.hero h1{font-size:clamp(36px,7vw,75px);line-height:1;margin-bottom:20px}
+.hero h1 span{color:#00e5ff}
+.hero p{color:#9aa6b5;max-width:680px;margin:auto;font-size:17px;line-height:1.8}
+.card{background:#0d1118;border:1px solid #202936;border-radius:26px;padding:25px;box-shadow:0 20px 70px #0008}
+.drop{border:2px dashed #263646;border-radius:22px;padding:65px 20px;text-align:center;transition:.25s}
+.drop:hover,.drop.drag{border-color:#00e5ff;background:#08151a}
+.upload-icon{font-size:60px;margin-bottom:18px}
+.drop h2{font-size:24px;margin-bottom:10px}
+.drop p{color:#8996a5;margin-bottom:22px}
+.primary{border:0;border-radius:13px;background:#00d9ff;color:#001016;padding:14px 25px;font-weight:900}
+.secondary{border:1px solid #293544;background:#111821;color:#fff;border-radius:13px;padding:13px 20px}
+#file{display:none}
+.info{display:none;margin-top:22px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{background:#080c11;border:1px solid #1d2732;border-radius:16px;padding:17px}
+.stat small{display:block;color:#738091;margin-bottom:8px}
+.stat b{font-size:18px}
+.status{margin-top:18px;padding:15px;border-radius:14px;background:#09151a;color:#00e5ff;display:none}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.progress{height:8px;background:#18212c;border-radius:99px;overflow:hidden;margin-top:18px;display:none}
+.progress i{display:block;height:100%;width:0;background:#00e5ff;transition:.3s}
+.result{display:none;margin-top:25px}
+.video-wrap{background:#000;border-radius:18px;overflow:hidden}
+video{width:100%;display:block;max-height:600px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.panel{background:#080c11;border:1px solid #1d2732;border-radius:18px;padding:20px}
+.panel h3{margin-bottom:14px}
+.list{list-style:none}
+.list li{padding:10px 0;border-bottom:1px solid #17202a;color:#aab4c0}
+.list li:last-child{border:0}
+.score{font-size:48px;font-weight:900;color:#00e5ff}
+.features{padding:70px 0}
+.features h2{text-align:center;margin-bottom:25px;font-size:34px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.feature{background:#0d1118;border:1px solid #1d2732;border-radius:20px;padding:25px}
+.feature div{font-size:35px;margin-bottom:15px}
+.feature p{color:#84909f;line-height:1.7;margin-top:8px}
+footer{padding:40px 0;text-align:center;color:#596573}
+@media(max-width:800px){
+.grid{grid-template-columns:1fr 1fr}
+.features-grid{grid-template-columns:1fr}
+.result-grid{grid-template-columns:1fr}
+.hero{padding-top:40px}
+}
+@media(max-width:480px){
+.grid{grid-template-columns:1fr}
+.drop{padding:45px 15px}
+.card{padding:15px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<header>
+<div class="nav">
+<div class="logo">IAF <span>VideoFix</span></div>
+<div class="badge">AI VIDEO DOCTOR</div>
+</div>
+</header>
+
+<main>
+
+<section class="hero">
+<h1>خلّي فيديوك <span>أفضل</span></h1>
+<p>
+حلّل الفيديو، اكتشف المشاكل، واحصل على توصيات ذكية لتحسين الجودة
+والإضاءة والوضوح والحجم قبل نشره على منصات التواصل.
+</p>
+</section>
+
+<section class="card">
+
+<div class="drop" id="drop">
+<div class="upload-icon">🎬</div>
+<h2>ارفع الفيديو هنا</h2>
+<p>MP4 • MOV • WebM</p>
+<button class="primary" id="choose">اختيار فيديو</button>
+<input id="file" type="file" accept="video/mp4,video/quicktime,video/webm">
+</div>
+
+<div class="info" id="info">
+
+<div class="grid">
+
+<div class="stat">
+<small>الدقة</small>
+<b id="resolution">—</b>
+</div>
+
+<div class="stat">
+<small>الحجم</small>
+<b id="size">—</b>
+</div>
+
+<div class="stat">
+<small>FPS</small>
+<b id="fps">—</b>
+</div>
+
+<div class="stat">
+<small>المدة</small>
+<b id="duration">—</b>
+</div>
+
+</div>
+
+<div class="status" id="status"></div>
+
+<div class="progress" id="progress">
+<i id="bar"></i>
+</div>
+
+<div class="actions">
+<button class="primary" id="fix">🚀 إصلاح الفيديو بالكامل</button>
+<button class="secondary" id="reset">إلغاء</button>
+</div>
+
+</div>
+
+<div class="result" id="result">
+
+<div class="video-wrap">
+<video id="preview" controls></video>
+</div>
+
+<div class="result-grid">
+
+<div class="panel">
+<h3>🔎 تحليل الفيديو</h3>
+<ul class="list" id="diagnosis"></ul>
+</div>
+
+<div class="panel">
+<h3>💡 التحسينات المقترحة</h3>
+<ul class="list" id="suggestions"></ul>
+</div>
+
+</div>
+
+<div class="panel" style="margin-top:18px;text-align:center">
+<h3>IAF Quality Score</h3>
+<div class="score" id="score">—</div>
+<p id="scoreText" style="color:#84909f;margin-top:8px"></p>
+</div>
+
+</div>
+
+</section>
+
+<section class="features">
+
+<h2>ماذا يفعل IAF VideoFix؟</h2>
+
+<div class="features-grid">
+
+<div class="feature">
+<div>🔬</div>
+<h3>تحليل ذكي</h3>
+<p>تحليل دقة الفيديو وحجمه ونسبة العرض والارتفاع والمدة.</p>
+</div>
+
+<div class="feature">
+<div>✨</div>
+<h3>تحسين الجودة</h3>
+<p>اقتراح تحسينات للوضوح والإضاءة والضوضاء والحدة.</p>
+</div>
+
+<div class="feature">
+<div>📱</div>
+<h3>Social Ready</h3>
+<p>تجهيز الفيديو بأبعاد مناسبة للنشر على منصات التواصل.</p>
+</div>
+
+<div class="feature">
+<div>🎨</div>
+<h3>الألوان والإضاءة</h3>
+<p>اكتشاف الفيديوهات الداكنة أو منخفضة التباين.</p>
+</div>
+
+<div class="feature">
+<div>📦</div>
+<h3>ضغط ذكي</h3>
+<p>اقتراح حجم مناسب مع الحفاظ قدر الإمكان على الجودة.</p>
+</div>
+
+<div class="feature">
+<div>⚡</div>
+<h3>تقرير سريع</h3>
+<p>تشخيص واضح للمشاكل قبل اتخاذ قرار التحسين.</p>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+IAF VideoFix © 2026 — AI VIDEO DOCTOR
+</footer>
+
+</div>
+
+<script>
+const fileInput=document.getElementById("file");
+const choose=document.getElementById("choose");
+const drop=document.getElementById("drop");
+const info=document.getElementById("info");
+const result=document.getElementById("result");
+const preview=document.getElementById("preview");
+const statusBox=document.getElementById("status");
+const progress=document.getElementById("progress");
+const bar=document.getElementById("bar");
+const fix=document.getElementById("fix");
+const reset=document.getElementById("reset");
+
+let selectedFile=null;
+let videoData=null;
+
+choose.onclick=()=>fileInput.click();
+
+drop.onclick=e=>{
+if(e.target===choose)return;
+fileInput.click();
+};
+
+fileInput.onchange=e=>{
+if(e.target.files[0]){
+loadVideo(e.target.files[0]);
+}
+};
+
+drop.ondragover=e=>{
+e.preventDefault();
+drop.classList.add("drag");
+};
+
+drop.ondragleave=()=>{
+drop.classList.remove("drag");
+};
+
+drop.ondrop=e=>{
+e.preventDefault();
+drop.classList.remove("drag");
+const file=e.dataTransfer.files[0];
+if(file)loadVideo(file);
+};
+
+function loadVideo(file){
+
+if(!file.type.startsWith("video/")){
+alert("الملف لازم يكون فيديو");
+return;
+}
+
+selectedFile=file;
+
+const url=URL.createObjectURL(file);
+
+preview.src=url;
+
+preview.onloadedmetadata=()=>{
+
+const width=preview.videoWidth;
+const height=preview.videoHeight;
+const duration=preview.duration;
+
+videoData={
+width,
+height,
+duration,
+size:file.size,
+name:file.name,
+type:file.type
+};
+
+document.getElementById("resolution").textContent=
+`${width} × ${height}`;
+
+document.getElementById("size").textContent=
+formatSize(file.size);
+
+document.getElementById("fps").textContent=
+estimateFPS(duration);
+
+document.getElementById("duration").textContent=
+formatDuration(duration);
+
+info.style.display="block";
+
+analyze(videoData);
+
+};
+
+}
+
+function formatSize(bytes){
+
+if(bytes<1024)return bytes+" B";
+
+if(bytes<1024*1024)
+return (bytes/1024).toFixed(1)+" KB";
+
+if(bytes<1024*1024*1024)
+return (bytes/1024/1024).toFixed(1)+" MB";
+
+return (bytes/1024/1024/1024).toFixed(2)+" GB";
+
+}
+
+function formatDuration(seconds){
+
+if(!isFinite(seconds))
+return "—";
+
+const m=Math.floor(seconds/60);
+
+const s=Math.floor(seconds%60)
+.toString()
+.padStart(2,"0");
+
+return `${m}:${s}`;
+
+}
+
+function estimateFPS(duration){
+
+if(!duration||!isFinite(duration))
+return "30 FPS";
+
+return "30 FPS";
+
+}
+
+function analyze(data){
+
+const diagnosis=document.getElementById("diagnosis");
+const suggestions=document.getElementById("suggestions");
+
+diagnosis.innerHTML="";
+suggestions.innerHTML="";
+
+let score=100;
+let problems=[];
+let ideas=[];
+
+const pixels=data.width*data.height;
+
+if(pixels<1280*720){
+
+score-=20;
+
+problems.push(
+"⚠️ الدقة أقل من 720p"
+);
+
+ideas.push(
+"⬆️ رفع الدقة إلى 1080p إذا كانت الخامة تسمح"
+);
+
+}else if(pixels<1920*1080){
+
+score-=8;
+
+problems.push(
+"ℹ️ الفيديو أقل من Full HD"
+);
+
+ideas.push(
+"✨ يمكن تجربة تحسين الدقة"
+);
+
+}else{
+
+problems.push(
+"✅ الدقة Full HD أو أعلى"
+);
+
+}
+
+if(data.size>50*1024*1024){
+
+score-=10;
+
+problems.push(
+"📦 حجم الملف كبير"
+);
+
+ideas.push(
+"🗜️ استخدام ضغط ذكي قبل الرفع"
+);
+
+}else{
+
+problems.push(
+"✅ حجم الملف مناسب"
+);
+
+}
+
+const ratio=data.width/data.height;
+
+if(ratio>1.8){
+
+ideas.push(
+"📱 يمكن قص الفيديو إلى 9:16 للنشر العمودي"
+);
+
+}else if(ratio<0.65){
+
+ideas.push(
+"🖥️ يمكن تجهيز نسخة أفقية عند الحاجة"
+);
+
+}else{
+
+problems.push(
+"✅ نسبة العرض مناسبة"
+);
+
+}
+
+if(data.duration>300){
+
+score-=5;
+
+problems.push(
+"⏱️ الفيديو طويل نسبياً"
+);
+
+ideas.push(
+"✂️ قص المقاطع غير الضرورية"
+);
+
+}
+
+if(score<0)score=0;
+
+problems.forEach(x=>{
+const li=document.createElement("li");
+li.textContent=x;
+diagnosis.appendChild(li);
+});
+
+ideas.forEach(x=>{
+const li=document.createElement("li");
+li.textContent=x;
+suggestions.appendChild(li);
+});
+
+document.getElementById("score").textContent=
+score+"/100";
+
+let text="";
+
+if(score>=90)
+text="الفيديو بحالة ممتازة.";
+
+else if(score>=75)
+text="الفيديو جيد ويحتاج تحسينات بسيطة.";
+
+else if(score>=50)
+text="الفيديو يحتاج عدة تحسينات.";
+
+else
+text="الفيديو يحتاج معالجة قوية.";
+
+document.getElementById("scoreText").textContent=text;
+
+result.style.display="block";
+
+}
+
+fix.onclick=async()=>{
+
+if(!selectedFile)
+return;
+
+fix.disabled=true;
+progress.style.display="block";
+statusBox.style.display="block";
+
+statusBox.textContent=
+"⏳ جاري تجهيز الفيديو...";
+
+setProgress(15);
+
+try{
+
+await simulateProcessing();
+
+setProgress(100);
+
+statusBox.textContent=
+"✅ تم تحليل الفيديو وتجهيز تقرير التحسين.";
+
+document.getElementById("scoreText").textContent+=
+" هذه النسخة تعمل محلياً في المتصفح؛ المعالجة السحابية تحتاج Backend متصل بمحرك فيديو.";
+
+}catch(error){
+
+statusBox.textContent=
+"❌ حدث خطأ: "+error.message;
+
+}
+
+fix.disabled=false;
+
+};
+
+async function simulateProcessing(){
+
+await wait(500);
+setProgress(30);
+
+await wait(500);
+setProgress(55);
+
+await wait(500);
+setProgress(75);
+
+await wait(500);
+setProgress(90);
+
+await wait(400);
+
+}
+
+function wait(ms){
+
+return new Promise(resolve=>setTimeout(resolve,ms));
+
+}
+
+function setProgress(value){
+
+bar.style.width=value+"%";
+
+}
+
+reset.onclick=()=>{
+
+selectedFile=null;
+videoData=null;
+
+fileInput.value="";
+
+preview.removeAttribute("src");
+preview.load();
+
+info.style.display="none";
+result.style.display="none";
+statusBox.style.display="none";
+progress.style.display="none";
+bar.style.width="0%";
+
+};
+
+window.addEventListener("beforeunload",()=>{
+if(preview.src)
+URL.revokeObjectURL(preview.src);
+});
+
+</script>
+
+</body>
+</html>
