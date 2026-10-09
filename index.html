@@ -1,78 +1,209 @@
-#!/usr/bin/env python3
-"""ضغط الفيديو قبل النشر على تيك توك (1080x1920، أقل من 287MB)"""
-import subprocess, sys, os, argparse, json
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ibrahim Al Fares - ضغط الفيديو</title>
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+<style>
+:root{--gold:#FFC844;--gold2:#E0A020;--bg:#0a0a0a;--card:#111;--card2:#151515;--line:#242424;--text:#f5f5f5;--muted:#8a8a8a;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,sans-serif}
+body{background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid var(--line);background:#0d0d0d;position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-box{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center;color:#000;font-weight:900;font-size:16px}
+.logo h1{font-size:16px;font-weight:700}
+.badge{background:var(--card2);border:1px solid var(--line);padding:6px 14px;border-radius:99px;font-size:12px;color:var(--gold)}
+.hero{text-align:center;padding:40px 20px 10px}
+.hero small{color:var(--gold);font-size:12px;letter-spacing:2px}
+.hero h2{font-size:32px;margin:8px 0;font-weight:800}
+.hero p{color:var(--muted);font-size:14px;max-width:500px;margin:0 auto}
+.infobar{max-width:900px;margin:24px auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;font-size:13px;flex-wrap:wrap;gap:10px}
+.infobar b{color:var(--gold)}
+.infobar .btn-mini{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:0;border-radius:8px;padding:8px 14px;font-weight:700;cursor:pointer;font-size:12px}
+.steps{display:flex;justify-content:center;gap:30px;padding:10px 20px 20px;max-width:900px;margin:0 auto}
+.step{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
+.step span{width:26px;height:26px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700}
+.step.active span{background:var(--gold);border-color:var(--gold);color:#000}
+.step.done span{background:var(--gold);border-color:var(--gold);color:#000}
+.card{max-width:900px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
+.card h3{display:flex;align-items:center;gap:12px;font-size:17px;margin-bottom:18px}
+.card .num{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;display:grid;place-items:center;font-size:13px;font-weight:900}
+.dropzone{border:2px dashed var(--line);border-radius:var(--radius);padding:50px 20px;text-align:center;cursor:pointer;transition:.25s;background:var(--card2)}
+.dropzone:hover,.dropzone.drag{border-color:var(--gold);background:rgba(255,200,68,.04)}
+.dropzone .plus{width:64px;height:64px;margin:0 auto 14px;border-radius:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center;font-size:34px;font-weight:300;color:#000}
+.dropzone p{font-size:16px;font-weight:700;margin-bottom:4px}
+.dropzone small{color:var(--muted)}
+.option{display:flex;gap:14px;align-items:flex-start;padding:16px;border:1px solid var(--line);border-radius:12px;margin-bottom:12px;cursor:pointer;transition:.2s;background:var(--card2)}
+.option:hover{border-color:var(--gold)}
+.option input{margin-top:4px;accent-color:var(--gold)}
+.option.recommended{border-color:var(--gold);background:rgba(255,200,68,.05)}
+.option.tiktok input{accent-color:var(--gold)}
+.opt-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.opt-body p{color:var(--muted);font-size:13px;line-height:1.6}
+.tag{background:var(--gold);color:#000;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:800}
+.btn-primary{display:block;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:0;border-radius:12px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;margin-top:16px;transition:.2s}
+.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-ghost{display:block;width:100%;margin-top:10px;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:14px;cursor:pointer}
+.btn-ghost:hover{color:var(--text);border-color:var(--gold)}
+.progress-wrap{text-align:center;padding:25px 0}
+.spinner{width:70px;height:70px;margin:0 auto 18px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--gold);animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.progress{width:100%;height:8px;background:var(--card2);border-radius:99px;overflow:hidden;margin:16px 0 8px}
+.bar{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .3s}
+#percentText{color:var(--muted);font-size:13px}
+#doneBox{text-align:center;padding:20px 0}
+.check{width:70px;height:70px;margin:0 auto 16px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));display:grid;place-items:center;font-size:34px;color:#000}
+#doneBox h4{font-size:20px;margin-bottom:8px}
+#fileMeta{color:var(--muted);font-size:14px;margin-bottom:20px}
+.hidden{display:none!important}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:40px 20px 20px}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="logo"><div class="logo-box">I</div><h1>Ibrahim Al Fares</h1></div>
+  <span class="badge">ضغط الفيديو</span>
+</header>
+<main>
+  <section class="hero"><small>COMPRESS</small><h2>طريقة التحميل</h2><p>اختر مقطع فيديو، وحدد طريقة الضغط، ثم حمّل الملف النهائي.</p></section>
+  <div class="infobar"><div><b>● ضغط مجاني</b> · كل جهاز · استخدماتك المتبقية اليوم: <b>5 من أصل ∞</b></div><button class="btn-mini">احصل على عضوية محدودة</button></div>
+  <div class="steps">
+    <div class="step active" data-step="1"><span>1</span> فيديو</div>
+    <div class="step" data-step="2"><span>2</span> طريقة</div>
+    <div class="step" data-step="3"><span>3</span> تحميل</div>
+  </div>
+  <section class="card" id="step1">
+    <h3><span class="num">1</span> اختر الفيديو الخاص بك</h3>
+    <div class="dropzone" id="dropzone">
+      <div class="plus">+</div><p>حدد الفيديو</p><small>اسحب الملف هنا أو اضغط للاختيار</small>
+      <input type="file" id="fileInput" accept="video/*" hidden>
+    </div>
+  </section>
+  <section class="card hidden" id="step2">
+    <h3><span class="num">2</span> اختر طريقة الضغط</h3>
+    <label class="option recommended">
+      <input type="radio" name="method" value="best" checked>
+      <div class="opt-body"><div class="opt-head"><strong>أعلى جودة + طريقة معدل الإطارات</strong><span class="tag">موصى به</span></div><p>1080p حتى 120 إطار/ث · H.264 + AAC — أفضل توازن بين الجودة والحجم.</p></div>
+    </label>
+    <label class="option">
+      <input type="radio" name="method" value="fps">
+      <div class="opt-body"><div class="opt-head"><strong>طريقة FPS</strong></div><p>يحدّث معدل الإطارات فقط دون المساس بجودة الصورة.</p></div>
+    </label>
+    <label class="option">
+      <input type="radio" name="method" value="720p60">
+      <div class="opt-body"><div class="opt-head"><strong>طريقة 720p60</strong></div><p>يحافظ على 720p بمعدل 60 إطار/ث بصيغة WMV.</p></div>
+    </label>
+    <label class="option tiktok">
+      <input type="checkbox" id="tiktokOpt">
+      <div class="opt-body"><div class="opt-head"><strong>تحسين حجم الملف لتطبيق تيك توك</strong><span class="tag">تيك توك</span></div><p>يُصغّر حجم الملفات الكبيرة للحفاظ على الجودة قدر الإمكان.</p></div>
+    </label>
+    <button class="btn-primary" id="startBtn">ابدأ المعالجة ←</button>
+  </section>
+  <section class="card hidden" id="step3">
+    <h3><span class="num">3</span> تحميل الملف</h3>
+    <div class="progress-wrap" id="progressWrap">
+      <div class="spinner" id="spinner"></div>
+      <p id="statusText" style="font-size:18px;font-weight:700;margin-bottom:6px">جارٍ العرض 00:08</p>
+      <div class="progress"><div class="bar" id="progressBar"></div></div>
+      <small id="percentText">0%</small>
+    </div>
+    <div id="doneBox" class="hidden">
+      <div class="check">✓</div><h4>الفيديو الخاص بك جاهز</h4><p id="fileMeta"></p>
+      <a class="btn-primary" id="downloadBtn" download>⬇ تنزيل الفيديو</a>
+      <button class="btn-ghost" id="againBtn">↻ معالجة فيديو آخر</button>
+    </div>
+  </section>
+</main>
+<footer><p>© <span id="year"></span> Ibrahim Al Fares — جميع الحقوق محفوظة</p></footer>
+<script>
+const { FFmpeg } = FFmpegWASM;
+const { fetchFile, toBlobURL } = FFmpegUtil;
+let ffmpeg = null, selectedFile = null;
+const $ = (id) => document.getElementById(id);
+const dropzone = $("dropzone"), fileInput = $("fileInput");
+const step1 = $("step1"), step2 = $("step2"), step3 = $("step3");
+const startBtn = $("startBtn"), progressBar = $("progressBar"), percentText = $("percentText");
+const statusText = $("statusText"), spinner = $("spinner"), progressWrap = $("progressWrap");
+const doneBox = $("doneBox"), downloadBtn = $("downloadBtn"), againBtn = $("againBtn"), fileMeta = $("fileMeta");
+$("year").textContent = new Date().getFullYear();
 
-TIKTOK_MAX_MB = 287
-W, H = 1080, 1920
+function setStep(n){
+  [step1, step2, step3].forEach((el,i)=>el.classList.toggle("hidden", i!==n-1));
+  document.querySelectorAll(".step").forEach(s=>{const num=+s.dataset.step;s.classList.toggle("active",num===n);s.classList.toggle("done",num<n);});
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+dropzone.addEventListener("click", ()=>fileInput.click());
+["dragenter","dragover"].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.add("drag");}));
+["dragleave","drop"].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.remove("drag");}));
+dropzone.addEventListener("drop", e=>{const f=e.dataTransfer.files[0];if(f)handleFile(f);});
+fileInput.addEventListener("change", e=>{const f=e.target.files[0];if(f)handleFile(f);});
+function handleFile(file){if(!file.type.startsWith("video/")){alert("الرجاء اختيار ملف فيديو صالح");return;}selectedFile=file;setStep(2);}
 
-def get_duration(path):
-    r = subprocess.run(["ffprobe","-v","quiet","-print_format","json",
-                        "-show_format",path], capture_output=True, text=True)
-    return float(json.loads(r.stdout)["format"]["duration"])
+async function loadFFmpeg(){
+  if(ffmpeg) return;
+  statusText.textContent = "جارٍ تحميل أدوات المعالجة...";
+  ffmpeg = new FFmpeg();
+  ffmpeg.on("log", ({message}) => console.log("[ffmpeg]", message));
+  ffmpeg.on("progress", ({progress}) => {
+    const p = Math.min(100, Math.round(progress*100));
+    progressBar.style.width = p + "%"; percentText.textContent = p + "%";
+  });
+  const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+  await ffmpeg.load({
+    coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
+    wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+  });
+}
 
-def size_mb(path):
-    return os.path.getsize(path) / (1024*1024)
-
-def compress(inp, out=None, crf=23, preset="medium"):
-    if not os.path.isfile(inp):
-        print(f"خطأ: الملف غير موجود {inp}"); sys.exit(1)
-
-    for t in ["ffmpeg","ffprobe"]:
-        try:
-            subprocess.run([t,"-version"], capture_output=True, check=True)
-        except (subprocess.CalledProcessError, FileNotFoundError):
-            print(f"خطأ: يجب تثبيت {t}"); sys.exit(1)
-
-    if out is None:
-        base, _ = os.path.splitext(inp)
-        out = f"{base}_tiktok.mp4"
-
-    orig = size_mb(inp)
-    dur = get_duration(inp)
-    print(f"الأصلي: {orig:.1f} MB | المدة: {dur:.1f} ثانية")
-    print(f"الهدف: {W}x{H} | H.264 | < {TIKTOK_MAX_MB} MB")
-
-    cmd = [
-        "ffmpeg","-y","-i",inp,
-        "-c:v","libx264","-crf",str(crf),"-preset",preset,
-        "-vf", (f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
-                f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:black"),
+startBtn.addEventListener("click", async ()=>{
+  if(!selectedFile) return;
+  const method = document.querySelector('input[name="method"]:checked').value;
+  const forTikTok = $("tiktokOpt").checked;
+  setStep(3);
+  spinner.classList.remove("hidden"); progressWrap.classList.remove("hidden");
+  doneBox.classList.add("hidden"); progressBar.style.width="0%"; percentText.textContent="0%";
+  statusText.textContent = "جارٍ تحضير MP4 النهائي...";
+  try{
+    await loadFFmpeg();
+    const inputName = "input.mp4", outputName = "ibrahim_alfares.mp4";
+    await ffmpeg.writeFile(inputName, await fetchFile(selectedFile));
+    let args = ["-i", inputName];
+    if(forTikTok){
+      args.push(
+        "-vf","scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p",
+        "-c:v","libx264","-profile:v","high","-level","4.1","-preset","veryfast","-crf","22",
         "-c:a","aac","-b:a","128k","-ar","44100",
-        "-movflags","+faststart","-map_metadata","-1",
-        out
-    ]
-
-    print(f"جاري الضغط إلى {out} ...")
-    r = subprocess.run(cmd, capture_output=True, text=True)
-    if r.returncode != 0:
-        print(f"خطأ FFmpeg:\n{r.stderr}"); sys.exit(1)
-
-    new = size_mb(out)
-    ratio = (1 - new/orig) * 100 if orig > 0 else 0
-    print(f"\nتم!")
-    print(f"  الملف: {out}")
-    print(f"  الأصلي: {orig:.1f} MB")
-    print(f"  المضغوط: {new:.1f} MB")
-    print(f"  نسبة الضغط: {ratio:.1f}%")
-
-    if new > TIKTOK_MAX_MB:
-        print(f"\nتحذير: يتجاوز {TIKTOK_MAX_MB} MB")
-        print(f"جرّب: python {sys.argv[0]} \"{inp}\" -c {crf+4}")
-    else:
-        print("\n✓ مطابق لمتطلبات تيك توك")
-
-def main():
-    p = argparse.ArgumentParser(description="ضغط فيديو لتيك توك")
-    p.add_argument("input", help="ملف الفيديو المدخل")
-    p.add_argument("-o","--output", help="ملف الإخراج")
-    p.add_argument("-c","--crf", type=int, default=23,
-                   help="جودة CRF (افتراضي 23، تيك توك 22-28)")
-    p.add_argument("-p","--preset", default="medium",
-                   choices=["ultrafast","superfast","veryfast","faster",
-                            "fast","medium","slow","slower","veryslow"],
-                   help="سرعة الترميز (افتراضي medium)")
-    a = p.parse_args()
-    compress(a.input, a.output, a.crf, a.preset)
-
-if __name__ == "__main__":
-    main()
+        "-movflags","+faststart"
+      );
+    } else if(method === "best"){
+      args.push("-c:v","libx264","-crf","23","-preset","veryfast","-c:a","aac");
+    } else if(method === "fps"){
+      args.push("-r","30","-c:v","libx264","-crf","23","-c:a","copy");
+    } else if(method === "720p60"){
+      args.push("-vf","scale=-2:720","-r","60","-c:v","libx264","-crf","24","-c:a","aac");
+    }
+    args.push(outputName);
+    await ffmpeg.exec(args);
+    const data = await ffmpeg.readFile(outputName);
+    const buf = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength);
+    const blob = new Blob([buf], {type:"video/mp4"});
+    const url = URL.createObjectURL(blob);
+    downloadBtn.href = url;
+    downloadBtn.download = "Ibrahim_Al_Fares_" + Date.now() + ".mp4";
+    const sizeMB = (blob.size/1024/1024).toFixed(1);
+    fileMeta.textContent = outputName + " — " + sizeMB + " ميجابايت";
+    spinner.classList.add("hidden"); doneBox.classList.remove("hidden");
+    statusText.textContent = "تم!";
+    await ffmpeg.deleteFile(inputName); await ffmpeg.deleteFile(outputName);
+  }catch(err){
+    console.error(err);
+    spinner.classList.add("hidden");
+    statusText.textContent = "حدث خطأ: " + err.message;
+  }
+});
+againBtn.addEventListener("click", ()=>{selectedFile=null;fileInput.value="";setStep(1);});
+</script>
+</body>
+</html>
