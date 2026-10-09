@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ibrahim Al Fares - ضغط الفيديو</title>
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
-<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+<script src="/ffmpeg/814.ffmpeg.js"></script>
 <style>
 :root{--gold:#FFC844;--gold2:#E0A020;--bg:#0a0a0a;--card:#111;--card2:#151515;--line:#242424;--text:#f5f5f5;--muted:#8a8a8a;--radius:14px}
 *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI",Tahoma,sans-serif}
@@ -25,8 +24,7 @@ body{background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px
 .steps{display:flex;justify-content:center;gap:30px;padding:10px 20px 20px;max-width:900px;margin:0 auto}
 .step{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:13px}
 .step span{width:26px;height:26px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:grid;place-items:center;font-size:12px;font-weight:700}
-.step.active span{background:var(--gold);border-color:var(--gold);color:#000}
-.step.done span{background:var(--gold);border-color:var(--gold);color:#000}
+.step.active span,.step.done span{background:var(--gold);border-color:var(--gold);color:#000}
 .card{max-width:900px;margin:0 auto 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px}
 .card h3{display:flex;align-items:center;gap:12px;font-size:17px;margin-bottom:18px}
 .card .num{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;display:grid;place-items:center;font-size:13px;font-weight:900}
@@ -39,12 +37,11 @@ body{background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:60px
 .option:hover{border-color:var(--gold)}
 .option input{margin-top:4px;accent-color:var(--gold)}
 .option.recommended{border-color:var(--gold);background:rgba(255,200,68,.05)}
-.option.tiktok input{accent-color:var(--gold)}
 .opt-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
 .opt-body p{color:var(--muted);font-size:13px;line-height:1.6}
 .tag{background:var(--gold);color:#000;font-size:11px;padding:3px 8px;border-radius:6px;font-weight:800}
 .btn-primary{display:block;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;border:0;border-radius:12px;padding:16px;font-size:16px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;margin-top:16px;transition:.2s}
-.btn-primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn-primary:hover{filter:brightness(1.08)}
 .btn-ghost{display:block;width:100%;margin-top:10px;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:14px;cursor:pointer}
 .btn-ghost:hover{color:var(--text);border-color:var(--gold)}
 .progress-wrap{text-align:center;padding:25px 0}
@@ -85,7 +82,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:40px 20px 20p
     <h3><span class="num">2</span> اختر طريقة الضغط</h3>
     <label class="option recommended">
       <input type="radio" name="method" value="best" checked>
-      <div class="opt-body"><div class="opt-head"><strong>أعلى جودة + طريقة معدل الإطارات</strong><span class="tag">موصى به</span></div><p>1080p حتى 120 إطار/ث · H.264 + AAC — أفضل توازن بين الجودة والحجم.</p></div>
+      <div class="opt-body"><div class="opt-head"><strong>أعلى جودة + طريقة معدل الإطارات</strong><span class="tag">موصى به</span></div><p>1080p حتى 120 إطار/ث · H.264 + AAC</p></div>
     </label>
     <label class="option">
       <input type="radio" name="method" value="fps">
@@ -93,9 +90,9 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:40px 20px 20p
     </label>
     <label class="option">
       <input type="radio" name="method" value="720p60">
-      <div class="opt-body"><div class="opt-head"><strong>طريقة 720p60</strong></div><p>يحافظ على 720p بمعدل 60 إطار/ث بصيغة WMV.</p></div>
+      <div class="opt-body"><div class="opt-head"><strong>طريقة 720p60</strong></div><p>يحافظ على 720p بمعدل 60 إطار/ث.</p></div>
     </label>
-    <label class="option tiktok">
+    <label class="option">
       <input type="checkbox" id="tiktokOpt">
       <div class="opt-body"><div class="opt-head"><strong>تحسين حجم الملف لتطبيق تيك توك</strong><span class="tag">تيك توك</span></div><p>يُصغّر حجم الملفات الكبيرة للحفاظ على الجودة قدر الإمكان.</p></div>
     </label>
@@ -118,9 +115,6 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:40px 20px 20p
 </main>
 <footer><p>© <span id="year"></span> Ibrahim Al Fares — جميع الحقوق محفوظة</p></footer>
 <script>
-const { FFmpeg } = FFmpegWASM;
-const { fetchFile, toBlobURL } = FFmpegUtil;
-let ffmpeg = null, selectedFile = null;
 const $ = (id) => document.getElementById(id);
 const dropzone = $("dropzone"), fileInput = $("fileInput");
 const step1 = $("step1"), step2 = $("step2"), step3 = $("step3");
@@ -128,6 +122,10 @@ const startBtn = $("startBtn"), progressBar = $("progressBar"), percentText = $(
 const statusText = $("statusText"), spinner = $("spinner"), progressWrap = $("progressWrap");
 const doneBox = $("doneBox"), downloadBtn = $("downloadBtn"), againBtn = $("againBtn"), fileMeta = $("fileMeta");
 $("year").textContent = new Date().getFullYear();
+
+let ffmpeg = null, selectedFile = null;
+const { FFmpeg } = FFmpegWASM;
+const { fetchFile } = FFmpegUtil;
 
 function setStep(n){
   [step1, step2, step3].forEach((el,i)=>el.classList.toggle("hidden", i!==n-1));
@@ -139,7 +137,10 @@ dropzone.addEventListener("click", ()=>fileInput.click());
 ["dragleave","drop"].forEach(ev=>dropzone.addEventListener(ev,e=>{e.preventDefault();dropzone.classList.remove("drag");}));
 dropzone.addEventListener("drop", e=>{const f=e.dataTransfer.files[0];if(f)handleFile(f);});
 fileInput.addEventListener("change", e=>{const f=e.target.files[0];if(f)handleFile(f);});
-function handleFile(file){if(!file.type.startsWith("video/")){alert("الرجاء اختيار ملف فيديو صالح");return;}selectedFile=file;setStep(2);}
+function handleFile(file){
+  if(!file.type.startsWith("video/")){alert("الرجاء اختيار ملف فيديو صالح");return;}
+  selectedFile=file;setStep(2);
+}
 
 async function loadFFmpeg(){
   if(ffmpeg) return;
@@ -150,10 +151,9 @@ async function loadFFmpeg(){
     const p = Math.min(100, Math.round(progress*100));
     progressBar.style.width = p + "%"; percentText.textContent = p + "%";
   });
-  const base = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
   await ffmpeg.load({
-    coreURL: await toBlobURL(`${base}/ffmpeg-core.js`, "text/javascript"),
-    wasmURL: await toBlobURL(`${base}/ffmpeg-core.wasm`, "application/wasm"),
+    coreURL: "/ffmpeg/ffmpeg-core.js",
+    wasmURL: "/ffmpeg/ffmpeg-core.wasm"
   });
 }
 
@@ -174,8 +174,7 @@ startBtn.addEventListener("click", async ()=>{
       args.push(
         "-vf","scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,fps=30,format=yuv420p",
         "-c:v","libx264","-profile:v","high","-level","4.1","-preset","veryfast","-crf","22",
-        "-c:a","aac","-b:a","128k","-ar","44100",
-        "-movflags","+faststart"
+        "-c:a","aac","-b:a","128k","-ar","44100","-movflags","+faststart"
       );
     } else if(method === "best"){
       args.push("-c:v","libx264","-crf","23","-preset","veryfast","-c:a","aac");
@@ -192,8 +191,7 @@ startBtn.addEventListener("click", async ()=>{
     const url = URL.createObjectURL(blob);
     downloadBtn.href = url;
     downloadBtn.download = "Ibrahim_Al_Fares_" + Date.now() + ".mp4";
-    const sizeMB = (blob.size/1024/1024).toFixed(1);
-    fileMeta.textContent = outputName + " — " + sizeMB + " ميجابايت";
+    fileMeta.textContent = outputName + " — " + (blob.size/1024/1024).toFixed(1) + " ميجابايت";
     spinner.classList.add("hidden"); doneBox.classList.remove("hidden");
     statusText.textContent = "تم!";
     await ffmpeg.deleteFile(inputName); await ffmpeg.deleteFile(outputName);
