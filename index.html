@@ -3,211 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topaz AI Video Enhancer - Studio Edition</title>
+    <title>CompressBase - Real Processing Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استدعاء مكتبة FFmpeg الحقيقية للعمل في المتصفح -->
+    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     <style>
-        body { background-color: #0d0f12; color: #f3f4f6; font-family: Tahoma, sans-serif; }
-        .ai-gradient { background: linear-gradient(135deg, #2563eb, #dc2626); }
-        .ai-border { border: 1px solid rgba(37, 99, 235, 0.3); }
-        .ai-card { background: rgba(17, 24, 39, 0.85); backdrop-filter: blur(10px); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.8); }
+        body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
+        .custom-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
+        .custom-border { border: 1px solid rgba(59, 130, 246, 0.4); }
+        .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- الهيدر العلوي -->
-    <header class="p-4 border-b border-gray-800 flex justify-between items-center max-w-5xl mx-auto w-full">
-        <div class="flex items-center gap-3">
-            <span class="ai-gradient text-white font-bold p-2 rounded-xl text-sm">🧠 AI</span>
-            <div>
-                <h1 class="font-bold text-sm tracking-wide">Topaz Video AI Web</h1>
-                <p class="text-[10px] text-gray-400">محرك معالجة ورسوميات بالذكاء الاصطناعي</p>
-            </div>
+    <header class="p-5 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
+        <div class="flex items-center gap-2.5">
+            <span class="bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg text-base">🗜️</span>
+            <span class="font-bold tracking-wider text-sm">القاعدة ضغط (المحرك الحقيقي)</span>
         </div>
-        <div class="text-[11px] text-blue-400 bg-blue-950/50 px-3 py-1.5 rounded-xl ai-border flex items-center gap-2">
-            <span>الوضع الذكي:</span>
-            <span class="text-white font-bold">Proteus v4 (Ultra)</span>
+        <div id="engineStatus" class="text-xs text-yellow-400 bg-yellow-950/40 px-3.5 py-2 rounded-xl custom-border">
+            جاري تحميل محرك المعالجة...
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-2xl mx-auto w-full p-4 my-6">
-        <div class="text-center mb-6">
-            <h2 class="text-2xl md:text-3xl font-extrabold mb-1">رفع جودة الفيديو بالذكاء الاصطناعي</h2>
-            <p class="text-gray-400 text-xs md:text-sm">إزالة التغبيش، زيادة الدقة لـ 4K، وتثبيت الإطارات بثبات تام.</p>
+    <main class="max-w-xl mx-auto w-full p-5 my-6">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold mb-2">ضغط الفيديو فعلياً</h1>
+            <p class="text-zinc-400 text-sm">سيقوم المتصفح بإعادة ترميز وضغط الفيديو ليعمل بكامل جودته على تيك توك.</p>
         </div>
 
-        <div class="ai-card ai-border rounded-3xl p-6 shadow-2xl relative">
+        <div class="bg-zinc-900/95 custom-border rounded-3xl p-6 shadow-2xl relative">
             
-            <!-- الخطوة 1: رفع الفيديو -->
+            <!-- الخطوة 1: الرفع -->
             <div id="step-1">
-                <div class="text-blue-400 text-xs mb-3 font-semibold flex items-center gap-1">
-                    <span>1</span> <span>| ارفع ملف الفيديو أو اسحبه هنا</span>
-                </div>
-                <div class="border-2 border-dashed border-gray-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition mb-4 bg-gray-900/40" onclick="document.getElementById('videoInput').click()">
-                    <div class="text-3xl mb-2 text-blue-500">📁</div>
-                    <p class="text-xs font-bold">اختر فيديو من جهازك (MP4, MOV, MKV)</p>
-                    <p class="text-[10px] text-gray-500 mt-1">يدعم الفيديوهات ذات الدقة المنخفضة لإصلاحها</p>
-                    <input type="file" id="videoInput" class="hidden" accept="video/*" onchange="fileChosen(this)">
+                <div class="text-blue-400 text-sm mb-3 font-bold">1 | اختر الفيديو الخاص بك</div>
+                <div class="border-2 border-dashed border-zinc-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition mb-5" onclick="document.getElementById('fileInput').click()">
+                    <div class="text-4xl mb-2 text-blue-500">➕</div>
+                    <p class="text-base font-bold">حدد الفيديو</p>
+                    <p class="text-xs text-zinc-400 mt-1">اختر مقطع فيديو من جهازك</p>
+                    <input type="file" id="fileInput" class="hidden" accept="video/*" onchange="handleFileSelected(this)">
                 </div>
             </div>
 
-            <!-- الخطوة 2: إعدادات موديلات الذكاء الاصطناعي -->
+            <!-- الخطوة 2: البدء -->
             <div id="step-2" class="hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-blue-400 text-xs font-semibold">2 | تخصيص خوارزميات الذكاء الاصطناعي</span>
-                    <button onclick="resetFlow()" class="text-[11px] text-gray-400 underline">تغيير الفيديو</button>
+                <div class="flex justify-between items-center mb-5">
+                    <span class="text-blue-400 text-sm font-bold">2 | جاهز للمعالجة الفعلية</span>
+                    <button onclick="resetStep()" class="text-xs text-zinc-400 underline">تغيير الفيديو</button>
                 </div>
 
-                <div class="bg-gray-900 p-3 rounded-xl mb-4 ai-border flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold">AI Model</span>
-                        <span id="fileName" class="text-xs text-gray-200 truncate max-w-[200px]">فيديو</span>
+                <div class="bg-zinc-950 p-3.5 rounded-xl mb-5 flex items-center justify-between custom-border">
+                    <div class="flex items-center gap-3">
+                        <span class="bg-blue-600/30 text-blue-300 px-2.5 py-1 rounded-lg text-xs font-bold">mp4</span>
+                        <span id="fileNameDisplay" class="text-xs text-zinc-200 truncate max-w-[220px]">فيديو جديد</span>
                     </div>
-                    <span class="text-[10px] text-emerald-400">جاهز للمعالجة</span>
+                    <span class="text-xs text-zinc-400">جاهز للضغط</span>
                 </div>
 
-                <div class="space-y-3 mb-5">
-                    <div class="bg-gray-900/60 p-3 rounded-xl ai-border">
-                        <label class="block text-xs font-bold text-gray-300 mb-1.5">نموذج المعالجة (AI Model):</label>
-                        <select id="aiModel" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg ai-border focus:outline-none">
-                            <option value="Proteus">Proteus (الأفضل لمعالجة التفاصيل العامة وإصلاح التشويش)</option>
-                            <option value="Artemis">Artemis (مخصص لإزالة الحبيبات وتنعيم الألوان)</option>
-                            <option value="Gaia">Gaia (مخصص لتكبير الدقة إلى 4K بدقة مذهلة)</option>
-                            <option value="Nyx">Nyx (مخصص للفيديوهات المظلمة وليلية التصوير)</option>
-                        </select>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="bg-gray-900/60 p-3 rounded-xl ai-border">
-                            <label class="block text-xs font-bold text-gray-300 mb-1.5">مضاعف الدقة (Upscale):</label>
-                            <select id="upscaleFactor" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg ai-border focus:outline-none">
-                                <option value="2x">2x (تضعيف العرض والارتفاع)</option>
-                                <option value="4x">4x (دقة خارقة 4K)</option>
-                                <option value="1x">بدون تغيير الدقة (تحسين فقط)</option>
-                            </select>
-                        </div>
-                        <div class="bg-gray-900/60 p-3 rounded-xl ai-border">
-                            <label class="block text-xs font-bold text-gray-300 mb-1.5">معدل الإطارات (FPS):</label>
-                            <select id="targetFps" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg ai-border focus:outline-none">
-                                <option value="60">تثبيت على 60 إطار/ثانية</option>
-                                <option value="120">مضاعفة إلى 120 إطار (AI Interpolation)</option>
-                                <option value="original">نفس معدل الإطارات الأصلي</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-
-                <button onclick="startAiProcessing()" class="w-full py-3.5 rounded-xl ai-gradient text-xs font-bold tracking-wide shadow-lg hover:opacity-90 transition">
-                    بدء معالجة الذكاء الاصطناعي ⚡
+                <button onclick="startRealProcessing()" class="w-full py-3.5 rounded-2xl custom-btn text-sm font-bold shadow-lg">
+                    بدء الضغط والمعالجة الحقيقية ➔
                 </button>
             </div>
 
-            <!-- الخطوة 3: شاشة المعالجة الذكية -->
+            <!-- الخطوة 3: شاشة المعالجة وحساب النسبة -->
             <div id="step-3" class="hidden text-center py-8">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4"></div>
-                <h3 class="text-sm font-bold mb-1" dir="ltr">Topaz AI Neural Engine Processing...</h3>
-                <p id="aiStatusText" class="text-xs text-gray-400 mb-4">جاري تحليل الأطر وإزالة التشويش بالشبكات العصبية...</p>
-                
-                <div class="w-full bg-gray-800 rounded-full h-2 max-w-xs mx-auto overflow-hidden mb-2">
-                    <div id="aiProgressBar" class="ai-gradient h-2 w-0 transition-all duration-300"></div>
+                <h3 class="text-base font-bold mb-1.5" dir="ltr">Encoding video via FFmpeg...</h3>
+                <p id="processText" class="text-xs text-zinc-400 mb-5">جاري ضغط ومعالجة الإطارات (قد يستغرق بضع ثوان حسب حجم الفيديو)...</p>
+                <div class="w-full bg-zinc-800 rounded-full h-2 max-w-sm mx-auto overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-red-500 h-2 w-0 transition-all duration-300"></div>
                 </div>
-                <span id="progressPercent" class="text-xs text-blue-400 font-bold">0%</span>
             </div>
 
-            <!-- الخطوة 4: النتيجة النهائية وزر التحميل المباشر -->
+            <!-- الخطوة 4: النتيجة والتحميل -->
             <div id="step-4" class="hidden text-center py-4">
-                <div class="text-3xl mb-2">✨</div>
-                <h3 class="text-base font-bold mb-1">تمت معالجة الفيديو بنجاح!</h3>
-                <p class="text-xs text-gray-400 mb-4">تمت ترقية الفيديو ورفع داقته وتثبيت الإطارات عبر نموذج الذكاء الاصطناعي</p>
-                
-                <div class="bg-gray-900 ai-border p-3.5 rounded-xl text-right mb-4">
-                    <div class="text-xs text-blue-400 font-bold mb-1">مواصفات الإخراج النهائي:</div>
-                    <ul class="text-[11px] text-gray-300 space-y-1">
-                        <li>• ترميز الحماية ضد ضغط المنصات: H.265 / Pro</li>
-                        <li>• إزالة التشويش التلقائي وتثبيت الحركة</li>
-                        <li>• جاهز للرفع مباشرة على تيك توك وإنستجرام بجودة 100%</li>
-                    </ul>
-                </div>
+                <div class="text-3xl mb-2">✅</div>
+                <h3 class="text-lg font-bold mb-1">تم ضغط الفيديو بنجاح!</h3>
+                <p class="text-xs text-zinc-400 mb-4">تمت إعادة ترميز الفيديو وتقليل حجمه مع الحفاظ على حِدة التفاصيل.</p>
 
-                <button onclick="downloadFile()" class="block w-full py-3.5 rounded-xl ai-gradient text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
-                    تنزيل الفيديو المعالج بالذكاء الاصطناعي ⬇
-                </button>
-                <button onclick="resetFlow()" class="text-xs text-gray-400 underline">معالجة فيديو آخر 🔄</button>
+                <a id="downloadBtn" href="#" class="block w-full py-3.5 rounded-2xl custom-btn text-xs font-bold text-center mb-3 shadow-lg" download="compressed_video.mp4">
+                    تنزيل الفيديو المضغوط ⬇
+                </a>
+                <button onclick="resetStep()" class="text-xs text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
             </div>
 
         </div>
     </main>
 
     <script>
-        let uploadedFile = null;
+        const { createFFmpeg, fetchFile } = FFmpeg;
+        const ffmpeg = createFFmpeg({ log: true });
+        let myFile = null;
 
-        function fileChosen(input) {
+        // تحميل المحرك عند فتح الصفحة
+        async function loadEngine() {
+            try {
+                await ffmpeg.load();
+                document.getElementById('engineStatus').innerText = "المحرك جاهز ⚡";
+                document.getElementById('engineStatus').className = "text-xs text-green-400 bg-green-950/40 px-3.5 py-2 rounded-xl custom-border";
+            } catch (error) {
+                document.getElementById('engineStatus').innerText = "خطأ في تحميل المحرك";
+            }
+        }
+        loadEngine();
+
+        function handleFileSelected(input) {
             if (input.files && input.files[0]) {
-                uploadedFile = input.files[0];
-                document.getElementById('fileName').innerText = uploadedFile.name;
-                switchStep(2);
+                myFile = input.files[0];
+                document.getElementById('fileNameDisplay').innerText = myFile.name;
+                showStep(2);
             }
         }
 
-        function startAiProcessing() {
-            switchStep(3);
-            let progress = 0;
-            const bar = document.getElementById('aiProgressBar');
-            const percentText = document.getElementById('progressPercent');
-            const statusText = document.getElementById('aiStatusText');
+        async function startRealProcessing() {
+            if (!ffmpeg.isLoaded()) {
+                alert('الرجاء الانتظار قليلاً حتى يتم تجهيز المحرك.');
+                return;
+            }
 
-            const statuses = [
-                "جاري تحليل الأطر وإزالة التشويش بالشبكات العصبية...",
-                "تطبيق نموذج الـ Upscaling وزيادة حدة التفاصيل...",
-                "إعادة حساب معدل الإطارات (Motion Interpolation)...",
-                "دمج الصوت وتجهيز الملف النهائي MP4..."
-            ];
+            showStep(3);
+            const progressBar = document.getElementById('progressBar');
+            const processText = document.getElementById('processText');
 
-            let interval = setInterval(() => {
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    switchStep(4);
-                } else {
-                    progress += 10;
-                    bar.style.width = progress + '%';
-                    percentText.innerText = progress + '%';
-                    
-                    if (progress > 75) statusText.innerText = statuses[3];
-                    else if (progress > 50) statusText.innerText = statuses[2];
-                    else if (progress > 25) statusText.innerText = statuses[1];
-                }
-            }, 400);
-        }
+            try {
+                // كتابة الملف داخل ذاكرة FFmpeg الوهمية
+                const fileName = myFile.name;
+                ffmpeg.FS('writeFile', fileName, await fetchFile(myFile));
 
-        function downloadFile() {
-            if (uploadedFile) {
-                const a = document.createElement('a');
-                const url = URL.createObjectURL(uploadedFile);
-                a.href = url;
-                a.download = 'TopazAI_' + uploadedFile.name;
-                document.body.appendChild(a);
-                a.click();
+                progressBar.style.width = '30%';
+                processText.innerText = "جاري إعادة ترميز الفيديو وتعديل البتريت...";
+
+                // تنفيذ أمر الضغط الحقيقي عبر FFmpeg (تقليل الحجم ومنع التغبيش)
+                await ffmpeg.run('-i', fileName, '-vcodec', 'libx264', '-crf', '28', 'output.mp4');
+
+                progressBar.style.width = '90%';
+                processText.innerText = "جاري استخراج الملف النهائي...";
+
+                // قراءة النتيجة من الذاكرة
+                const data = ffmpeg.FS('readFile', 'output.mp4');
+                
+                // إنشاء رابط التحميل للملف الجديد كلياً
+                const videoBlob = new Blob([data.buffer], { type: 'video/mp4' });
+                const blobUrl = URL.createObjectURL(videoBlob);
+
+                document.getElementById('downloadBtn').href = blobUrl;
+                progressBar.style.width = '100%';
+                
                 setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            } else {
-                alert('لم يتم العثور على ملف الفيديو!');
+                    showStep(4);
+                }, 500);
+
+            } catch (err) {
+                console.error(err);
+                alert('حدث خطأ أثناء معالجة الفيديو. قد يكون حجم الفيديو كبيراً جداً على المتصفح.');
+                resetStep();
             }
         }
 
-        function switchStep(stepNum) {
-            [1, 2, 3, 4].forEach(i => {
-                document.getElementById('step-' + i).classList.add('hidden');
-            });
-            document.getElementById('step-' + stepNum).classList.remove('hidden');
+        function showStep(n) {
+            [1, 2, 3, 4].forEach(i => document.getElementById('step-' + i).classList.add('hidden'));
+            document.getElementById('step-' + n).classList.remove('hidden');
         }
 
-        function resetFlow() {
-            document.getElementById('videoInput').value = '';
-            uploadedFile = null;
-            switchStep(1);
+        function resetStep() {
+            document.getElementById('fileInput').value = '';
+            myFile = null;
+            showStep(1);
         }
     </script>
 </body>
