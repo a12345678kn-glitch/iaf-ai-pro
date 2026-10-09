@@ -1,229 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القاعدة ضغط - Ultra HD Quality</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
-        .pro-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
-        .pro-border { border: 1px solid rgba(59, 130, 246, 0.4); }
-        .pro-border-active { border: 2px solid #3b82f6; background-color: rgba(59, 130, 246, 0.08); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>طريقة التحميل</title>
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #121212;
+      --panel2: #1a1915;
+      --gold: #f5c928;
+      --gold2: #ffe477;
+      --text: #f5f1df;
+      --muted: #a5a092;
+      --border: #302d22;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Tahoma, Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .topbar {
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 16px;
+      border-bottom: 1px solid #211f19;
+      color: #ddd;
+    }
+
+    .brand {
+      color: var(--gold);
+      font-weight: bold;
+      font-size: 13px;
+    }
+
+    .address {
+      margin-right: auto;
+      direction: ltr;
+      background: #202020;
+      border-radius: 20px;
+      padding: 7px 13px;
+      color: #ccc;
+      font-size: 12px;
+    }
+
+    main {
+      width: min(760px, calc(100% - 28px));
+      margin: 18px auto 100px;
+    }
+
+    .notice {
+      border: 1px solid var(--border);
+      background: #10100e;
+      border-radius: 8px;
+      padding: 10px 13px;
+      color: var(--gold2);
+      font-size: 12px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(23px, 5vw, 32px);
+      margin: 26px 0 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin: 0 0 18px;
+      font-size: 12px;
+    }
+
+    .urlbox {
+      display: flex;
+      gap: 8px;
+      max-width: 560px;
+      margin: 0 auto 17px;
+      padding: 6px;
+      border: 1px solid #393321;
+      border-radius: 9px;
+      background: #111;
+    }
+
+    .urlbox input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: white;
+      padding: 8px;
+      direction: ltr;
+    }
+
+    button, select {
+      font: inherit;
+    }
+
+    .gold-button {
+      border: 0;
+      border-radius: 7px;
+      background: linear-gradient(110deg, var(--gold2), #e5ae00);
+      color: #17130a;
+      font-weight: bold;
+      padding: 10px 17px;
+      cursor: pointer;
+    }
+
+    .steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 560px;
+      margin: 18px auto;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 19px;
+      height: 19px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #29271f;
+      color: var(--gold);
+    }
+
+    .step.active .dot {
+      background: var(--gold);
+      color: #111;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 20px;
+      min-height: 220px;
+      box-shadow: 0 10px 35px #0008;
+    }
+
+    .card-title {
+      font-size: 16px;
+      margin: 0 0 5px;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.8;
+      margin: 5px 0 16px;
+    }
+
+    .filebox {
+      direction: ltr;
+      border: 1px solid #393321;
+      background: #0d0d0d;
+      border-radius: 8px;
+      padding: 12px;
+      color: #ddd;
+      overflow-wrap: anywhere;
+      font-size: 12px;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border: 1px solid var(--border);
+      background: #15140f;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 9px;
+      cursor: pointer;
+    }
+
+    .option:has(input:checked) {
+      border-color: var(--gold);
+    }
+
+    .option input { accent-color: var(--gold); margin-top: 3px; }
+    .option strong { display: block; margin-bottom: 4px; }
+    .option small { color: var(--muted); line-height: 1.6; }
+
+    .row {
+      display: flex;
+      gap: 9px;
+      margin-top: 12px;
+    }
+
+    select {
+      width: 100%;
+      color: white;
+      background: #1b1b1b;
+      border: 1px solid #393939;
+      border-radius: 7px;
+      padding: 11px;
+    }
+
+    .wide { width: 100%; margin-top: 12px; }
+
+    .progress-view {
+      display: none;
+      text-align: center;
+      min-height: 190px;
+      padding: 25px 10px;
+    }
+
+    .progress-view.show { display: block; }
+
+    .spinner {
+      width: 38px;
+      height: 38px;
+      border: 3px solid #383326;
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .progress-track {
+      max-width: 350px;
+      height: 5px;
+      background: #34312a;
+      border-radius: 9px;
+      margin: 18px auto 8px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--gold);
+      transition: width .3s;
+    }
+
+    .result {
+      display: none;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .result.show { display: block; }
+    .check {
+      width: 42px; height: 42px; display: grid; place-items: center;
+      margin: 0 auto 12px; border-radius: 50%;
+      background: var(--gold); color: #111; font-size: 22px;
+    }
+
+    .ad {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 8px;
+      text-align: center;
+      background: #111;
+      border-top: 1px solid #262626;
+      color: #ddd;
+      font-size: 11px;
+    }
+
+    .ad span { color: var(--gold); }
+
+    @media (max-width: 520px) {
+      main { width: calc(100% - 24px); margin-top: 12px; }
+      .card { padding: 15px; }
+      .topbar { height: 46px; }
+      .steps { font-size: 9px; }
+      .urlbox { gap: 3px; }
+      .gold-button { padding: 9px 11px; }
+    }
+  </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
 
-    <!-- الهيدر -->
-    <header class="p-4 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
-        <div class="flex items-center gap-2">
-            <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-sm">🗜️</span>
-            <span class="font-bold tracking-wider text-sm">القاعدة ضغط (Ultra HD)</span>
-        </div>
-        <div class="text-[11px] text-blue-400 bg-blue-950/40 px-3 py-1.5 rounded-lg pro-border flex items-center gap-2">
-            <span>جودة خارقة 4K / 120fps</span>
-            <span dir="ltr" class="text-zinc-400">⚡ نشط</span>
-        </div>
-    </header>
+<body>
+  <header class="topbar">
+    <span>☰</span>
+    <span class="brand">◆ أداة التحميل</span>
+    <span class="address">compressbase.com</span>
+    <span>⌂</span>
+  </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-2xl mx-auto w-full p-4 my-8">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-bold mb-2">معالجة الفيديو بأعلى جودة</h1>
-            <p class="text-zinc-400 text-xs md:text-sm">اختر الفيديو، وحدد إعدادات الجودة الخارقة لمنع ضغط تيك توك.</p>
-        </div>
+  <main>
+    <div class="notice">🟨 ملاحظة: استخدم الخدمة مع الملفات التي تملك حق تنزيلها.</div>
 
-        <div class="bg-zinc-900/90 pro-border rounded-2xl p-5 md:p-6 shadow-xl relative">
-            
-            <!-- الخطوة 1: رفع الفيديو أو الرابط -->
-            <div id="step-1">
-                <div class="text-blue-400 text-xs mb-3 font-semibold">1 | اختر الفيديو الخاص بك</div>
-                <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 transition mb-4" onclick="document.getElementById('videoFile').click()">
-                    <div class="text-2xl mb-1 text-blue-500">➕</div>
-                    <p class="text-xs font-semibold">حدد الفيديو بدقة عالية (4K / HD)</p>
-                    <p class="text-[10px] text-zinc-500 mt-1">أو اسحب الملف وأفلته هنا</p>
-                    <input type="file" id="videoFile" class="hidden" accept="video/*" onchange="fileSelected(this)">
-                </div>
+    <h1>طريقة التحميل</h1>
+    <p class="subtitle">اختر طريقة التحميل المناسبة لك</p>
 
-                <div class="relative">
-                    <div class="text-[11px] text-zinc-400 mb-1">أو استخدم رابط الفيديو المباشر</div>
-                    <div class="flex gap-2">
-                        <input type="text" id="videoUrl" placeholder="https://compressbase.com/clip/..." class="w-full bg-zinc-950 pro-border rounded-lg p-2.5 text-xs text-zinc-300 focus:outline-none focus:border-blue-500">
-                        <button onclick="handleUrlInput()" class="bg-blue-600/20 text-blue-400 px-4 rounded-lg text-xs font-bold border border-blue-500/30 hover:bg-blue-600/30 transition">استخدام</button>
-                    </div>
-                </div>
-            </div>
+    <form class="urlbox" id="urlForm">
+      <input id="urlInput" type="url" placeholder="ألصق رابط الفيديو هنا" required>
+      <button class="gold-button" type="submit">تحليل الرابط</button>
+    </form>
 
-            <!-- الخطوة 2: اختيار الطريقة -->
-            <div id="step-2" class="hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-blue-400 text-xs font-semibold">2 | تحديد خيارات الجودة الخارقة</span>
-                    <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">تغيير الفيديو</button>
-                </div>
-
-                <div class="bg-zinc-950 p-3 rounded-lg mb-4 pro-border flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold">4K/HD</span>
-                        <span id="fileName" class="text-xs text-zinc-300 truncate max-w-[200px]">فيديو جديد</span>
-                    </div>
-                    <span class="text-[10px] text-green-400">جاهز للتحسين</span>
-                </div>
-
-                <div class="space-y-3 mb-5">
-                    <label class="block pro-border-active p-3.5 rounded-xl cursor-pointer">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-xs">✨ تفعيل خوارزمية 4K + 120fps الخارقة</span>
-                            <span class="text-[9px] bg-red-600 text-white px-2 py-0.5 rounded font-bold">أعلى جودة</span>
-                        </div>
-                        <p class="text-[11px] text-zinc-400 mt-1">يثبت معدل الإطارات ويحافظ على حِدة التفاصيل والألوان ضد ضغط منصات التواصل.</p>
-                    </label>
-
-                    <label class="flex items-center gap-2 pro-border p-3 rounded-xl cursor-pointer bg-zinc-950/40">
-                        <input type="checkbox" id="tiktokMode" class="accent-red-500" checked>
-                        <span class="text-xs text-zinc-300">تطبيق كود ترميز مخصص لتفادي تغبيش تيك توك (Blur Fix)</span>
-                    </label>
-                </div>
-
-                <button onclick="openDeviceModal()" class="w-full py-3 rounded-xl pro-btn text-xs tracking-wide">
-                    بدء المعالجة بالجودة الخارقة ➔
-                </button>
-            </div>
-
-            <!-- الخطوة 3: شاشة الانتظار -->
-            <div id="step-3" class="hidden text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-10 w-10 border-3 border-red-500 border-t-transparent mb-3"></div>
-                <h3 class="text-base font-bold mb-1" dir="ltr">Processing Ultra HD MP4...</h3>
-                <p class="text-[11px] text-zinc-400 mb-4">جاري إعادة هيكلة الإطارات والبتريت للحفاظ على الجودة الخارقة</p>
-                <div class="w-full bg-zinc-800 rounded-full h-1.5 max-w-xs mx-auto overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-red-500 h-1.5 w-0 transition-all duration-300"></div>
-                </div>
-            </div>
-
-            <!-- الخطوة 4: النتيجة والتحميل -->
-            <div id="step-4" class="hidden text-center py-4">
-                <div class="text-2xl mb-1">🔥</div>
-                <h3 class="text-base font-bold mb-1">الفيديو جاهز بأعلى جودة ممكنة!</h3>
-                <p class="text-[11px] text-zinc-400 mb-3">تم تطبيق معايير الـ 4K ومعدل الإطارات العالي بنجاح</p>
-                
-                <div class="bg-zinc-950 pro-border p-3 rounded-xl text-right mb-4">
-                    <div class="flex justify-between items-center mb-1">
-                        <span class="text-[11px] text-blue-400 font-bold">هاشتاجات لضمان دعم الجودة:</span>
-                        <button onclick="copyTags()" class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded hover:bg-blue-700 transition">📋 نسخ الهاشتاجات</button>
-                    </div>
-                    <p id="tagsText" class="text-[10px] text-zinc-300 select-all">#TikQuality #4k #60fps #explore #الشعب_الصيني_ماله_حل😂</p>
-                </div>
-
-                <a id="downloadLink" href="#" class="block w-full py-3 rounded-xl pro-btn text-xs text-center mb-3" download>
-                    تنزيل الفيديو بدقة Ultra HD ⬇
-                </a>
-                <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- نافذة اختيار الأجهزة -->
-    <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-zinc-900 pro-border rounded-2xl p-5 max-w-sm w-full text-center">
-            <h3 class="text-sm font-bold text-blue-400 mb-1">تحسين النشر على الأجهزة</h3>
-            <p class="text-[11px] text-zinc-400 mb-4">اختر جهازك لضمان توافق الترميز الحقيقي:</p>
-            
-            <div class="grid grid-cols-3 gap-2 mb-4">
-                <button onclick="startProcessing()" class="pro-border bg-zinc-950 p-3 rounded-xl hover:border-red-500 transition text-center">
-                    <div class="text-lg mb-1">📱</div>
-                    <div class="text-[11px] font-bold">منتج أبل</div>
-                    <div class="text-[9px] text-zinc-500">ايفون وأيباد</div>
-                </button>
-                <button onclick="startProcessing()" class="pro-border bg-zinc-950 p-3 rounded-xl hover:border-red-500 transition text-center">
-                    <div class="text-lg mb-1">🤖</div>
-                    <div class="text-[11px] font-bold">أندرويد</div>
-                    <div class="text-[9px] text-zinc-500">سامسونج وغيرها</div>
-                </button>
-                <button onclick="startProcessing()" class="pro-border bg-zinc-950 p-3 rounded-xl hover:border-red-500 transition text-center">
-                    <div class="text-lg mb-1">💻</div>
-                    <div class="text-[11px] font-bold">كمبيوتر</div>
-                    <div class="text-[9px] text-zinc-500">مكتب أو محمول</div>
-                </button>
-            </div>
-
-            <button onclick="closeDeviceModal()" class="text-xs text-zinc-400 underline">إلغاء</button>
-        </div>
+    <div class="steps">
+      <div class="step active"><span class="dot">1</span> الرابط</div>
+      <span>ــــــــــــ</span>
+      <div class="step"><span class="dot">2</span> الخيارات</div>
+      <span>ــــــــــــ</span>
+      <div class="step"><span class="dot">3</span> التحميل</div>
     </div>
 
-    <script>
-        let selectedFile = null;
+    <section class="card" id="optionsView">
+      <h2 class="card-title">اختر طريقة التحميل</h2>
+      <p class="hint">أدخل رابط الملف أو الفيديو، ثم حدد الجودة والصيغة المطلوبة.</p>
 
-        function fileSelected(input) {
-            if (input.files && input.files[0]) {
-                selectedFile = input.files[0];
-                document.getElementById('fileName').innerText = selectedFile.name;
-                switchStep(2);
-            }
+      <div class="filebox" id="fileName">لم يتم إدخال رابط بعد</div>
+
+      <label class="option">
+        <input type="radio" name="method" value="fast" checked>
+        <span>
+          <strong>التحميل السريع</strong>
+          <small>تحضير الملف بأفضل جودة متاحة تلقائيًا.</small>
+        </span>
+      </label>
+
+      <label class="option">
+        <input type="radio" name="method" value="custom">
+        <span>
+          <strong>اختيار الجودة والصيغة</strong>
+          <small>حدد إعدادات الملف قبل بدء التجهيز.</small>
+        </span>
+      </label>
+
+      <div class="row">
+        <select id="format">
+          <option value="MP4">صيغة الفيديو: MP4</option>
+          <option value="MP3">صيغة الصوت: MP3</option>
+          <option value="WEBM">صيغة الفيديو: WEBM</option>
+        </select>
+        <select id="quality">
+          <option>الجودة: تلقائي</option>
+          <option>الجودة: 1080p</option>
+          <option>الجودة: 720p</option>
+          <option>الجودة: 480p</option>
+        </select>
+      </div>
+
+      <button class="gold-button wide" id="startButton">ابدأ التجهيز</button>
+      <p class="hint" id="message" aria-live="polite"></p>
+    </section>
+
+    <section class="card progress-view" id="progressView">
+      <div class="spinner"></div>
+      <strong id="progressText">Preparing the final MP4</strong>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <small class="hint" id="percent">جارٍ تجهيز الملف…</small>
+    </section>
+
+    <section class="card result" id="resultView">
+      <div class="check">✓</div>
+      <h2>تم تجهيز الطلب</h2>
+      <p class="hint">هذه واجهة تجريبية. اربط زر التنزيل بخادمك لإنتاج ملف حقيقي.</p>
+      <button class="gold-button" onclick="resetPage()">العودة</button>
+    </section>
+  </main>
+
+  <div class="ad">Want Fewer Ads Like This One? <span>◆ grow</span></div>
+
+  <script>
+    const form = document.getElementById("urlForm");
+    const urlInput = document.getElementById("urlInput");
+    const fileName = document.getElementById("fileName");
+    const message = document.getElementById("message");
+
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const url = urlInput.value.trim();
+
+      try {
+        new URL(url);
+        fileName.textContent = url;
+        message.textContent = "تم إدخال الرابط. اختر إعدادات الملف ثم ابدأ التجهيز.";
+      } catch {
+        message.textContent = "يرجى إدخال رابط صحيح.";
+      }
+    });
+
+    document.getElementById("startButton").addEventListener("click", () => {
+      if (fileName.textContent === "لم يتم إدخال رابط بعد") {
+        message.textContent = "أدخل رابطًا أولًا.";
+        return;
+      }
+
+      document.getElementById("optionsView").style.display = "none";
+      document.getElementById("progressView").classList.add("show");
+
+      let progress = 0;
+      const fill = document.getElementById("progressFill");
+      const percent = document.getElementById("percent");
+
+      const timer = setInterval(() => {
+        progress += 10;
+        fill.style.width = progress + "%";
+        percent.textContent = "جارٍ التجهيز… " + progress + "%";
+
+        if (progress >= 100) {
+          clearInterval(timer);
+          document.getElementById("progressView").classList.remove("show");
+          document.getElementById("resultView").classList.add("show");
         }
+      }, 250);
+    });
 
-        function handleUrlInput() {
-            const urlVal = document.getElementById('videoUrl').value;
-            if(urlVal) {
-                document.getElementById('fileName').innerText = "فيديو من رابط خارجي";
-                switchStep(2);
-            } else {
-                alert('الرجاء إدخال رابط صالح');
-            }
-        }
-
-        function openDeviceModal() {
-            document.getElementById('deviceModal').classList.remove('hidden');
-        }
-
-        function closeDeviceModal() {
-            document.getElementById('deviceModal').classList.add('hidden');
-        }
-
-        function startProcessing() {
-            closeDeviceModal();
-            switchStep(3);
-
-            let progress = 0;
-            const bar = document.getElementById('progressBar');
-            
-            let interval = setInterval(() => {
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    switchStep(4);
-                    
-                    if (selectedFile) {
-                        const fileURL = URL.createObjectURL(selectedFile);
-                        document.getElementById('downloadLink').href = fileURL;
-                        document.getElementById('downloadLink').setAttribute('download', 'UltraHD_' + selectedFile.name);
-                    } else {
-                        document.getElementById('downloadLink').href = "#";
-                    }
-                } else {
-                    progress += 20;
-                    bar.style.width = progress + '%';
-                }
-            }, 350);
-        }
-
-        function copyTags() {
-            const tagsText = document.getElementById('tagsText').innerText;
-            navigator.clipboard.writeText(tagsText).then(() => {
-                alert('تم نسخ هاشتاجات الجودة الخارقة بنجاح!');
-            });
-        }
-
-        function switchStep(num) {
-            ['1', '2', '3', '4'].forEach(n => document.getElementById('step-' + n).classList.add('hidden'));
-            document.getElementById('step-' + num).classList.remove('hidden');
-        }
-
-        function resetAll() {
-            document.getElementById('videoFile').value = '';
-            document.getElementById('videoUrl').value = '';
-            selectedFile = null;
-            switchStep(1);
-        }
-    </script>
+    function resetPage() {
+      location.reload();
+    }
+  </script>
 </body>
 </html>
