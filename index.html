@@ -52,7 +52,7 @@
                 </div>
             </div>
 
-            <!-- الخطوة 2: إعدادات موديلات الذكاء الاصطناعي (مثل توباز) -->
+            <!-- الخطوة 2: إعدادات موديلات الذكاء الاصطناعي -->
             <div id="step-2" class="hidden">
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-blue-400 text-xs font-semibold">2 | تخصيص خوارزميات الذكاء الاصطناعي</span>
@@ -68,7 +68,6 @@
                 </div>
 
                 <div class="space-y-3 mb-5">
-                    <!-- اختيار الموديل -->
                     <div class="bg-gray-900/60 p-3 rounded-xl ai-border">
                         <label class="block text-xs font-bold text-gray-300 mb-1.5">نموذج المعالجة (AI Model):</label>
                         <select id="aiModel" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg ai-border focus:outline-none">
@@ -79,7 +78,6 @@
                         </select>
                     </div>
 
-                    <!-- معاملات التكبير ودقة الإطارات -->
                     <div class="grid grid-cols-2 gap-3">
                         <div class="bg-gray-900/60 p-3 rounded-xl ai-border">
                             <label class="block text-xs font-bold text-gray-300 mb-1.5">مضاعف الدقة (Upscale):</label>
@@ -105,7 +103,7 @@
                 </button>
             </div>
 
-            <!-- الخطوة 3: شاشة المعالجة الذكية بالذكاء الاصطناعي -->
+            <!-- الخطوة 3: شاشة المعالجة الذكية -->
             <div id="step-3" class="hidden text-center py-8">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4"></div>
                 <h3 class="text-sm font-bold mb-1" dir="ltr">Topaz AI Neural Engine Processing...</h3>
@@ -117,7 +115,7 @@
                 <span id="progressPercent" class="text-xs text-blue-400 font-bold">0%</span>
             </div>
 
-            <!-- الخطوة 4: النتيجة النهائية وجاهزية التحميل -->
+            <!-- الخطوة 4: النتيجة النهائية وزر التحميل المباشر -->
             <div id="step-4" class="hidden text-center py-4">
                 <div class="text-3xl mb-2">✨</div>
                 <h3 class="text-base font-bold mb-1">تمت معالجة الفيديو بنجاح!</h3>
@@ -132,9 +130,9 @@
                     </ul>
                 </div>
 
-                <a id="downloadResultBtn" href="#" class="block w-full py-3.5 rounded-xl ai-gradient text-xs font-bold text-center mb-3 shadow-lg" download>
+                <button onclick="downloadFile()" class="block w-full py-3.5 rounded-xl ai-gradient text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
                     تنزيل الفيديو المعالج بالذكاء الاصطناعي ⬇
-                </a>
+                </button>
                 <button onclick="resetFlow()" class="text-xs text-gray-400 underline">معالجة فيديو آخر 🔄</button>
             </div>
 
@@ -170,11 +168,6 @@
                 if (progress >= 100) {
                     clearInterval(interval);
                     switchStep(4);
-                    if (uploadedFile) {
-                        const fileURL = URL.createObjectURL(uploadedFile);
-                        document.getElementById('downloadResultBtn').href = fileURL;
-                        document.getElementById('downloadResultBtn').setAttribute('download', 'TopazAI_' + uploadedFile.name);
-                    }
                 } else {
                     progress += 10;
                     bar.style.width = progress + '%';
@@ -185,6 +178,23 @@
                     else if (progress > 25) statusText.innerText = statuses[1];
                 }
             }, 400);
+        }
+
+        function downloadFile() {
+            if (uploadedFile) {
+                const a = document.createElement('a');
+                const url = URL.createObjectURL(uploadedFile);
+                a.href = url;
+                a.download = 'TopazAI_' + uploadedFile.name;
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            } else {
+                alert('لم يتم العثور على ملف الفيديو!');
+            }
         }
 
         function switchStep(stepNum) {
