@@ -12,7 +12,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .logo{font-size:22px;font-weight:900;color:#fbbf24}
 .badge{background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 12px;border-radius:20px;color:#fbbf24;font-size:11px}
 .hero{text-align:center;padding:40px 0 30px}
-.hero h1{font-size:34px;margin:10px 0;color:#fff}
+.hero h1{font-size:34px;margin:10px 0}
 .hero h1 span{color:#fbbf24}
 .hero p{color:#888;line-height:1.7;font-size:14px}
 .card{background:#111;border:1px solid #1a1a1a;border-radius:16px;padding:20px;margin-top:15px}
@@ -24,14 +24,13 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .upload p{color:#666;font-size:12px}
 input[type=file]{display:none}
 .hidden{display:none}
-.method{background:#0d0d0d;border:2px solid #1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s;position:relative}
+.method{background:#0d0d0d;border:2px solid #1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s}
 .method:hover{border-color:#2a2a2a}
 .method.active{border-color:#fbbf24;background:#1a1500}
-.method-title{font-weight:bold;font-size:14px;color:#fff;margin-bottom:6px}
+.method-title{font-weight:bold;font-size:14px;margin-bottom:6px}
 .method-desc{font-size:12px;color:#888;line-height:1.5}
 .primary-btn{width:100%;padding:16px;border-radius:12px;border:0;background:#fbbf24;color:#000;font-weight:900;font-size:15px;cursor:pointer;margin-top:15px}
-.primary-btn:hover:not(:disabled){background:#fcd34d}
-.primary-btn:disabled{opacity:.4;cursor:not-allowed}
+.primary-btn:disabled{opacity:.4}
 .progress{height:8px;background:#1a1a1a;border-radius:8px;overflow:hidden;margin-top:15px}
 .bar{height:100%;width:0%;background:#fbbf24;transition:width .3s}
 .status{text-align:center;color:#888;margin-top:12px;padding:10px;border-radius:10px;font-size:12px}
@@ -51,12 +50,12 @@ footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
 <div class="container">
 <header>
 <div class="logo">IAF VideoCompress</div>
-<div class="badge">⚡ سريع</div>
+<div class="badge">⚡ MP4</div>
 </header>
 
 <section class="hero">
 <h1>اضغط فيديوهاتك <span>في ثوانٍ</span></h1>
-<p>ضغط محلي داخل المتصفح — بدون رفع، بدون انتظار</p>
+<p>ضغط محلي داخل المتصفح — MP4 + صوت</p>
 </section>
 
 <div class="card" id="uploadCard">
@@ -74,20 +73,26 @@ footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
 
 <div class="method active" data-quality="high">
 <div class="method-title">🎯 جودة عالية</div>
-<div class="method-desc">أفضل جودة — تقليل طفيف بالحجم (مناسب للنشر)</div>
+<div class="method-desc">1080p • 5 Mbps — أفضل جودة</div>
 </div>
 
 <div class="method" data-quality="medium">
 <div class="method-title">⚖️ متوازن</div>
-<div class="method-desc">توازن بين الجودة والحجم (موصى به)</div>
+<div class="method-desc">720p • 2.5 Mbps — موصى به</div>
 </div>
 
 <div class="method" data-quality="low">
 <div class="method-title">📉 حجم صغير</div>
-<div class="method-desc">حجم أقل — جودة مقبولة (مناسب للواتساب)</div>
+<div class="method-desc">480p • 1 Mbps — للواتساب</div>
 </div>
 
 <button class="primary-btn" id="startBtn">▶️ ابدأ الضغط</button>
+</div>
+
+<div class="card hidden" id="processingCard">
+<h3>⏳ جاري الضغط...</h3>
+<div class="progress"><div class="bar" id="progressBar"></div></div>
+<div class="status" id="statusText">جاري المعالجة...</div>
 </div>
 
 <div class="card hidden" id="resultCard">
@@ -109,12 +114,6 @@ footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
 <video id="previewVideo" class="video-preview" controls></video>
 <a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو المضغوط</a>
 <button class="secondary-btn" onclick="location.reload()">🔄 ضغط فيديو آخر</button>
-</div>
-
-<div class="card hidden" id="processingCard">
-<h3>⏳ جاري الضغط...</h3>
-<div class="progress"><div class="bar" id="progressBar"></div></div>
-<div class="status" id="statusText">جاري المعالجة...</div>
 </div>
 
 <footer>IAF VideoCompress © 2026</footer>
@@ -152,84 +151,127 @@ if(!selectedFile)return;
 startBtn.disabled=true;
 methodCard.classList.add("hidden");
 processingCard.classList.remove("hidden");
+
 try{
-const qualitySettings={
+const settings={
 high:{width:1920,bitrate:5000000},
 medium:{width:1280,bitrate:2500000},
 low:{width:854,bitrate:1000000}
 };
-const settings=qualitySettings[selectedQuality];
+const cfg=settings[selectedQuality];
+
 statusText.textContent="جاري قراءة الفيديو...";
-progressBar.style.width="20%";
+progressBar.style.width="10%";
+
 const video=document.createElement("video");
 video.src=URL.createObjectURL(selectedFile);
-video.muted=true;
-await new Promise(resolve=>{
+video.muted=false;
+video.playsInline=true;
+await new Promise((resolve,reject)=>{
 video.onloadedmetadata=resolve;
+video.onerror=reject;
 });
-const targetWidth=Math.min(settings.width,video.videoWidth);
+
+const targetWidth=Math.min(cfg.width,video.videoWidth);
 const targetHeight=Math.round(video.videoHeight*(targetWidth/video.videoWidth));
+
 const canvas=document.createElement("canvas");
 canvas.width=targetWidth;
 canvas.height=targetHeight;
 const ctx=canvas.getContext("2d");
-statusText.textContent="جاري الضغط...";
-progressBar.style.width="40%";
+
+statusText.textContent="جاري تجهيز المعالجة...";
+progressBar.style.width="20%";
+
 const stream=canvas.captureStream(30);
-const mimeType=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm';
+const videoTrack=stream.getVideoTracks()[0];
+
+const mimeCandidates=[
+'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
+'video/mp4;codecs=h264,aac',
+'video/mp4',
+'video/webm;codecs=h264,opus',
+'video/webm;codecs=vp9,opus',
+'video/webm'
+];
+
+let mimeType='';
+for(const m of mimeCandidates){
+if(MediaRecorder.isTypeSupported(m)){
+mimeType=m;
+break;
+}
+}
+
+if(!mimeType){
+throw new Error("المتصفح لا يدعم أي صيغة للتسجيل");
+}
+
 const recorder=new MediaRecorder(stream,{
 mimeType:mimeType,
-videoBitsPerSecond:settings.bitrate
+videoBitsPerSecond:cfg.bitrate,
+audioBitsPerSecond:128000
 });
+
 const chunks=[];
 recorder.ondataavailable=e=>{
 if(e.data.size>0)chunks.push(e.data);
 };
-const recordingDone=new Promise(resolve=>{
+
+const done=new Promise(resolve=>{
 recorder.onstop=resolve;
 });
+
 recorder.start(100);
 video.currentTime=0;
 await video.play();
+
 const duration=video.duration;
-const startTime=Date.now();
-let frameCount=0;
-async function captureFrame(){
+
+function captureLoop(){
 if(video.ended||video.currentTime>=duration){
-recorder.stop();
+if(recorder.state!=="inactive")recorder.stop();
 return;
 }
 ctx.drawImage(video,0,0,targetWidth,targetHeight);
-frameCount++;
-const progress=40+Math.min((video.currentTime/duration)*50,50);
+const progress=20+Math.min((video.currentTime/duration)*70,70);
 progressBar.style.width=progress+"%";
 statusText.textContent="جاري الضغط... "+Math.round((video.currentTime/duration)*100)+"%";
-requestAnimationFrame(captureFrame);
+requestAnimationFrame(captureLoop);
 }
+
 video.onended=()=>{
-recorder.stop();
+if(recorder.state!=="inactive")recorder.stop();
 };
-captureFrame();
-await recordingDone;
+
+captureLoop();
+await done;
+
 statusText.textContent="جاري إنشاء الملف...";
 progressBar.style.width="95%";
-const blob=new Blob(chunks,{type:"video/webm"});
+
+const ext=mimeType.includes("mp4")?"mp4":"webm";
+const blob=new Blob(chunks,{type:mimeType});
 const url=URL.createObjectURL(blob);
+
 document.getElementById("newSize").textContent=formatSize(blob.size);
 const savings=Math.round((1-blob.size/selectedFile.size)*100);
 document.getElementById("savings").textContent=savings+"% توفير";
 document.getElementById("previewVideo").src=url;
 document.getElementById("downloadBtn").href=url;
-document.getElementById("downloadBtn").download="compressed_"+selectedFile.name.replace(/\.[^.]+$/,".webm");
+document.getElementById("downloadBtn").download="compressed_"+selectedFile.name.replace(/\.[^.]+$/,"."+ext);
+
 progressBar.style.width="100%";
 statusText.textContent="✅ تم الضغط بنجاح!";
 statusText.className="status success";
 processingCard.classList.add("hidden");
 resultCard.classList.remove("hidden");
+
 }catch(err){
 console.error(err);
 statusText.textContent="❌ فشل: "+err.message;
 statusText.className="status error";
+startBtn.disabled=false;
 }
 });
 
