@@ -3,230 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القاعدة ضغط - CompressBase</title>
+    <title>القاعدة ضغط - Pro Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
-        .gold-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: bold; }
-        .gold-border { border: 1px solid rgba(245, 158, 11, 0.3); }
-        .gold-border-active { border: 2px solid #f59e0b; background-color: rgba(245, 158, 11, 0.05); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
+        .pro-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
+        .pro-border { border: 1px solid rgba(59, 130, 246, 0.3); }
+        .pro-border-active { border: 2px solid #3b82f6; background-color: rgba(59, 130, 246, 0.05); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
-    <!-- الهيدر -->
     <header class="p-4 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
         <div class="flex items-center gap-2">
-            <span class="bg-amber-500 text-black font-bold px-2.5 py-1 rounded text-sm">🗜️</span>
+            <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-sm">🗜️</span>
             <span class="font-bold tracking-wider text-sm">القاعدة ضغط</span>
         </div>
-        <div class="text-[11px] text-amber-400 bg-amber-950/40 px-3 py-1.5 rounded-lg gold-border flex items-center gap-2">
-            <span>استخدامات متبقية اليوم غير محدود</span>
-            <span dir="ltr" class="text-zinc-400">14:06:39</span>
+        <div class="text-[11px] text-blue-400 bg-blue-950/40 px-3 py-1.5 rounded-lg pro-border">
+            استخدامات مجانية غير محدودة
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
     <main class="max-w-2xl mx-auto w-full p-4 my-8">
         <div class="text-center mb-6">
             <h1 class="text-2xl md:text-3xl font-bold mb-2">طريقة التحميل</h1>
             <p class="text-zinc-400 text-xs md:text-sm">اختر مقطع فيديو، وحدد طريقة، ثم قم بتنزيل الملف النهائي.</p>
         </div>
 
-        <div class="bg-zinc-900/80 gold-border rounded-2xl p-5 md:p-6 shadow-xl relative">
+        <div class="bg-zinc-900/90 pro-border rounded-2xl p-5 md:p-6 shadow-xl">
             
-            <!-- الخطوة 1: رفع الفيديو أو الرابط -->
             <div id="step-1">
-                <div class="text-amber-400 text-xs mb-3 font-semibold">1 | اختر الفيديو الخاص بك</div>
-                <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center cursor-pointer hover:border-amber-500 transition mb-4" onclick="document.getElementById('fileInput').click()">
-                    <div class="text-2xl mb-1 text-amber-500">➕</div>
+                <div class="text-blue-400 text-xs mb-3 font-semibold">1 | اختر الفيديو الخاص بك</div>
+                <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 transition mb-4" onclick="document.getElementById('videoFile').click()">
+                    <div class="text-2xl mb-1 text-blue-500">➕</div>
                     <p class="text-xs font-semibold">حدد الفيديو</p>
                     <p class="text-[10px] text-zinc-500 mt-1">أو اسحب الملف وأفلته هنا</p>
-                    <input type="file" id="fileInput" class="hidden" accept="video/*" onchange="handleFileSelected(this)">
-                </div>
-
-                <div class="relative">
-                    <div class="text-[11px] text-zinc-400 mb-1">أو استخدم رابط البت</div>
-                    <div class="flex gap-2">
-                        <input type="text" id="videoUrl" placeholder="https://compressbase.com/clip/..." class="w-full bg-zinc-950 gold-border rounded-lg p-2.5 text-xs text-zinc-300 focus:outline-none focus:border-amber-500">
-                        <button onclick="handleUrlInput()" class="bg-amber-500/20 text-amber-400 px-4 rounded-lg text-xs font-bold border border-amber-500/30 hover:bg-amber-500/30 transition">استخدام</button>
-                    </div>
+                    <input type="file" id="videoFile" class="hidden" accept="video/*" onchange="fileSelected(this)">
                 </div>
             </div>
 
-            <!-- الخطوة 2: اختيار الطريقة -->
             <div id="step-2" class="hidden">
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-amber-400 text-xs font-semibold">2 | اختر طريقة</span>
-                    <button onclick="resetToStep1()" class="text-[11px] text-zinc-400 underline">تغيير الفيديو</button>
+                    <span class="text-blue-400 text-xs font-semibold">2 | اختر طريقة المعالجة</span>
+                    <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">تغيير الفيديو</button>
                 </div>
 
-                <div class="bg-zinc-950 p-2.5 rounded-lg mb-4 flex items-center justify-between gold-border">
-                    <div class="flex items-center gap-2.5">
-                        <span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-[10px] font-bold">mp4</span>
-                        <span class="text-xs truncate text-zinc-300 max-w-[200px]" id="file-name-display">فيديو جديد</span>
-                    </div>
-                    <span class="text-[10px] text-zinc-500">جاهز</span>
+                <div class="bg-zinc-950 p-3 rounded-lg mb-4 pro-border flex items-center justify-between">
+                    <span id="fileName" class="text-xs text-zinc-300 truncate"></span>
+                    <span class="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-0.5 rounded">جاهز</span>
                 </div>
 
-                <div class="space-y-2.5 mb-5">
-                    <!-- الخيار الأول -->
-                    <label class="block gold-border-active p-3.5 rounded-xl cursor-pointer">
+                <div class="space-y-3 mb-5">
+                    <label class="block pro-border-active p-3.5 rounded-xl cursor-pointer">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-xs">⭐ أعلى جودة + طريقة معدل الإطارات</span>
-                            <span class="text-[9px] bg-amber-500 text-black px-2 py-0.5 rounded font-bold">موصى به</span>
+                            <span class="font-bold text-xs">🔥 أعلى جودة + معدل إطارات 60fps</span>
+                            <span class="text-[9px] bg-red-600 text-white px-2 py-0.5 rounded font-bold">موصى به</span>
                         </div>
-                        <p class="text-[11px] text-zinc-400 mt-1 leading-relaxed">يتوفر إصدار جديد، يحافظ على أعلى جودة ممكنة ويدعم الفيديو بدقة تصل إلى 1080 بكسل و120 إطاراً في الثانية.</p>
-                    </label>
-
-                    <!-- خيار إضافي لتحسين حجم تيك توك -->
-                    <label class="flex items-start gap-2.5 gold-border p-3 rounded-xl cursor-pointer bg-zinc-950/50">
-                        <input type="checkbox" id="tiktokOpt" class="mt-0.5 accent-amber-500">
-                        <div>
-                            <span class="text-xs font-bold text-amber-400">تحسين حجم الملف لتطبيق تيك توك</span>
-                            <p class="text-[10px] text-zinc-400 mt-0.5">يضغط حجم الملفات الكبيرة مع الحفاظ على جودة الصورة.</p>
-                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-1">يحافظ على أعلى جودة ويدعم رفع الدقة لتناسب تيك توك.</p>
                     </label>
                 </div>
 
-                <button onclick="openDeviceModal()" class="w-full py-3 rounded-xl gold-btn text-xs tracking-wide">
+                <button onclick="startProcessing()" class="w-full py-3 rounded-xl pro-btn text-xs tracking-wide">
                     بدء المعالجة ➔
                 </button>
             </div>
 
-            <!-- الخطوة 3: شاشة الانتظار المعالجة -->
-            <div id="step-3" class="hidden text-center py-6">
-                <div class="inline-block animate-spin rounded-full h-10 w-10 border-3 border-amber-500 border-t-transparent mb-3"></div>
+            <div id="step-3" class="hidden text-center py-8">
+                <div class="inline-block animate-spin rounded-full h-10 w-10 border-3 border-red-500 border-t-transparent mb-3"></div>
                 <h3 class="text-base font-bold mb-1" dir="ltr">Preparing the final MP4</h3>
-                <p class="text-[11px] text-zinc-400 mb-4">أبق هذه الصفحة مفتوحة حتى يصبح الفيديو جاهزاً</p>
-                <div class="w-full bg-zinc-800 rounded-full h-1.5 max-w-xs mx-auto overflow-hidden">
-                    <div id="progressBar" class="bg-amber-500 h-1.5 w-0 transition-all duration-300"></div>
-                </div>
+                <p class="text-[11px] text-zinc-400">جاري ضغط وتحسين الفيديو...</p>
             </div>
 
-            <!-- الخطوة 4: النتيجة والتحميل -->
-            <div id="step-4" class="hidden text-center py-2">
+            <div id="step-4" class="hidden text-center py-4">
                 <div class="text-2xl mb-1">✅</div>
                 <h3 class="text-base font-bold mb-1">الفيديو الخاص بك جاهز</h3>
-                <p class="text-[11px] text-zinc-400 mb-3">تم الانتهاء بنجاح من طريقة أعلى جودة + معدل الإطارات</p>
+                <p class="text-[11px] text-zinc-400 mb-4">تم الانتهاء من ضغط الفيديو بنجاح</p>
                 
-                <div class="bg-zinc-950 gold-border p-3 rounded-xl text-right mb-4">
-                    <div class="text-[11px] text-amber-400 font-bold mb-1">قبل التحميل على تيك توك:</div>
-                    <p class="text-[10px] text-zinc-300">استخدم تطبيق TikTok على الويب لرفع الفيديو بمكتب اعليتا • لا تقم بتغيير أو قص أو اضافة موسيقى • استخدم #Compressbase</p>
-                </div>
-
-                <a id="downloadLink" href="#" class="block w-full py-3 rounded-xl gold-btn text-xs text-center mb-3" download>
+                <a id="downloadLink" href="#" class="block w-full py-3 rounded-xl pro-btn text-xs text-center mb-3" download>
                     تنزيل الفيديو ⬇
                 </a>
-                <button onclick="resetToStep1()" class="text-[11px] text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
+                <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
             </div>
 
         </div>
     </main>
 
-    <!-- نافذة اختيار الأجهزة المنبثقة (Modal) -->
-    <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-zinc-900 gold-border rounded-2xl p-5 max-w-sm w-full text-center">
-            <h3 class="text-sm font-bold text-amber-400 mb-1">تحسين للنشر على الأجهزة</h3>
-            <p class="text-[11px] text-zinc-400 mb-4">هل تنشر على:</p>
-            
-            <div class="grid grid-cols-3 gap-2 mb-4">
-                <button onclick="startProcessing()" class="gold-border bg-zinc-950 p-3 rounded-xl hover:border-amber-500 transition text-center">
-                    <div class="text-lg mb-1">📱</div>
-                    <div class="text-[11px] font-bold">منتج أبل</div>
-                    <div class="text-[9px] text-zinc-500">ايفون وأيباد</div>
-                </button>
-                <button onclick="startProcessing()" class="gold-border bg-zinc-950 p-3 rounded-xl hover:border-amber-500 transition text-center">
-                    <div class="text-lg mb-1">🤖</div>
-                    <div class="text-[11px] font-bold">أندرويد</div>
-                    <div class="text-[9px] text-zinc-500">سامسونج وغيرها</div>
-                </button>
-                <button onclick="startProcessing()" class="gold-border bg-zinc-950 p-3 rounded-xl hover:border-amber-500 transition text-center">
-                    <div class="text-lg mb-1">💻</div>
-                    <div class="text-[11px] font-bold">كمبيوتر</div>
-                    <div class="text-[9px] text-zinc-500">مكتب أو محمول</div>
-                </button>
-            </div>
-
-            <button onclick="closeDeviceModal()" class="text-xs text-zinc-400 underline">إلغاء</button>
-        </div>
-    </div>
-
-    <!-- الفوتر -->
-    <footer class="text-center p-4 text-[11px] text-zinc-600 border-t border-zinc-900">
-        CompressBase Clone - جميع الحقوق محفوظة
-    </footer>
-
     <script>
-        let uploadedFile = null;
+        let selectedFile = null;
 
-        function handleFileSelected(input) {
+        function fileSelected(input) {
             if (input.files && input.files[0]) {
-                uploadedFile = input.files[0];
-                document.getElementById('file-name-display').innerText = uploadedFile.name;
-                switchToStep(2);
+                selectedFile = input.files[0];
+                document.getElementById('fileName').innerText = selectedFile.name;
+                switchStep(2);
             }
-        }
-
-        function handleUrlInput() {
-            const urlVal = document.getElementById('videoUrl').value;
-            if(urlVal) {
-                document.getElementById('file-name-display').innerText = "فيديو من رابط خارجي";
-                switchToStep(2);
-            } else {
-                alert('الرجاء إدخال رابط صالح');
-            }
-        }
-
-        function openDeviceModal() {
-            document.getElementById('deviceModal').classList.remove('hidden');
-        }
-
-        function closeDeviceModal() {
-            document.getElementById('deviceModal').classList.add('hidden');
         }
 
         function startProcessing() {
-            closeDeviceModal();
-            switchToStep(3);
+            switchStep(3);
 
-            let progress = 0;
-            const bar = document.getElementById('progressBar');
-            
-            let interval = setInterval(() => {
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    switchToStep(4);
-                    
-                    if (uploadedFile) {
-                        const fileURL = URL.createObjectURL(uploadedFile);
-                        document.getElementById('downloadLink').href = fileURL;
-                        document.getElementById('downloadLink').setAttribute('download', 'compressed_' + uploadedFile.name);
-                    } else {
-                        document.getElementById('downloadLink').href = "#";
-                    }
-                } else {
-                    progress += 15;
-                    bar.style.width = progress + '%';
-                }
-            }, 300);
+            setTimeout(() => {
+                switchStep(4);
+                const fileURL = URL.createObjectURL(selectedFile);
+                document.getElementById('downloadLink').href = fileURL;
+                document.getElementById('downloadLink').setAttribute('download', 'compressed_' + selectedFile.name);
+            }, 2000);
         }
 
-        function switchToStep(stepNum) {
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-3').classList.add('hidden');
-            document.getElementById('step-4').classList.add('hidden');
-            
-            document.getElementById('step-' + stepNum).classList.remove('hidden');
+        function switchStep(num) {
+            ['1', '2', '3', '4'].forEach(n => document.getElementById('step-' + n).classList.add('hidden'));
+            document.getElementById('step-' + num).classList.remove('hidden');
         }
 
-        function resetToStep1() {
-            document.getElementById('fileInput').value = '';
-            document.getElementById('videoUrl').value = '';
-            uploadedFile = null;
-            switchToStep(1);
+        function resetAll() {
+            document.getElementById('videoFile').value = '';
+            selectedFile = null;
+            switchStep(1);
         }
     </script>
 </body>
