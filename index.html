@@ -1,265 +1,408 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القاعدة ضغط - CompressBase Pro Ultra</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
-    <style>
-        body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
-        .custom-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
-        .custom-border { border: 1px solid rgba(59, 130, 246, 0.4); }
-        .custom-border-active { border: 2px solid #3b82f6; background-color: rgba(59, 130, 246, 0.08); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080d12">
+<title>IAF أذكار المسلم</title>
+<style>
+:root{
+ --bg:#080d12;--panel:#101922;--panel2:#15232b;
+ --gold:#d9bd79;--text:#f4f4ed;--muted:#a3b0b6;
+ --green:#4ec6a0;--line:#25343c;--red:#f17d7d;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:var(--bg);color:var(--text);
+ font-family:Tahoma,Arial,sans-serif;line-height:1.9;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible{
+ outline:2px solid var(--gold);outline-offset:3px
+}
+header{
+ padding:25px 18px 20px;text-align:center;
+ background:radial-gradient(ellipse at top,#20392f 0%,#101922 48%,#080d12 100%);
+ border-bottom:1px solid var(--line)
+}
+.logo{
+ width:65px;height:65px;margin:auto auto 10px;
+ display:grid;place-items:center;border:1px solid var(--gold);
+ border-radius:22px;color:var(--gold);font-size:31px;
+ background:#14251f
+}
+h1{font-size:27px;margin:0;color:var(--gold)}
+header p{margin:4px 0;color:var(--muted);font-size:13px}
+.clock{color:var(--green);font-size:14px;margin-top:10px}
+main{max-width:850px;margin:auto;padding:17px}
+.hero{
+ padding:20px;border:1px solid #344c40;border-radius:20px;
+ background:linear-gradient(130deg,#152a24,#101922);
+ margin-bottom:18px
+}
+.hero small{color:var(--gold)}
+.hero h2{font-size:20px;margin:5px 0}
+.hero p{font-size:13px;color:var(--muted);margin:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:18px}
+.stat{
+ background:#0c1716;border:1px solid #29443a;
+ border-radius:13px;text-align:center;padding:10px 4px
+}
+.stat strong{display:block;color:var(--gold);font-size:20px}
+.stat span{font-size:11px;color:var(--muted)}
+.search{position:relative;margin:16px 0}
+.search input{
+ width:100%;padding:13px 15px;border-radius:13px;
+ border:1px solid var(--line);background:var(--panel);
+ color:var(--text);outline:none
+}
+.search input:focus{border-color:var(--gold)}
+.categories{
+ display:flex;gap:8px;overflow-x:auto;padding:3px 0 13px;
+ scrollbar-width:thin
+}
+.chip{
+ flex-shrink:0;padding:9px 14px;border:1px solid var(--line);
+ background:var(--panel);color:var(--text);border-radius:30px;
+ font-size:13px
+}
+.chip.active{background:var(--gold);color:#172018;border-color:var(--gold)}
+.section-title{
+ display:flex;justify-content:space-between;align-items:center;
+ gap:10px;margin:13px 0
+}
+.section-title h2{font-size:19px;margin:0}
+.muted{color:var(--muted);font-size:12px}
+.progress-wrap{
+ height:5px;background:#263238;border-radius:10px;overflow:hidden;
+ margin:10px 0 17px
+}
+.progress{height:100%;width:0;background:var(--green);transition:.25s}
+.card{
+ background:var(--panel);border:1px solid var(--line);
+ border-radius:17px;padding:17px;margin-bottom:12px;
+ transition:border-color .2s
+}
+.card.done{border-color:#2d705b}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.tag{font-size:11px;color:var(--gold)}
+.icon-btn{
+ border:1px solid var(--line);background:var(--panel2);
+ color:var(--muted);border-radius:10px;padding:5px 9px
+}
+.icon-btn.fav{color:var(--gold);border-color:#826e43}
+.dhikr{
+ font-size:21px;line-height:2.1;text-align:center;
+ padding:19px 2px;color:#f5f0df;white-space:pre-line
+}
+.reference{text-align:center;color:var(--muted);font-size:11px;margin-bottom:12px}
+.card-bottom{
+ display:flex;justify-content:space-between;align-items:center;
+ flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding-top:13px
+}
+.count-info{font-size:12px;color:var(--muted)}
+.count-info strong{color:var(--gold);font-size:18px}
+.counter{
+ width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);
+ background:#18291f;color:var(--gold);font-size:20px;font-weight:bold;
+ box-shadow:inset 0 0 0 5px #101922
+}
+.counter:active{transform:scale(.95)}
+.counter.complete{background:#244b3b;color:#fff;border-color:var(--green)}
+.actions{display:flex;gap:7px}
+.empty{text-align:center;padding:35px 10px;color:var(--muted)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.btn{
+ border:1px solid var(--line);background:var(--panel2);
+ color:var(--text);padding:9px 12px;border-radius:10px;font-size:12px
+}
+.btn.primary{background:var(--gold);color:#152018;border-color:var(--gold)}
+footer{
+ text-align:center;color:var(--muted);font-size:12px;
+ padding:25px 15px 35px;border-top:1px solid var(--line);margin-top:25px
+}
+footer strong{color:var(--gold)}
+.toast{
+ position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+ background:#20382d;border:1px solid #4c8064;color:white;
+ padding:10px 17px;border-radius:12px;display:none;z-index:10;
+ max-width:90%;font-size:13px
+}
+@media(min-width:650px){
+ main{padding:25px}
+ .cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+ .card{margin:0}
+ .dhikr{font-size:20px}
+}
+</style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
+<header>
+ <div class="logo">۞</div>
+ <h1>IAF أذكار المسلم</h1>
+ <p>طمأنينة لقلبك وذكرٌ لربك</p>
+ <div class="clock" id="clock">أهلاً بك في رحاب الذكر</div>
+</header>
 
-    <header class="p-5 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
-        <div class="flex items-center gap-2.5">
-            <span class="bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg text-base">🗜️</span>
-            <span class="font-bold tracking-wider text-sm">القاعدة ضغط</span>
-        </div>
-        <div id="engineStatus" class="text-xs text-yellow-400 bg-yellow-950/40 px-3.5 py-2 rounded-xl custom-border">
-            جاري تهيئة محرك الضغط الفعلي...
-        </div>
-    </header>
+<main>
+ <section class="hero">
+  <small>﴿ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ ﴾</small>
+  <h2>اجعل لسانك رطباً بذكر الله</h2>
+  <p>ابدأ يومك بالذكر، واحتسب الأجر، واجعل وقتك عامراً بالطاعة.</p>
+  <div class="stats">
+   <div class="stat"><strong id="totalToday">0</strong><span>تسبيحات اليوم</span></div>
+   <div class="stat"><strong id="doneToday">0</strong><span>أذكار أتممتها</span></div>
+   <div class="stat"><strong id="percent">0%</strong><span>إنجاز اليوم</span></div>
+  </div>
+ </section>
 
-    <main class="max-w-xl mx-auto w-full p-5 my-6">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold mb-2">طريقة التحميل</h1>
-            <p class="text-zinc-400 text-sm">اختر مقطع فيديو، وحدد طريقة، ثم قم بتنزيل الملف النهائي.</p>
-        </div>
+ <div class="search">
+  <input id="search" type="search" placeholder="ابحث عن ذكر..." aria-label="البحث عن الأذكار">
+ </div>
 
-        <div class="bg-zinc-900/95 custom-border rounded-3xl p-6 shadow-2xl relative">
-            
-            <div id="step-1">
-                <div class="text-blue-400 text-sm mb-3 font-bold">1 | اختر الفيديو الخاص بك</div>
-                <div class="border-2 border-dashed border-zinc-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition mb-5" onclick="document.getElementById('fileInput').click()">
-                    <div class="text-4xl mb-2 text-blue-500">➕</div>
-                    <p class="text-base font-bold">حدد الفيديو</p>
-                    <p class="text-xs text-zinc-400 mt-1">أو اسحب الملف وأفلته هنا</p>
-                    <input type="file" id="fileInput" class="hidden" accept="video/*" onchange="handleFileSelected(this)">
-                </div>
+ <nav class="categories" id="categories" aria-label="أقسام الأذكار"></nav>
 
-                <div>
-                    <div class="text-xs text-zinc-300 mb-2 font-semibold">أو استخدم رابط البت</div>
-                    <div class="flex gap-2.5">
-                        <input type="text" id="videoUrl" placeholder="https://compressbase.com/clip/..." class="w-full bg-zinc-950 custom-border rounded-xl p-3 text-xs text-zinc-200 focus:outline-none focus:border-blue-500">
-                        <button onclick="handleUrl()" class="bg-blue-600/30 text-blue-300 px-5 rounded-xl text-xs font-bold border border-blue-500/40">استخدام</button>
-                    </div>
-                </div>
-            </div>
+ <div class="section-title">
+  <h2 id="listTitle">أذكار الصباح</h2>
+  <span class="muted" id="itemCount"></span>
+ </div>
+ <div class="progress-wrap"><div class="progress" id="progress"></div></div>
 
-            <div id="step-2" class="hidden">
-                <div class="flex justify-between items-center mb-5">
-                    <span class="text-blue-400 text-sm font-bold">2 | اختر طريقة</span>
-                    <button onclick="resetStep()" class="text-xs text-zinc-400 underline">تغيير الفيديو</button>
-                </div>
+ <div class="toolbar">
+  <button class="btn" id="reset">↻ تصفير القسم</button>
+  <button class="btn" id="favoritesOnly">♡ المفضلة</button>
+  <button class="btn" id="shareSite">↗ مشاركة الموقع</button>
+ </div>
 
-                <div class="bg-zinc-950 p-3.5 rounded-xl mb-5 flex items-center justify-between custom-border">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-blue-600/30 text-blue-300 px-2.5 py-1 rounded-lg text-xs font-bold">mp4</span>
-                        <span id="fileNameDisplay" class="text-xs text-zinc-200 truncate max-w-[220px]">فيديو جديد</span>
-                    </div>
-                    <span id="fileSizeDisplay" class="text-xs text-zinc-400">جاهز</span>
-                </div>
+ <div class="cards" id="cards"></div>
+ <div class="empty" id="empty" hidden>لم يتم العثور على أذكار مطابقة.</div>
+</main>
 
-                <div class="space-y-3.5 mb-5">
-                    <label class="block custom-border-active p-4 rounded-2xl cursor-pointer">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-xs">⭐ أعلى جودة + ضغط قوي جداً</span>
-                            <span class="text-[10px] bg-red-600 text-white px-2.5 py-0.5 rounded-md font-bold">موصى به</span>
-                        </div>
-                        <p class="text-xs text-zinc-300 mt-1.5 leading-relaxed">تقليل حجم الملف إلى النصف أو أكثر مع الحفاظ على حِدة التفاصيل لمنع تغبيش تيك توك.</p>
-                    </label>
-                </div>
+<footer>
+ <strong>IAF أذكار المسلم</strong>
+ <p>اللهم اجعل هذا العمل نافعاً ومباركاً.</p>
+ <p>تأكد من صحة النصوص والأعداد عند إضافة أذكار جديدة.</p>
+</footer>
+<div class="toast" id="toast" role="status"></div>
 
-                <button onclick="openModal()" class="w-full py-3.5 rounded-2xl custom-btn text-sm font-bold shadow-lg">
-                    بدء المعالجة والضغط الفعلي ➔
-                </button>
-            </div>
+<script>
+"use strict";
 
-            <div id="step-3" class="hidden text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4"></div>
-                <h3 class="text-base font-bold mb-1.5" dir="ltr">Compressing Video...</h3>
-                <p id="progressText" class="text-xs text-zinc-400 mb-5">جاري ضغط حجم الفيديو وتقليل البتريت بقوة داخل المتصفح...</p>
-                <div class="w-full bg-zinc-800 rounded-full h-2 max-w-sm mx-auto overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-red-500 h-2 w-0 transition-all duration-300"></div>
-                </div>
-            </div>
+const sections = [
+ {id:"morning",name:"أذكار الصباح",items:[
+  ["آية الكرسي","اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ","1","سورة البقرة: 255"],
+  ["سورة الإخلاص","قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ","3","سورة الإخلاص"],
+  ["سورة الفلق","قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ","3","سورة الفلق"],
+  ["سورة الناس","قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ","3","سورة الناس"],
+  ["ذكر الصباح","أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.","1","من أذكار الصباح"],
+  ["سيد الاستغفار","اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.","1","صحيح البخاري"]
+ ]},
+ {id:"evening",name:"أذكار المساء",items:[
+  ["آية الكرسي","اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ","1","سورة البقرة: 255"],
+  ["الإخلاص","قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُنْ لَهُ كُفُوًا أَحَدٌ","3","سورة الإخلاص"],
+  ["الفلق","قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِنْ شَرِّ مَا خَلَقَ ۝ وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ","3","سورة الفلق"],
+  ["الناس","قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ","3","سورة الناس"],
+  ["أمسينا وأمسى الملك لله","أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.","1","من أذكار المساء"],
+  ["سيد الاستغفار","اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ.","1","صحيح البخاري"]
+ ]},
+ {id:"prayer",name:"أذكار بعد الصلاة",items:[
+  ["الاستغفار","أَسْتَغْفِرُ اللَّهَ","3","صحيح مسلم"],
+  ["السلام","اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ.","1","صحيح مسلم"],
+  ["التسبيح","سُبْحَانَ اللَّهِ","33","صحيح مسلم"],
+  ["التحميد","الْحَمْدُ لِلَّهِ","33","صحيح مسلم"],
+  ["التكبير","اللَّهُ أَكْبَرُ","33","صحيح مسلم"],
+  ["التوحيد","لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ.","1","صحيح مسلم"]
+ ]},
+ {id:"sleep",name:"أذكار النوم",items:[
+  ["باسمك اللهم أموت وأحيا","بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا.","1","صحيح البخاري"],
+  ["التسبيح قبل النوم","سُبْحَانَ اللَّهِ","33","صحيح البخاري"],
+  ["التحميد قبل النوم","الْحَمْدُ لِلَّهِ","33","صحيح البخاري"],
+  ["التكبير قبل النوم","اللَّهُ أَكْبَرُ","34","صحيح البخاري"],
+  ["المعوذات","قراءة سورة الإخلاص وسورة الفلق وسورة الناس، والنفث في الكفين ومسح ما استطاع من الجسد.","3","صحيح البخاري"]
+ ]},
+ {id:"wake",name:"أذكار الاستيقاظ",items:[
+  ["دعاء الاستيقاظ","الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ.","1","صحيح البخاري"]
+ ]},
+ {id:"general",name:"أذكار متنوعة",items:[
+  ["سبحان الله وبحمده","سُبْحَانَ اللَّهِ وَبِحَمْدِهِ.","100","صحيح البخاري ومسلم"],
+  ["سبحان الله العظيم","سُبْحَانَ اللَّهِ الْعَظِيمِ.","1","صحيح البخاري ومسلم"],
+  ["الصلاة على النبي ﷺ","اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ.","1","صيغة مختصرة للصلاة على النبي"],
+  ["الاستغفار","أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ.","1","صحيح البخاري ومسلم"],
+  ["لا حول ولا قوة إلا بالله","لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ.","1","صحيح البخاري ومسلم"],
+  ["كلمتان خفيفتان","سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ.","1","صحيح البخاري ومسلم"]
+ ]}
+];
 
-            <div id="step-4" class="hidden text-center py-4">
-                <div class="text-3xl mb-2">✅</div>
-                <h3 class="text-lg font-bold mb-1">تم ضغط الفيديو بنجاح!</h3>
-                <p id="resultSizeText" class="text-xs text-zinc-400 mb-4">تم تقليل حجم الملف وتثبيت الترميز بنجاح</p>
-                
-                <button onclick="downloadRealFile()" class="block w-full py-3.5 rounded-2xl custom-btn text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
-                    تنزيل الفيديو المضغوط ⬇
-                </button>
-                <button onclick="resetStep()" class="text-xs text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
-            </div>
+const $ = id => document.getElementById(id);
+const KEY = "iaf-adhkar-v1";
+let active = "morning";
+let favoritesOnly = false;
+let data = {counts:{},favorites:[],day:new Date().toLocaleDateString("en-CA")};
 
-        </div>
-    </main>
+try{
+ const saved = JSON.parse(localStorage.getItem(KEY)||"null");
+ if(saved && saved.counts && Array.isArray(saved.favorites)) data=saved;
+}catch(e){}
 
-    <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-zinc-900 custom-border rounded-3xl p-5 max-w-sm w-full text-center shadow-2xl">
-            <h3 class="text-sm font-bold text-blue-400 mb-1.5">تحسين للنشر على الأجهزة</h3>
-            <p class="text-xs text-zinc-400 mb-4">اختر جهازك للضغط المناسب:</p>
-            
-            <div class="grid grid-cols-3 gap-2.5 mb-4">
-                <button onclick="startRealProcessing()" class="custom-border bg-zinc-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
-                    <div class="text-xl mb-1">📱</div>
-                    <div class="text-xs font-bold">منتج أبل</div>
-                </button>
-                <button onclick="startRealProcessing()" class="custom-border bg-zinc-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
-                    <div class="text-xl mb-1">🤖</div>
-                    <div class="text-xs font-bold">أندرويد</div>
-                </button>
-                <button onclick="startRealProcessing()" class="custom-border bg-zinc-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
-                    <div class="text-xl mb-1">💻</div>
-                    <div class="text-xs font-bold">كمبيوتر</div>
-                </button>
-            </div>
-            <button onclick="closeModal()" class="text-xs text-zinc-400 underline cursor-pointer">إلغاء</button>
-        </div>
+function today(){
+ return new Date().toLocaleDateString("en-CA");
+}
+function prepareDay(){
+ if(data.day !== today()){
+  data.day=today();
+  data.counts={};
+  save();
+ }
+}
+function save(){
+ try{localStorage.setItem(KEY,JSON.stringify(data));}
+ catch(e){showToast("تعذر الحفظ على هذا الجهاز.");}
+}
+function allItems(){
+ return sections.flatMap(s=>s.items.map((x,i)=>({
+  id:s.id+"-"+i,section:s.id,sectionName:s.name,
+  name:x[0],text:x[1],goal:Number(x[2]),source:x[3]
+ })));
+}
+function countOf(id){return Number(data.counts[id]||0)}
+function isFav(id){return data.favorites.includes(id)}
+function escapeHTML(s){
+ return String(s).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function renderCategories(){
+ $("categories").innerHTML=sections.map(s=>
+ `<button class="chip ${active===s.id?"active":""}" data-section="${s.id}">${escapeHTML(s.name)}</button>`
+ ).join("");
+ $("categories").querySelectorAll("button").forEach(b=>{
+  b.addEventListener("click",()=>{
+   active=b.dataset.section;
+   favoritesOnly=false;
+   $("favoritesOnly").classList.remove("primary");
+   render();
+  });
+ });
+}
+function visibleItems(){
+ const query=$("search").value.trim().toLowerCase();
+ return allItems().filter(x=>{
+  const inSection=favoritesOnly?isFav(x.id):x.section===active;
+  const matches=(x.name+" "+x.text+" "+x.source+" "+x.sectionName).toLowerCase().includes(query);
+  return inSection&&matches;
+ });
+}
+function renderCards(){
+ const items=visibleItems();
+ $("cards").innerHTML=items.map(x=>{
+  const n=countOf(x.id),finished=n>=x.goal;
+  return `<article class="card ${finished?"done":""}">
+   <div class="card-top">
+    <span class="tag">${escapeHTML(x.sectionName)}</span>
+    <div class="actions">
+     <button class="icon-btn ${isFav(x.id)?"fav":""}" data-fav="${x.id}" aria-label="إضافة إلى المفضلة">${isFav(x.id)?"★":"♡"}</button>
+     <button class="icon-btn" data-share="${x.id}" aria-label="مشاركة الذكر">↗</button>
     </div>
-
-    <script>
-        const { createFFmpeg, fetchFile } = FFmpeg;
-        const ffmpeg = createFFmpeg({ log: true });
-        let myFile = null;
-        let compressedBlob = null;
-
-        async function initEngine() {
-            try {
-                await ffmpeg.load();
-                document.getElementById('engineStatus').innerText = "المحرك الحقيقي جاهز ⚡";
-                document.getElementById('engineStatus').className = "text-xs text-green-400 bg-green-950/40 px-3.5 py-2 rounded-xl custom-border";
-            } catch (e) {
-                document.getElementById('engineStatus').innerText = "وضع الضغط الذكي النشط";
-            }
-        }
-        initEngine();
-
-        function handleFileSelected(input) {
-            if (input.files && input.files[0]) {
-                myFile = input.files[0];
-                const sizeMb = (myFile.size / (1024*1024)).toFixed(1);
-                document.getElementById('fileNameDisplay').innerText = myFile.name;
-                document.getElementById('fileSizeDisplay').innerText = sizeMb + ' MB';
-                showStep(2);
-            }
-        }
-
-        function handleUrl() {
-            if(document.getElementById('videoUrl').value) {
-                document.getElementById('fileNameDisplay').innerText = "رابط خارجي";
-                document.getElementById('fileSizeDisplay').innerText = "مستحسن";
-                showStep(2);
-            } else {
-                alert('الرجاء إدخال الرابط');
-            }
-        }
-
-        function openModal() {
-            document.getElementById('deviceModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('deviceModal').classList.add('hidden');
-        }
-
-        async function startRealProcessing() {
-            closeModal();
-            showStep(3);
-            const progressBar = document.getElementById('progressBar');
-            const progressText = document.getElementById('progressText');
-
-            try {
-                if (myFile && ffmpeg.isLoaded()) {
-                    progressBar.style.width = '20%';
-                    progressText.innerText = "جاري رفع الملف إلى ذاكرة المعالجة...";
-
-                    const inputName = "input_" + Date.now() + ".mp4";
-                    const outputName = "output_" + Date.now() + ".mp4";
-                    
-                    ffmpeg.FS('writeFile', inputName, await fetchFile(myFile));
-
-                    progressBar.style.width = '50%';
-                    progressText.innerText = "جاري تنفيذ خوارزميات الضغط القوي (Compression)...";
-
-                    // تم رفع معدل الضغط عبر زيادة قيمة CRF إلى 32 لتقليل الحجم بشكل ملحوظ وقوي جداً
-                    await ffmpeg.run('-i', inputName, '-vcodec', 'libx264', '-crf', '32', '-preset', 'fast', outputName);
-
-                    progressBar.style.width = '90%';
-                    progressText.innerText = "جاري استخراج الملف المضغوط...";
-
-                    const data = ffmpeg.FS('readFile', outputName);
-                    compressedBlob = new Blob([data.buffer], { type: 'video/mp4' });
-
-                    const newSizeMb = (compressedBlob.size / (1024*1024)).toFixed(1);
-                    document.getElementById('resultSizeText').innerText = "تم تقليص الحجم ليصبح: " + newSizeMb + " MB بنجاح";
-
-                    progressBar.style.width = '100%';
-                    setTimeout(() => showStep(4), 500);
-                } else {
-                    forceCompressionFallback(progressBar, progressText);
-                }
-            } catch (err) {
-                console.error(err);
-                forceCompressionFallback(progressBar, progressText);
-            }
-        }
-
-        function forceCompressionFallback(progressBar, progressText) {
-            let w = 0;
-            let timer = setInterval(() => {
-                if(w >= 100) {
-                    clearInterval(timer);
-                    compressedBlob = myFile;
-                    document.getElementById('resultSizeText').innerText = "تمت معالجة وضغط الملف بنجاح";
-                    showStep(4);
-                } else {
-                    w += 25;
-                    progressBar.style.width = w + '%';
-                    progressText.innerText = "جاري معالجة الأطر وضغط المساحة (" + w + "%)";
-                }
-            }, 300);
-        }
-
-        function downloadRealFile() {
-            const blobToDownload = compressedBlob || myFile;
-            if (blobToDownload) {
-                const a = document.createElement('a');
-                const url = URL.createObjectURL(blobToDownload);
-                a.href = url;
-                a.download = 'Compressed_' + (myFile ? myFile.name : 'video.mp4');
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            } else {
-                alert('لا يوجد ملف جاهز للتنزيل');
-            }
-        }
-
-        function showStep(n) {
-            [1, 2, 3, 4].forEach(i => document.getElementById('step-' + i).classList.add('hidden'));
-            document.getElementById('step-' + n).classList.remove('hidden');
-        }
-
-        function resetStep() {
-            document.getElementById('fileInput').value = '';
-            document.getElementById('videoUrl').value = '';
-            myFile = null;
-            compressedBlob = null;
-            showStep(1);
-        }
-    </script>
+   </div>
+   <div class="dhikr">${escapeHTML(x.text)}</div>
+   <div class="reference">${escapeHTML(x.source)}</div>
+   <div class="card-bottom">
+    <div class="count-info">التكرار: <strong>${Math.min(n,x.goal)}</strong> / ${x.goal}<br>${finished?"✓ اكتمل الذكر":"اضغط للعدّ"}</div>
+    <button class="counter ${finished?"complete":""}" data-count="${x.id}" aria-label="تسبيح ${escapeHTML(x.name)}">${finished?"✓":Math.max(0,x.goal-n)}</button>
+   </div>
+  </article>`;
+ }).join("");
+ $("empty").hidden=items.length!==0;
+ $("itemCount").textContent=items.length+" أذكار";
+ $("cards").querySelectorAll("[data-count]").forEach(b=>b.addEventListener("click",()=>{
+  const x=allItems().find(i=>i.id===b.dataset.count);
+  if(!x)return;
+  const n=countOf(x.id);
+  if(n>=x.goal){showToast("اكتمل هذا الذكر، بارك الله فيك.");return;}
+  data.counts[x.id]=n+1;
+  save();render();
+  if(n+1===x.goal)showToast("تقبّل الله منك، اكتمل الذكر ✓");
+ }));
+ $("cards").querySelectorAll("[data-fav]").forEach(b=>b.addEventListener("click",()=>{
+  const id=b.dataset.fav;
+  data.favorites=isFav(id)?data.favorites.filter(f=>f!==id):[...data.favorites,id];
+  save();render();
+ }));
+ $("cards").querySelectorAll("[data-share]").forEach(b=>b.addEventListener("click",()=>{
+  const x=allItems().find(i=>i.id===b.dataset.share);
+  if(x)shareText(x.text);
+ }));
+}
+function renderStats(){
+ const items=allItems();
+ const total=items.reduce((sum,x)=>sum+countOf(x.id),0);
+ const completed=items.filter(x=>countOf(x.id)>=x.goal).length;
+ const percent=items.length?Math.round(completed/items.length*100):0;
+ $("totalToday").textContent=total;
+ $("doneToday").textContent=completed;
+ $("percent").textContent=percent+"%";
+ const sectionItems=items.filter(x=>x.section===active);
+ const done=sectionItems.filter(x=>countOf(x.id)>=x.goal).length;
+ $("progress").style.width=(sectionItems.length?done/sectionItems.length*100:0)+"%";
+}
+function render(){
+ prepareDay();
+ renderCategories();
+ const s=sections.find(s=>s.id===active);
+ $("listTitle").textContent=favoritesOnly?"الأذكار المفضلة":s.name;
+ $("favoritesOnly").classList.toggle("primary",favoritesOnly);
+ renderCards();
+ renderStats();
+}
+let toastTimer;
+function showToast(message){
+ const t=$("toast");
+ t.textContent=message;t.style.display="block";
+ clearTimeout(toastTimer);
+ toastTimer=setTimeout(()=>t.style.display="none",2300);
+}
+async function shareText(text){
+ try{
+  if(navigator.share)await navigator.share({title:"IAF أذكار المسلم",text});
+  else if(navigator.clipboard){
+   await navigator.clipboard.writeText(text);
+   showToast("تم نسخ الذكر.");
+  }else showToast(text);
+ }catch(e){
+  if(e.name!=="AbortError")showToast("تعذرت المشاركة.");
+ }
+}
+$("search").addEventListener("input",renderCards);
+$("reset").addEventListener("click",()=>{
+ if(!confirm("هل تريد تصفير عدّادات هذا القسم؟"))return;
+ allItems().filter(x=>x.section===active).forEach(x=>delete data.counts[x.id]);
+ save();render();showToast("تم تصفير عدّادات القسم.");
+});
+$("favoritesOnly").addEventListener("click",()=>{
+ favoritesOnly=!favoritesOnly;
+ render();
+});
+$("shareSite").addEventListener("click",async()=>{
+ const text="IAF أذكار المسلم — تذكّر ذكر الله.";
+ if(navigator.share){
+  try{await navigator.share({title:"IAF أذكار المسلم",text,url:location.href});}
+  catch(e){if(e.name!=="AbortError")showToast("تعذرت المشاركة.");}
+ }else if(navigator.clipboard){
+  try{await navigator.clipboard.writeText(location.href);showToast("تم نسخ رابط الموقع.");}
+  catch(e){showToast("رابط الموقع: "+location.href);}
+ }else showToast("رابط الموقع: "+location.href);
+});
+function updateClock(){
+ $("clock").textContent=new Intl.DateTimeFormat("ar-IQ",{
+  weekday:"long",hour:"2-digit",minute:"2-digit"
+ }).format(new Date());
+}
+updateClock();
+setInterval(updateClock,30000);
+prepareDay();
+render();
+</script>
 </body>
 </html>
