@@ -3,173 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CompressBase - Real Processing Engine</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء مكتبة FFmpeg الحقيقية للعمل في المتصفح -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+    <title>إبراهيم ال فارس | Ibrahim Al-Fares Official</title>
     <style>
-        body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
-        .custom-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
-        .custom-border { border: 1px solid rgba(59, 130, 246, 0.4); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
+        :root {
+            --bg-dark: #050810;
+            --panel-dark: #0f172a;
+            --accent-gold: #f5c928;
+            --accent-purple: #7657ff;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        /* خلفية متحركة تعطي إيحاء عالمي */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #050810 100%);
+            z-index: -1;
+        }
+
+        .blob {
+            position: absolute;
+            width: 400px; height: 400px;
+            background: var(--accent-purple);
+            filter: blur(120px);
+            opacity: 0.15;
+            border-radius: 50%;
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(110%, 110%); }
+        }
+
+        /* Header */
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 15px;
+            transition: 0.3s;
+            opacity: 0.8;
+        }
+
+        nav a:hover {
+            color: var(--accent-gold);
+            opacity: 1;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h2 {
+            font-size: 18px;
+            color: var(--accent-purple);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(to bottom, #fff 30%, var(--accent-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero p {
+            max-width: 600px;
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 40px;
+            animation: fadeInUp 1.4s ease;
+        }
+
+        .cta-button {
+            padding: 16px 40px;
+            background: var(--accent-gold);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.4s;
+            animation: fadeInUp 1.6s ease;
+            box-shadow: 0 10px 30px rgba(245, 201, 40, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(245, 201, 40, 0.5);
+        }
+
+        /* Services / Features Section */
+        .services {
+            padding: 100px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 40px;
+            border-radius: 24px;
+            transition: 0.4s;
+            text-align: right;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--accent-purple);
+            transform: translateY(-10px);
+        }
+
+        .card h3 {
+            color: var(--accent-gold);
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 5%;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .hero h1 { font-size: 45px; }
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
+<body>
 
-    <header class="p-5 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
-        <div class="flex items-center gap-2.5">
-            <span class="bg-blue-600 text-white font-bold px-3 py-1.5 rounded-lg text-base">🗜️</span>
-            <span class="font-bold tracking-wider text-sm">القاعدة ضغط (المحرك الحقيقي)</span>
-        </div>
-        <div id="engineStatus" class="text-xs text-yellow-400 bg-yellow-950/40 px-3.5 py-2 rounded-xl custom-border">
-            جاري تحميل محرك المعالجة...
-        </div>
+    <div class="bg-glow"></div>
+    <div class="blob"></div>
+
+    <header>
+        <div class="logo">إبراهيم ال فارس</div>
+        <nav>
+            <a href="#home">الرئيسية</a>
+            <a href="#about">من أنا</a>
+            <a href="#services">خدماتي</a>
+            <a href="#contact">اتصل بي</a>
+        </nav>
     </header>
 
-    <main class="max-w-xl mx-auto w-full p-5 my-6">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold mb-2">ضغط الفيديو فعلياً</h1>
-            <p class="text-zinc-400 text-sm">سيقوم المتصفح بإعادة ترميز وضغط الفيديو ليعمل بكامل جودته على تيك توك.</p>
+    <section class="hero" id="home">
+        <h2>مرحباً بكم في عالمي الرقمي</h2>
+        <h1>إبراهيم ال فارس</h1>
+        <p>مبتكر، مبرمج، وصانع حلول تقنية. أعمل على تحويل الأفكار المعقدة إلى تجارب رقمية بسيطة، أنيقة، وعالمية المعايير.</p>
+        <a href="#services" class="cta-button">اكتشف أعمالي</a>
+    </section>
+
+    <section class="services" id="services">
+        <div class="card">
+            <h3>تطوير الأنظمة</h3>
+            <p>بناء تطبيقات ومواقع إلكترونية بأحدث التقنيات العالمية، مع التركيز على السرعة، الأمان، وتجربة المستخدم.</p>
         </div>
-
-        <div class="bg-zinc-900/95 custom-border rounded-3xl p-6 shadow-2xl relative">
-            
-            <!-- الخطوة 1: الرفع -->
-            <div id="step-1">
-                <div class="text-blue-400 text-sm mb-3 font-bold">1 | اختر الفيديو الخاص بك</div>
-                <div class="border-2 border-dashed border-zinc-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition mb-5" onclick="document.getElementById('fileInput').click()">
-                    <div class="text-4xl mb-2 text-blue-500">➕</div>
-                    <p class="text-base font-bold">حدد الفيديو</p>
-                    <p class="text-xs text-zinc-400 mt-1">اختر مقطع فيديو من جهازك</p>
-                    <input type="file" id="fileInput" class="hidden" accept="video/*" onchange="handleFileSelected(this)">
-                </div>
-            </div>
-
-            <!-- الخطوة 2: البدء -->
-            <div id="step-2" class="hidden">
-                <div class="flex justify-between items-center mb-5">
-                    <span class="text-blue-400 text-sm font-bold">2 | جاهز للمعالجة الفعلية</span>
-                    <button onclick="resetStep()" class="text-xs text-zinc-400 underline">تغيير الفيديو</button>
-                </div>
-
-                <div class="bg-zinc-950 p-3.5 rounded-xl mb-5 flex items-center justify-between custom-border">
-                    <div class="flex items-center gap-3">
-                        <span class="bg-blue-600/30 text-blue-300 px-2.5 py-1 rounded-lg text-xs font-bold">mp4</span>
-                        <span id="fileNameDisplay" class="text-xs text-zinc-200 truncate max-w-[220px]">فيديو جديد</span>
-                    </div>
-                    <span class="text-xs text-zinc-400">جاهز للضغط</span>
-                </div>
-
-                <button onclick="startRealProcessing()" class="w-full py-3.5 rounded-2xl custom-btn text-sm font-bold shadow-lg">
-                    بدء الضغط والمعالجة الحقيقية ➔
-                </button>
-            </div>
-
-            <!-- الخطوة 3: شاشة المعالجة وحساب النسبة -->
-            <div id="step-3" class="hidden text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4"></div>
-                <h3 class="text-base font-bold mb-1.5" dir="ltr">Encoding video via FFmpeg...</h3>
-                <p id="processText" class="text-xs text-zinc-400 mb-5">جاري ضغط ومعالجة الإطارات (قد يستغرق بضع ثوان حسب حجم الفيديو)...</p>
-                <div class="w-full bg-zinc-800 rounded-full h-2 max-w-sm mx-auto overflow-hidden">
-                    <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-red-500 h-2 w-0 transition-all duration-300"></div>
-                </div>
-            </div>
-
-            <!-- الخطوة 4: النتيجة والتحميل -->
-            <div id="step-4" class="hidden text-center py-4">
-                <div class="text-3xl mb-2">✅</div>
-                <h3 class="text-lg font-bold mb-1">تم ضغط الفيديو بنجاح!</h3>
-                <p class="text-xs text-zinc-400 mb-4">تمت إعادة ترميز الفيديو وتقليل حجمه مع الحفاظ على حِدة التفاصيل.</p>
-
-                <a id="downloadBtn" href="#" class="block w-full py-3.5 rounded-2xl custom-btn text-xs font-bold text-center mb-3 shadow-lg" download="compressed_video.mp4">
-                    تنزيل الفيديو المضغوط ⬇
-                </a>
-                <button onclick="resetStep()" class="text-xs text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
-            </div>
-
+        <div class="card">
+            <h3>هندسة الفيديو</h3>
+            <p>متخصص في تحسين جودة المحتوى المرئي وتهيئته ليتوافق مع خوارزميات المنصات العالمية لضمان أعلى انتشار.</p>
         </div>
-    </main>
+        <div class="card">
+            <h3>الاستشارات التقنية</h3>
+            <p>تقديم استشارات استراتيجية للشركات والأفراد للتحول الرقمي وزيادة الكفاءة باستخدام الذكاء الاصطناعي.</p>
+        </div>
+    </section>
 
-    <script>
-        const { createFFmpeg, fetchFile } = FFmpeg;
-        const ffmpeg = createFFmpeg({ log: true });
-        let myFile = null;
+    <footer id="contact">
+        <p>&copy; 2026 جميع الحقوق محفوظة | إبراهيم ال فارس - Ibrahim Al-Fares</p>
+    </footer>
 
-        // تحميل المحرك عند فتح الصفحة
-        async function loadEngine() {
-            try {
-                await ffmpeg.load();
-                document.getElementById('engineStatus').innerText = "المحرك جاهز ⚡";
-                document.getElementById('engineStatus').className = "text-xs text-green-400 bg-green-950/40 px-3.5 py-2 rounded-xl custom-border";
-            } catch (error) {
-                document.getElementById('engineStatus').innerText = "خطأ في تحميل المحرك";
-            }
-        }
-        loadEngine();
-
-        function handleFileSelected(input) {
-            if (input.files && input.files[0]) {
-                myFile = input.files[0];
-                document.getElementById('fileNameDisplay').innerText = myFile.name;
-                showStep(2);
-            }
-        }
-
-        async function startRealProcessing() {
-            if (!ffmpeg.isLoaded()) {
-                alert('الرجاء الانتظار قليلاً حتى يتم تجهيز المحرك.');
-                return;
-            }
-
-            showStep(3);
-            const progressBar = document.getElementById('progressBar');
-            const processText = document.getElementById('processText');
-
-            try {
-                // كتابة الملف داخل ذاكرة FFmpeg الوهمية
-                const fileName = myFile.name;
-                ffmpeg.FS('writeFile', fileName, await fetchFile(myFile));
-
-                progressBar.style.width = '30%';
-                processText.innerText = "جاري إعادة ترميز الفيديو وتعديل البتريت...";
-
-                // تنفيذ أمر الضغط الحقيقي عبر FFmpeg (تقليل الحجم ومنع التغبيش)
-                await ffmpeg.run('-i', fileName, '-vcodec', 'libx264', '-crf', '28', 'output.mp4');
-
-                progressBar.style.width = '90%';
-                processText.innerText = "جاري استخراج الملف النهائي...";
-
-                // قراءة النتيجة من الذاكرة
-                const data = ffmpeg.FS('readFile', 'output.mp4');
-                
-                // إنشاء رابط التحميل للملف الجديد كلياً
-                const videoBlob = new Blob([data.buffer], { type: 'video/mp4' });
-                const blobUrl = URL.createObjectURL(videoBlob);
-
-                document.getElementById('downloadBtn').href = blobUrl;
-                progressBar.style.width = '100%';
-                
-                setTimeout(() => {
-                    showStep(4);
-                }, 500);
-
-            } catch (err) {
-                console.error(err);
-                alert('حدث خطأ أثناء معالجة الفيديو. قد يكون حجم الفيديو كبيراً جداً على المتصفح.');
-                resetStep();
-            }
-        }
-
-        function showStep(n) {
-            [1, 2, 3, 4].forEach(i => document.getElementById('step-' + i).classList.add('hidden'));
-            document.getElementById('step-' + n).classList.remove('hidden');
-        }
-
-        function resetStep() {
-            document.getElementById('fileInput').value = '';
-            myFile = null;
-            showStep(1);
-        }
-    </script>
 </body>
 </html>
