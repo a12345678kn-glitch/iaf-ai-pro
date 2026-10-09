@@ -3,241 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إبراهيم ال فارس | Ibrahim Al-Fares Official</title>
+    <title>إبراهيم ال فارس | تحسين الفيديو PRO</title>
     <style>
         :root {
-            --bg-dark: #050810;
-            --panel-dark: #0f172a;
-            --accent-gold: #f5c928;
-            --accent-purple: #7657ff;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --bg: #080b14;
+            --panel: #111827;
+            --gold: #f5c928;
+            --gold-light: #ffe477;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: #1e293b;
+            --primary: #7657ff;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* خلفية متحركة تعطي إيحاء عالمي */
-        .bg-glow {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1e1b4b 0%, #050810 100%);
-            z-index: -1;
-        }
-
-        .blob {
-            position: absolute;
-            width: 400px; height: 400px;
-            background: var(--accent-purple);
-            filter: blur(120px);
-            opacity: 0.15;
-            border-radius: 50%;
-            animation: move 20s infinite alternate;
-        }
-
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(110%, 110%); }
-        }
-
-        /* Header */
-        header {
-            padding: 20px 5%;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Tahoma', 'Arial', sans-serif;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--accent-gold);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-right: 25px;
-            font-size: 15px;
-            transition: 0.3s;
-            opacity: 0.8;
-        }
-
-        nav a:hover {
-            color: var(--accent-gold);
-            opacity: 1;
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 90vh;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            text-align: center;
-            padding: 0 20px;
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        .hero h2 {
-            font-size: 18px;
-            color: var(--accent-purple);
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero h1 {
-            font-size: clamp(40px, 8vw, 80px);
-            line-height: 1.1;
-            margin-bottom: 25px;
-            background: linear-gradient(to bottom, #fff 30%, var(--accent-gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInUp 1.2s ease;
-        }
-
-        .hero p {
-            max-width: 600px;
-            color: var(--text-muted);
-            font-size: 18px;
-            margin-bottom: 40px;
-            animation: fadeInUp 1.4s ease;
-        }
-
-        .cta-button {
-            padding: 16px 40px;
-            background: var(--accent-gold);
-            color: #000;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: 0.4s;
-            animation: fadeInUp 1.6s ease;
-            box-shadow: 0 10px 30px rgba(245, 201, 40, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(245, 201, 40, 0.5);
-        }
-
-        /* Services / Features Section */
-        .services {
-            padding: 100px 5%;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--glass);
+        .container {
+            background: var(--panel);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 30px;
             border: 1px solid var(--border);
             padding: 40px;
-            border-radius: 24px;
-            transition: 0.4s;
-            text-align: right;
-        }
-
-        .card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: var(--accent-purple);
-            transform: translateY(-10px);
-        }
-
-        .card h3 {
-            color: var(--accent-gold);
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-
-        .card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        /* Footer */
-        footer {
-            padding: 50px 5%;
             text-align: center;
-            border-top: 1px solid var(--border);
-            color: var(--text-muted);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* تأثير الضوء في الخلفية */
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(118, 87, 255, 0.1) 0%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content { position: relative; z-index: 1; }
+
+        h1 {
+            color: var(--gold);
+            font-size: 32px;
+            margin-bottom: 10px;
+            font-weight: 900;
+        }
+
+        p {
+            color: var(--muted);
+            font-size: 15px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            padding: 40px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(118, 87, 255, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .upload-area:hover {
+            background: rgba(118, 87, 255, 0.1);
+            border-color: var(--gold);
+        }
+
+        .upload-area span {
+            display: block;
+            color: var(--text);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #videoFile { display: none; }
+
+        .btn-optimize {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, var(--primary), #a28eff);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(118, 87, 255, 0.3);
+        }
+
+        .btn-optimize:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(118, 87, 255, 0.5);
+        }
+
+        .btn-optimize:disabled {
+            background: #444;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #status {
+            margin-top: 20px;
             font-size: 14px;
+            color: var(--gold-light);
+            min-height: 20px;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .download-btn {
+            display: none;
+            background: #00c853;
+            color: white;
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav { display: none; }
-            .hero h1 { font-size: 45px; }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="bg-glow"></div>
-    <div class="blob"></div>
+<div class="container">
+    <div class="content">
+        <h1>إبراهيم ال فارس PRO</h1>
+        <p>نظام تحسين الجودة الخارق لرفع الفيديوهات بدون تغبيش على تيك توك وإنستجرام</p>
 
-    <header>
-        <div class="logo">إبراهيم ال فارس</div>
-        <nav>
-            <a href="#home">الرئيسية</a>
-            <a href="#about">من أنا</a>
-            <a href="#services">خدماتي</a>
-            <a href="#contact">اتصل بي</a>
-        </nav>
-    </header>
+        <form id="uploadForm">
+            <label class="upload-area" id="dropzone">
+                <span id="fileLabel">اضغط هنا لرفع الفيديو 📁</span>
+                <input type="file" id="videoFile" accept="video/*" required>
+            </label>
 
-    <section class="hero" id="home">
-        <h2>مرحباً بكم في عالمي الرقمي</h2>
-        <h1>إبراهيم ال فارس</h1>
-        <p>مبتكر، مبرمج، وصانع حلول تقنية. أعمل على تحويل الأفكار المعقدة إلى تجارب رقمية بسيطة، أنيقة، وعالمية المعايير.</p>
-        <a href="#services" class="cta-button">اكتشف أعمالي</a>
-    </section>
+            <button type="submit" id="submitBtn" class="btn-optimize">بدء المعالجة الذكية ✨</button>
+        </form>
 
-    <section class="services" id="services">
-        <div class="card">
-            <h3>تطوير الأنظمة</h3>
-            <p>بناء تطبيقات ومواقع إلكترونية بأحدث التقنيات العالمية، مع التركيز على السرعة، الأمان، وتجربة المستخدم.</p>
-        </div>
-        <div class="card">
-            <h3>هندسة الفيديو</h3>
-            <p>متخصص في تحسين جودة المحتوى المرئي وتهيئته ليتوافق مع خوارزميات المنصات العالمية لضمان أعلى انتشار.</p>
-        </div>
-        <div class="card">
-            <h3>الاستشارات التقنية</h3>
-            <p>تقديم استشارات استراتيجية للشركات والأفراد للتحول الرقمي وزيادة الكفاءة باستخدام الذكاء الاصطناعي.</p>
-        </div>
-    </section>
+        <div id="status"></div>
+        <a id="downloadBtn" class="download-btn" href="#" download>تحميل الفيديو المحسن 📥</a>
+    </div>
+</div>
 
-    <footer id="contact">
-        <p>&copy; 2026 جميع الحقوق محفوظة | إبراهيم ال فارس - Ibrahim Al-Fares</p>
-    </footer>
+<script>
+    const fileInput = document.getElementById('videoFile');
+    const fileLabel = document.getElementById('fileLabel');
+    const form = document.getElementById('uploadForm');
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('status');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // تحديث اسم الملف عند الاختيار
+    fileInput.onchange = () => {
+        if(fileInput.files.length > 0) {
+            fileLabel.innerText = "تم اختيار: " + fileInput.files[0].name;
+            fileLabel.style.color = "#f5c928";
+        }
+    };
+
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData();
+        formData.append('video', fileInput.files[0]);
+
+        btn.disabled = true;
+        btn.innerText = "جاري المعالجة... يرجى الانتظار";
+        status.innerText = "يتم الآن تطبيق خوارزمية (CRF 18) لتحسين حدة البكسلات...";
+        downloadBtn.style.display = "none";
+
+        try {
+            // هنا يتم الربط مع السيرفر (الذي يعالج الفيديو فعلياً)
+            const response = await fetch('/optimize', { 
+                method: 'POST', 
+                body: formData 
+            });
+            const data = await response.json();
+
+            if(data.url) {
+                status.innerText = "تم التحسين بنجاح! الفيديو الآن جاهز للنشر بدقة خارقة.";
+                downloadBtn.href = data.url;
+                downloadBtn.style.display = "block";
+            } else {
+                status.innerText = "خطأ في المعالجة.";
+            }
+        } catch (err) {
+            // رسالة تظهر إذا لم يكن هناك سيرفر مربوط حالياً
+            status.innerHTML = "<span style='color:#ff4d4d;'>تنبيه: الواجهة تعمل بنجاح، ولكن تحتاج لربطها بسيرفر FFmpeg لتتم المعالجة.</span>";
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "بدء المعالجة الذكية ✨";
+        }
+    };
+</script>
 
 </body>
 </html>
