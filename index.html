@@ -1,277 +1,233 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>IAF VideoCompress</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Tahoma,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh}
-.container{max-width:900px;margin:auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #1a1a1a}
-.logo{font-size:22px;font-weight:900;color:#fbbf24}
-.badge{background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 12px;border-radius:20px;color:#fbbf24;font-size:11px}
-.hero{text-align:center;padding:40px 0 30px}
-.hero h1{font-size:34px;margin:10px 0}
-.hero h1 span{color:#fbbf24}
-.hero p{color:#888;line-height:1.7;font-size:14px}
-.card{background:#111;border:1px solid #1a1a1a;border-radius:16px;padding:20px;margin-top:15px}
-.card h3{margin-bottom:15px;font-size:16px;color:#fbbf24}
-.upload{border:2px dashed #2a2a2a;background:#0d0d0d;border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;display:block;transition:.2s}
-.upload:hover{border-color:#fbbf24}
-.up-icon{font-size:44px;margin-bottom:12px}
-.upload h2{margin:5px 0;font-size:18px}
-.upload p{color:#666;font-size:12px}
-input[type=file]{display:none}
-.hidden{display:none}
-.method{background:#0d0d0d;border:2px solid #1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s}
-.method:hover{border-color:#2a2a2a}
-.method.active{border-color:#fbbf24;background:#1a1500}
-.method-title{font-weight:bold;font-size:14px;margin-bottom:6px}
-.method-desc{font-size:12px;color:#888;line-height:1.5}
-.primary-btn{width:100%;padding:16px;border-radius:12px;border:0;background:#fbbf24;color:#000;font-weight:900;font-size:15px;cursor:pointer;margin-top:15px}
-.primary-btn:disabled{opacity:.4}
-.progress{height:8px;background:#1a1a1a;border-radius:8px;overflow:hidden;margin-top:15px}
-.bar{height:100%;width:0%;background:#fbbf24;transition:width .3s}
-.status{text-align:center;color:#888;margin-top:12px;padding:10px;border-radius:10px;font-size:12px}
-.status.success{background:#0d2a1c;color:#19e6b2}
-.status.error{background:#2a0d0d;color:#ff6b6b}
-.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
-.info-box{background:#0d0d0d;padding:15px;border-radius:12px;border:1px solid #1a1a1a}
-.info-box h4{font-size:12px;color:#888;margin-bottom:8px}
-.info-box b{font-size:16px;color:#fbbf24}
-.download-btn{display:block;width:100%;padding:16px;background:#19e6b2;color:#000;text-align:center;border-radius:12px;font-weight:900;text-decoration:none;font-size:15px;margin-top:15px}
-.secondary-btn{width:100%;padding:14px;background:transparent;color:#fbbf24;border:1px solid #2a2a2a;border-radius:12px;font-weight:bold;cursor:pointer;font-size:13px;margin-top:10px}
-.video-preview{width:100%;max-height:300px;border-radius:12px;background:#000;margin-top:15px}
-footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
-.loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:20px}
-.spinner{width:50px;height:50px;border:4px solid #333;border-top-color:#fbbf24;border-radius:50%;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القاعدة ضغط - CompressBase</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
+        .gold-btn { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; font-weight: bold; }
+        .gold-border { border: 1px solid rgba(245, 158, 11, 0.3); }
+        .gold-border-active { border: 2px solid #f59e0b; background-color: rgba(245, 158, 11, 0.05); }
+        .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
+    </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between">
 
-<div class="loading-overlay" id="loadingOverlay">
-<div class="spinner"></div>
-<div style="color:#fbbf24">جاري تحميل محرك الضغط...</div>
-<div style="color:#888;font-size:12px" id="loadStatus">0%</div>
-</div>
+    <!-- الهيدر -->
+    <header class="p-4 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
+        <div class="flex items-center gap-2">
+            <span class="bg-amber-500 text-black font-bold px-2.5 py-1 rounded text-sm">🗜️</span>
+            <span class="font-bold tracking-wider text-sm">القاعدة ضغط</span>
+        </div>
+        <div class="text-[11px] text-amber-400 bg-amber-950/40 px-3 py-1.5 rounded-lg gold-border flex items-center gap-2">
+            <span>استخدامات متبقية اليوم غير محدود</span>
+            <span dir="ltr" class="text-zinc-400">14:06:39</span>
+        </div>
+    </header>
 
-<div class="container">
-<header>
-<div class="logo">IAF VideoCompress</div>
-<div class="badge">⚡ FFmpeg</div>
-</header>
+    <!-- المحتوى الرئيسي -->
+    <main class="max-w-2xl mx-auto w-full p-4 my-8">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold mb-2">طريقة التحميل</h1>
+            <p class="text-zinc-400 text-xs md:text-sm">اختر مقطع فيديو، وحدد طريقة، ثم قم بتنزيل الملف النهائي.</p>
+        </div>
 
-<section class="hero">
-<h1>اضغط فيديوهاتك <span>بجودة احترافية</span></h1>
-<p>MP4 • صوت • بدون فقدان — كل شيء في المتصفح</p>
-</section>
+        <div class="bg-zinc-900/80 gold-border rounded-2xl p-5 md:p-6 shadow-xl relative">
+            
+            <!-- الخطوة 1: رفع الفيديو أو الرابط -->
+            <div id="step-1">
+                <div class="text-amber-400 text-xs mb-3 font-semibold">1 | اختر الفيديو الخاص بك</div>
+                <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center cursor-pointer hover:border-amber-500 transition mb-4" onclick="document.getElementById('fileInput').click()">
+                    <div class="text-2xl mb-1 text-amber-500">➕</div>
+                    <p class="text-xs font-semibold">حدد الفيديو</p>
+                    <p class="text-[10px] text-zinc-500 mt-1">أو اسحب الملف وأفلته هنا</p>
+                    <input type="file" id="fileInput" class="hidden" accept="video/*" onchange="handleFileSelected(this)">
+                </div>
 
-<div class="card" id="uploadCard">
-<h3>📤 اختر الفيديو</h3>
-<label class="upload" for="videoInput">
-<div class="up-icon">🎬</div>
-<h2>اختر فيديو</h2>
-<p>MP4 • MOV • WebM • AVI</p>
-</label>
-<input id="videoInput" type="file" accept="video/*">
-</div>
+                <div class="relative">
+                    <div class="text-[11px] text-zinc-400 mb-1">أو استخدم رابط البت</div>
+                    <div class="flex gap-2">
+                        <input type="text" id="videoUrl" placeholder="https://compressbase.com/clip/..." class="w-full bg-zinc-950 gold-border rounded-lg p-2.5 text-xs text-zinc-300 focus:outline-none focus:border-amber-500">
+                        <button onclick="handleUrlInput()" class="bg-amber-500/20 text-amber-400 px-4 rounded-lg text-xs font-bold border border-amber-500/30 hover:bg-amber-500/30 transition">استخدام</button>
+                    </div>
+                </div>
+            </div>
 
-<div class="card hidden" id="methodCard">
-<h3>📊 اختر مستوى الضغط</h3>
+            <!-- الخطوة 2: اختيار الطريقة -->
+            <div id="step-2" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-amber-400 text-xs font-semibold">2 | اختر طريقة</span>
+                    <button onclick="resetToStep1()" class="text-[11px] text-zinc-400 underline">تغيير الفيديو</button>
+                </div>
 
-<div class="method active" data-quality="high">
-<div class="method-title">🎯 جودة عالية</div>
-<div class="method-desc">CRF 23 • احترافي — جودة ممتازة</div>
-</div>
+                <div class="bg-zinc-950 p-2.5 rounded-lg mb-4 flex items-center justify-between gold-border">
+                    <div class="flex items-center gap-2.5">
+                        <span class="bg-amber-500/20 text-amber-400 px-2 py-1 rounded text-[10px] font-bold">mp4</span>
+                        <span class="text-xs truncate text-zinc-300 max-w-[200px]" id="file-name-display">فيديو جديد</span>
+                    </div>
+                    <span class="text-[10px] text-zinc-500">جاهز</span>
+                </div>
 
-<div class="method" data-quality="medium">
-<div class="method-title">⚖️ متوازن</div>
-<div class="method-desc">CRF 28 • موصى به — توازن ممتاز</div>
-</div>
+                <div class="space-y-2.5 mb-5">
+                    <!-- الخيار الأول -->
+                    <label class="block gold-border-active p-3.5 rounded-xl cursor-pointer">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-xs">⭐ أعلى جودة + طريقة معدل الإطارات</span>
+                            <span class="text-[9px] bg-amber-500 text-black px-2 py-0.5 rounded font-bold">موصى به</span>
+                        </div>
+                        <p class="text-[11px] text-zinc-400 mt-1 leading-relaxed">يتوفر إصدار جديد، يحافظ على أعلى جودة ممكنة ويدعم الفيديو بدقة تصل إلى 1080 بكسل و120 إطاراً في الثانية.</p>
+                    </label>
 
-<div class="method" data-quality="low">
-<div class="method-title">📉 حجم صغير</div>
-<div class="method-desc">CRF 32 • للواتساب — حجم أقل</div>
-</div>
+                    <!-- خيار إضافي لتحسين حجم تيك توك -->
+                    <label class="flex items-start gap-2.5 gold-border p-3 rounded-xl cursor-pointer bg-zinc-950/50">
+                        <input type="checkbox" id="tiktokOpt" class="mt-0.5 accent-amber-500">
+                        <div>
+                            <span class="text-xs font-bold text-amber-400">تحسين حجم الملف لتطبيق تيك توك</span>
+                            <p class="text-[10px] text-zinc-400 mt-0.5">يضغط حجم الملفات الكبيرة مع الحفاظ على جودة الصورة.</p>
+                        </div>
+                    </label>
+                </div>
 
-<button class="primary-btn" id="startBtn">▶️ ابدأ الضغط</button>
-</div>
+                <button onclick="openDeviceModal()" class="w-full py-3 rounded-xl gold-btn text-xs tracking-wide">
+                    بدء المعالجة ➔
+                </button>
+            </div>
 
-<div class="card hidden" id="processingCard">
-<h3>⏳ جاري الضغط...</h3>
-<div class="progress"><div class="bar" id="progressBar"></div></div>
-<div class="status" id="statusText">جاري المعالجة...</div>
-</div>
+            <!-- الخطوة 3: شاشة الانتظار المعالجة -->
+            <div id="step-3" class="hidden text-center py-6">
+                <div class="inline-block animate-spin rounded-full h-10 w-10 border-3 border-amber-500 border-t-transparent mb-3"></div>
+                <h3 class="text-base font-bold mb-1" dir="ltr">Preparing the final MP4</h3>
+                <p class="text-[11px] text-zinc-400 mb-4">أبق هذه الصفحة مفتوحة حتى يصبح الفيديو جاهزاً</p>
+                <div class="w-full bg-zinc-800 rounded-full h-1.5 max-w-xs mx-auto overflow-hidden">
+                    <div id="progressBar" class="bg-amber-500 h-1.5 w-0 transition-all duration-300"></div>
+                </div>
+            </div>
 
-<div class="card hidden" id="resultCard">
-<h3>📊 النتيجة</h3>
-<div class="info-grid">
-<div class="info-box">
-<h4>📦 الحجم الأصلي</h4>
-<b id="originalSize">—</b>
-</div>
-<div class="info-box">
-<h4>✨ الحجم الجديد</h4>
-<b id="newSize" style="color:#19e6b2">—</b>
-</div>
-</div>
-<div class="info-box" style="margin-top:10px">
-<h4>💰 التوفير</h4>
-<b id="savings" style="color:#19e6b2">—</b>
-</div>
-<video id="previewVideo" class="video-preview" controls></video>
-<a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو المضغوط (MP4)</a>
-<button class="secondary-btn" onclick="location.reload()">🔄 ضغط فيديو آخر</button>
-</div>
+            <!-- الخطوة 4: النتيجة والتحميل -->
+            <div id="step-4" class="hidden text-center py-2">
+                <div class="text-2xl mb-1">✅</div>
+                <h3 class="text-base font-bold mb-1">الفيديو الخاص بك جاهز</h3>
+                <p class="text-[11px] text-zinc-400 mb-3">تم الانتهاء بنجاح من طريقة أعلى جودة + معدل الإطارات</p>
+                
+                <div class="bg-zinc-950 gold-border p-3 rounded-xl text-right mb-4">
+                    <div class="text-[11px] text-amber-400 font-bold mb-1">قبل التحميل على تيك توك:</div>
+                    <p class="text-[10px] text-zinc-300">استخدم تطبيق TikTok على الويب لرفع الفيديو بمكتب اعليتا • لا تقم بتغيير أو قص أو اضافة موسيقى • استخدم #Compressbase</p>
+                </div>
 
-<footer>IAF VideoCompress © 2026</footer>
-</div>
+                <a id="downloadLink" href="#" class="block w-full py-3 rounded-xl gold-btn text-xs text-center mb-3" download>
+                    تنزيل الفيديو ⬇
+                </a>
+                <button onclick="resetToStep1()" class="text-[11px] text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
+            </div>
 
-<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
-<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
-<script>
-const { FFmpeg } = FFmpegWASM;
-const { fetchFile, toBlobURL } = FFmpegUtil;
+        </div>
+    </main>
 
-const input=document.getElementById("videoInput");
-const methodCard=document.getElementById("methodCard");
-const resultCard=document.getElementById("resultCard");
-const processingCard=document.getElementById("processingCard");
-const progressBar=document.getElementById("progressBar");
-const statusText=document.getElementById("statusText");
-const startBtn=document.getElementById("startBtn");
-const loadingOverlay=document.getElementById("loadingOverlay");
-const loadStatus=document.getElementById("loadStatus");
+    <!-- نافذة اختيار الأجهزة المنبثقة (Modal) -->
+    <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-zinc-900 gold-border rounded-2xl p-5 max-w-sm w-full text-center">
+            <h3 class="text-sm font-bold text-amber-400 mb-1">تحسين للنشر على الأجهزة</h3>
+            <p class="text-[11px] text-zinc-400 mb-4">هل تنشر على:</p>
+            
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <button onclick="startProcessing()" class="gold-border bg-zinc-950 p-3 rounded-xl hover:border-amber-500 transition text-center">
+                    <div class="text-lg mb-1">📱</div>
+                    <div class="text-[11px] font-bold">منتج أبل</div>
+                    <div class="text-[9px] text-zinc-500">ايفون وأيباد</div>
+                </button>
+                <button onclick="startProcessing()" class="gold-border bg-zinc-950 p-3 rounded-xl hover:border-amber-500 transition text-center">
+                    <div class="text-lg mb-1">🤖</div>
+                    <div class="text-[11px] font-bold">أندرويد</div>
+                    <div class="text-[9px] text-zinc-500">سامسونج وغيرها</div>
+                </button>
+                <button onclick="startProcessing()" class="gold-border bg-zinc-950 p-3 rounded-xl hover:border-amber-500 transition text-center">
+                    <div class="text-lg mb-1">💻</div>
+                    <div class="text-[11px] font-bold">كمبيوتر</div>
+                    <div class="text-[9px] text-zinc-500">مكتب أو محمول</div>
+                </button>
+            </div>
 
-let ffmpeg=null;
-let selectedFile=null;
-let selectedQuality="medium";
+            <button onclick="closeDeviceModal()" class="text-xs text-zinc-400 underline">إلغاء</button>
+        </div>
+    </div>
 
-async function loadFFmpeg(){
-try{
-ffmpeg=new FFmpeg();
-ffmpeg.on("log",({message})=>{
-if(message.includes("frame=")){
-const match=message.match(/time=(\d+):(\d+):(\d+)/);
-if(match){
-const seconds=parseInt(match[1])*3600+parseInt(match[2])*60+parseInt(match[3]);
-const total=window.videoDuration||1;
-const progress=Math.min(20+(seconds/total)*70,90);
-progressBar.style.width=progress+"%";
-statusText.textContent="جاري الضغط... "+Math.round((seconds/total)*100)+"%";
-}
-}
-});
+    <!-- الفوتر -->
+    <footer class="text-center p-4 text-[11px] text-zinc-600 border-t border-zinc-900">
+        CompressBase Clone - جميع الحقوق محفوظة
+    </footer>
 
-ffmpeg.on("progress",({progress})=>{
-const p=Math.min(20+progress*70,90);
-progressBar.style.width=p+"%";
-});
+    <script>
+        let uploadedFile = null;
 
-const baseURL="https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
-await ffmpeg.load({
-coreURL:await toBlobURL(baseURL+"/ffmpeg-core.js","text/javascript"),
-wasmURL:await toBlobURL(baseURL+"/ffmpeg-core.wasm","application/wasm"),
-});
+        function handleFileSelected(input) {
+            if (input.files && input.files[0]) {
+                uploadedFile = input.files[0];
+                document.getElementById('file-name-display').innerText = uploadedFile.name;
+                switchToStep(2);
+            }
+        }
 
-loadingOverlay.classList.add("hidden");
-}catch(err){
-console.error(err);
-loadStatus.textContent="❌ فشل التحميل";
-loadStatus.style.color="#ff6b6b";
-setTimeout(()=>{
-alert("فشل تحميل محرك الضغط. تأكد من الإنترنت وحاول مجدداً.");
-},500);
-}
-}
+        function handleUrlInput() {
+            const urlVal = document.getElementById('videoUrl').value;
+            if(urlVal) {
+                document.getElementById('file-name-display').innerText = "فيديو من رابط خارجي";
+                switchToStep(2);
+            } else {
+                alert('الرجاء إدخال رابط صالح');
+            }
+        }
 
-loadFFmpeg();
+        function openDeviceModal() {
+            document.getElementById('deviceModal').classList.remove('hidden');
+        }
 
-input.addEventListener("change",function(){
-const file=this.files[0];
-if(!file)return;
-selectedFile=file;
-document.getElementById("originalSize").textContent=formatSize(file.size);
-methodCard.classList.remove("hidden");
-});
+        function closeDeviceModal() {
+            document.getElementById('deviceModal').classList.add('hidden');
+        }
 
-document.querySelectorAll(".method").forEach(m=>{
-m.addEventListener("click",()=>{
-document.querySelectorAll(".method").forEach(x=>x.classList.remove("active"));
-m.classList.add("active");
-selectedQuality=m.dataset.quality;
-});
-});
+        function startProcessing() {
+            closeDeviceModal();
+            switchToStep(3);
 
-startBtn.addEventListener("click",async()=>{
-if(!selectedFile||!ffmpeg)return;
-startBtn.disabled=true;
-methodCard.classList.add("hidden");
-processingCard.classList.remove("hidden");
-progressBar.style.width="5%";
-statusText.textContent="جاري قراءة الفيديو...";
+            let progress = 0;
+            const bar = document.getElementById('progressBar');
+            
+            let interval = setInterval(() => {
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    switchToStep(4);
+                    
+                    if (uploadedFile) {
+                        const fileURL = URL.createObjectURL(uploadedFile);
+                        document.getElementById('downloadLink').href = fileURL;
+                        document.getElementById('downloadLink').setAttribute('download', 'compressed_' + uploadedFile.name);
+                    } else {
+                        document.getElementById('downloadLink').href = "#";
+                    }
+                } else {
+                    progress += 15;
+                    bar.style.width = progress + '%';
+                }
+            }, 300);
+        }
 
-try{
-const crfMap={high:"23",medium:"28",low:"32"};
-const crf=crfMap[selectedQuality];
+        function switchToStep(stepNum) {
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-3').classList.add('hidden');
+            document.getElementById('step-4').classList.add('hidden');
+            
+            document.getElementById('step-' + stepNum).classList.remove('hidden');
+        }
 
-await ffmpeg.writeFile("input.mp4",await fetchFile(selectedFile));
-progressBar.style.width="15%";
-
-const video=document.createElement("video");
-video.src=URL.createObjectURL(selectedFile);
-await new Promise(r=>{
-video.onloadedmetadata=r;
-});
-window.videoDuration=video.duration;
-
-statusText.textContent="جاري الضغط...";
-
-await ffmpeg.exec([
-"-i","input.mp4",
-"-vcodec","libx264",
-"-crf",crf,
-"-preset","fast",
-"-acodec","aac",
-"-b:a","128k",
-"-movflags","+faststart",
-"output.mp4"
-]);
-
-progressBar.style.width="95%";
-statusText.textContent="جاري إنشاء الملف...";
-
-const data=await ffmpeg.readFile("output.mp4");
-const blob=new Blob([data.buffer],{type:"video/mp4"});
-const url=URL.createObjectURL(blob);
-
-document.getElementById("newSize").textContent=formatSize(blob.size);
-const savings=Math.round((1-blob.size/selectedFile.size)*100);
-document.getElementById("savings").textContent=savings+"% توفير";
-document.getElementById("previewVideo").src=url;
-document.getElementById("downloadBtn").href=url;
-document.getElementById("downloadBtn").download="compressed_"+selectedFile.name.replace(/\.[^.]+$/,".mp4");
-
-progressBar.style.width="100%";
-statusText.textContent="✅ تم الضغط بنجاح! (MP4 + صوت)";
-statusText.className="status success";
-processingCard.classList.add("hidden");
-resultCard.classList.remove("hidden");
-
-}catch(err){
-console.error(err);
-statusText.textContent="❌ فشل: "+err.message;
-statusText.className="status error";
-startBtn.disabled=false;
-}
-});
-
-function formatSize(bytes){
-if(bytes<1024*1024)return(bytes/1024).toFixed(1)+" KB";
-return(bytes/(1024*1024)).toFixed(1)+" MB";
-}
-</script>
+        function resetToStep1() {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('videoUrl').value = '';
+            uploadedFile = null;
+            switchToStep(1);
+        }
+    </script>
 </body>
 </html>
