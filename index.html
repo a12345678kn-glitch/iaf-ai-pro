@@ -1,91 +1,78 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Faris Smart Compress - ابراهيم ال فارس</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@700;800&display=swap" rel="stylesheet">
-<style>body{font-family:'Tajawal';background:#08080a;color:#fff}.gold{background:linear-gradient(90deg,#fde047,#eab308);color:#000}.card{background:#121214;border:1px solid #27272a}</style>
-</head>
-<body>
-<header class="p-4 flex justify-between items-center border-b border-zinc-800 bg-[#121214]"><div class="flex gap-2 items-center"><div class="w-9 h-9 bg-[#fde047] text-black font-black rounded-lg flex items-center justify-center">F</div><b>فارس كومبرس <span class="text-[10px] bg-zinc-800 px-2 py-1 rounded-full">ابراهيم ال فارس</span></b></div><span class="text-[10px] bg-[#fde047] text-black px-3 py-1 rounded-full font-bold">SMART AI</span></header>
+#!/usr/bin/env python3
+"""ضغط الفيديو قبل النشر على تيك توك (1080x1920، أقل من 287MB)"""
+import subprocess, sys, os, argparse, json
 
-<div class="max-w-[720px] mx-auto p-4">
-<h1 class="text-3xl font-black text-center mt-4">الضغط الذكي 🧠</h1>
-<p class="text-center text-zinc-500 text-xs mt-1">يحافظ على جودة الوجه 100% ويضغط الخلفية فقط - نفس جودة الولد TikQuality</p>
+TIKTOK_MAX_MB = 287
+W, H = 1080, 1920
 
-<div class="card rounded-[20px] p-5 mt-6">
-<label for="f" class="block border-2 border-dashed border-zinc-700 rounded-2xl p-10 text-center cursor-pointer hover:border-amber-300"><div class="w-14 h-14 mx-auto bg-[#fde047] rounded-xl flex items-center justify-center text-black text-3xl">+</div><p class="mt-3 font-bold">اختار الفيديو</p><p class="text-[11px] text-zinc-500">يدعم 4K حتى 2GB</p></label>
-<input type="file" id="f" accept="video/*" hidden>
-<div id="info" class="hidden mt-4 text-xs bg-[#08080a] p-3 rounded-xl"></div>
+def get_duration(path):
+    r = subprocess.run(["ffprobe","-v","quiet","-print_format","json",
+                        "-show_format",path], capture_output=True, text=True)
+    return float(json.loads(r.stdout)["format"]["duration"])
 
-<p class="font-bold mt-6 mb-3">1- وين راح تنشره؟</p>
-<div class="grid grid-cols-3 gap-2">
-<button onclick="setPlat('tiktok')" id="p-tiktok" class="plat gold p-3 rounded-xl font-bold text-sm">تيك توك 🔥<br><span class="text-[10px]">1080x1920 60fps</span></button>
-<button onclick="setPlat('insta')" id="p-insta" class="plat card p-3 rounded-xl text-sm">انستا<br><span class="text-[10px]">1080x1350</span></button>
-<button onclick="setPlat('whats')" id="p-whats" class="plat card p-3 rounded-xl text-sm">واتساب<br><span class="text-[10px]">حجم صغير</span></button>
-</div>
+def size_mb(path):
+    return os.path.getsize(path) / (1024*1024)
 
-<p class="font-bold mt-5 mb-3">2- نوع الضغط</p>
-<label class="flex gap-3 card p-4 rounded-xl mb-2 border-amber-400/40 bg-[#1e1c12]"><input type="radio" name="mode" value="smart" checked><div><b class="text-sm">😍 Smart Face - ذكي (موصى به)</b><p class="text-[11px] text-zinc-400">يثبت الوجه 4K ويضغط الخلفية - يصغر 70% بدون ما يبين</p></div></label>
-<label class="flex gap-3 card p-4 rounded-xl mb-2"><input type="radio" name="mode" value="fix"><div><b class="text-sm">✨ تصليح التقطيع + 60fps ناعم</b><p class="text-[11px] text-zinc-400">يحول الفيديو المتقطع الى 60fps سينمائي</p></div></label>
+def compress(inp, out=None, crf=23, preset="medium"):
+    if not os.path.isfile(inp):
+        print(f"خطأ: الملف غير موجود {inp}"); sys.exit(1)
 
-<button id="go" disabled class="w-full mt-6 bg-zinc-700 text-zinc-400 py-4 rounded-xl font-black">حمل فيديو اولاً</button>
-<div class="w-full bg-zinc-800 h-2 rounded-full mt-3 overflow-hidden"><div id="bar" class="h-full gold" style="width:0%"></div></div>
-<p id="txt" class="text-center text-xs text-amber-300 mt-2">بانتظار الفيديو...</p>
+    for t in ["ffmpeg","ffprobe"]:
+        try:
+            subprocess.run([t,"-version"], capture_output=True, check=True)
+        except (subprocess.CalledProcessError, FileNotFoundError):
+            print(f"خطأ: يجب تثبيت {t}"); sys.exit(1)
 
-<div id="done" class="hidden mt-6 text-center">
-<video id="prev" controls class="w-full rounded-xl bg-black"></video>
-<a id="dl" download="Faris-Smart.mp4" class="block w-full gold py-4 rounded-xl font-black mt-4">تنزيل الجودة الخرافية ⬇️</a>
-<p class="text-[11px] text-zinc-500 mt-2">نصيحة: انشر بدون فلتر تيك توك حتى تبقى الجودة</p>
-</div>
-</div>
-</div>
+    if out is None:
+        base, _ = os.path.splitext(inp)
+        out = f"{base}_tiktok.mp4"
 
-<script type="module">
-import {FFmpeg} from "https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/+esm";
-import {fetchFile,toBlobURL} from "https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/+esm";
-let ffmpeg, file, plat='tiktok', loaded=false;
-const go=document.getElementById('go'), bar=document.getElementById('bar'), txt=document.getElementById('txt');
+    orig = size_mb(inp)
+    dur = get_duration(inp)
+    print(f"الأصلي: {orig:.1f} MB | المدة: {dur:.1f} ثانية")
+    print(f"الهدف: {W}x{H} | H.264 | < {TIKTOK_MAX_MB} MB")
 
-window.setPlat=(p)=>{plat=p; document.querySelectorAll('.plat').forEach(b=>b.className='plat card p-3 rounded-xl text-sm'); document.getElementById('p-'+p).className='plat gold p-3 rounded-xl font-bold text-sm';}
+    cmd = [
+        "ffmpeg","-y","-i",inp,
+        "-c:v","libx264","-crf",str(crf),"-preset",preset,
+        "-vf", (f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
+                f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:black"),
+        "-c:a","aac","-b:a","128k","-ar","44100",
+        "-movflags","+faststart","-map_metadata","-1",
+        out
+    ]
 
-document.getElementById('f').onchange=async e=>{
-  file=e.target.files[0]; if(!file)return;
-  document.getElementById('info').classList.remove('hidden');
-  document.getElementById('info').textContent=file.name+' - '+(file.size/1024/1024).toFixed(2)+' MB';
-  go.textContent='جاري تحميل المحرك الذكي...'; go.disabled=true;
-  if(!ffmpeg){
-    ffmpeg=new FFmpeg(); ffmpeg.on('progress',({progress})=>{
-      const p=Math.round(progress*100); if(loaded){ bar.style.width=p+'%'; txt.textContent=`يضغط بذكاء ${p}% - لا تطلع`; } else { bar.style.width=p+'%'; txt.textContent=`تحميل المحرك ${p}%`; }
-    });
-    const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/esm';
-    await ffmpeg.load({coreURL:await toBlobURL(`${base}/ffmpeg-core.js`,'text/javascript'), wasmURL:await toBlobURL(`${base}/ffmpeg-core.wasm`,'application/wasm')});
-    loaded=true;
-  }
-  go.disabled=false; go.className='w-full gold py-4 rounded-xl font-black mt-6'; go.textContent='ابدأ الضغط الذكي →'; txt.textContent='المحرك جاهز 100%';
-};
+    print(f"جاري الضغط إلى {out} ...")
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode != 0:
+        print(f"خطأ FFmpeg:\n{r.stderr}"); sys.exit(1)
 
-go.onclick=async()=>{
-  if(!file||!loaded)return; go.disabled=true; bar.style.width='0%';
-  await ffmpeg.writeFile('in.mp4', await fetchFile(file));
-  let cmd=['-i','in.mp4'];
-  const mode=document.querySelector('input[name="mode"]:checked').value;
+    new = size_mb(out)
+    ratio = (1 - new/orig) * 100 if orig > 0 else 0
+    print(f"\nتم!")
+    print(f"  الملف: {out}")
+    print(f"  الأصلي: {orig:.1f} MB")
+    print(f"  المضغوط: {new:.1f} MB")
+    print(f"  نسبة الضغط: {ratio:.1f}%")
 
-  if(plat==='tiktok'){ cmd.push('-vf','scale=1080:1920:flags=lanczos,unsharp=5:5:0.8:3:3:0.4,fps=60','-c:v','libx264','-crf','16','-preset','medium','-b:v','6000k','-maxrate','8000k'); }
-  else if(plat==='insta'){ cmd.push('-vf','scale=1080:1350:flags=lanczos,unsharp=5:5:0.6','-c:v','libx264','-crf','18','-preset','medium','-b:v','4000k'); }
-  else { cmd.push('-vf','scale=720:-2','-c:v','libx264','-crf','24','-preset','veryfast','-b:v','1200k'); }
+    if new > TIKTOK_MAX_MB:
+        print(f"\nتحذير: يتجاوز {TIKTOK_MAX_MB} MB")
+        print(f"جرّب: python {sys.argv[0]} \"{inp}\" -c {crf+4}")
+    else:
+        print("\n✓ مطابق لمتطلبات تيك توك")
 
-  if(mode==='fix'){ // حركة الـ 60fps الناعم
-    cmd[2]='scale=1080:1920:flags=lanczos,minterpolate=fps=60:mi_mode=mci:mc_mode=aobmc:vsbmc=1,unsharp=5:5:0.8';
-  }
+def main():
+    p = argparse.ArgumentParser(description="ضغط فيديو لتيك توك")
+    p.add_argument("input", help="ملف الفيديو المدخل")
+    p.add_argument("-o","--output", help="ملف الإخراج")
+    p.add_argument("-c","--crf", type=int, default=23,
+                   help="جودة CRF (افتراضي 23، تيك توك 22-28)")
+    p.add_argument("-p","--preset", default="medium",
+                   choices=["ultrafast","superfast","veryfast","faster",
+                            "fast","medium","slow","slower","veryslow"],
+                   help="سرعة الترميز (افتراضي medium)")
+    a = p.parse_args()
+    compress(a.input, a.output, a.crf, a.preset)
 
-  cmd.push('-c:a','aac','-b:a','128k','-movflags','+faststart','out.mp4');
-  await ffmpeg.exec(cmd);
-  const data=await ffmpeg.readFile('out.mp4'); const url=URL.createObjectURL(new Blob([data.buffer],{type:'video/mp4'}));
-  document.getElementById('done').classList.remove('hidden'); document.getElementById('prev').src=url; document.getElementById('dl').href=url;
-  go.disabled=false; go.textContent='تم ✅ اضغط مرة ثانية'; txt.textContent=`تم! الحجم الجديد ${(data.byteLength/1024/1024).toFixed(2)} MB`;
-};
-</script>
-</body>
-</html>
+if __name__ == "__main__":
+    main()
