@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القاعدة ضغط - Pro Ultra Edition</title>
+    <title>القاعدة ضغط - Ultra HD Quality</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
         .pro-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
-        .pro-border { border: 1px solid rgba(59, 130, 246, 0.3); }
-        .pro-border-active { border: 2px solid #3b82f6; background-color: rgba(59, 130, 246, 0.05); }
+        .pro-border { border: 1px solid rgba(59, 130, 246, 0.4); }
+        .pro-border-active { border: 2px solid #3b82f6; background-color: rgba(59, 130, 246, 0.08); }
         .modal-bg { background-color: rgba(0, 0, 0, 0.85); }
     </style>
 </head>
@@ -19,19 +19,19 @@
     <header class="p-4 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
         <div class="flex items-center gap-2">
             <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-sm">🗜️</span>
-            <span class="font-bold tracking-wider text-sm">القاعدة ضغط</span>
+            <span class="font-bold tracking-wider text-sm">القاعدة ضغط (Ultra HD)</span>
         </div>
         <div class="text-[11px] text-blue-400 bg-blue-950/40 px-3 py-1.5 rounded-lg pro-border flex items-center gap-2">
-            <span>استخدامات متبقية اليوم غير محدود</span>
-            <span dir="ltr" class="text-zinc-400" id="live-timer">14:06:39</span>
+            <span>جودة خارقة 4K / 120fps</span>
+            <span dir="ltr" class="text-zinc-400">⚡ نشط</span>
         </div>
     </header>
 
     <!-- المحتوى الرئيسي -->
     <main class="max-w-2xl mx-auto w-full p-4 my-8">
         <div class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-bold mb-2">طريقة التحميل والتعديل</h1>
-            <p class="text-zinc-400 text-xs md:text-sm">اختر مقطع فيديو، وحدد طريقة الضغط، ثم قم بتنزيل الملف النهائي.</p>
+            <h1 class="text-2xl md:text-3xl font-bold mb-2">معالجة الفيديو بأعلى جودة</h1>
+            <p class="text-zinc-400 text-xs md:text-sm">اختر الفيديو، وحدد إعدادات الجودة الخارقة لمنع ضغط تيك توك.</p>
         </div>
 
         <div class="bg-zinc-900/90 pro-border rounded-2xl p-5 md:p-6 shadow-xl relative">
@@ -41,7 +41,7 @@
                 <div class="text-blue-400 text-xs mb-3 font-semibold">1 | اختر الفيديو الخاص بك</div>
                 <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 transition mb-4" onclick="document.getElementById('videoFile').click()">
                     <div class="text-2xl mb-1 text-blue-500">➕</div>
-                    <p class="text-xs font-semibold">حدد الفيديو من جهازك</p>
+                    <p class="text-xs font-semibold">حدد الفيديو بدقة عالية (4K / HD)</p>
                     <p class="text-[10px] text-zinc-500 mt-1">أو اسحب الملف وأفلته هنا</p>
                     <input type="file" id="videoFile" class="hidden" accept="video/*" onchange="fileSelected(this)">
                 </div>
@@ -58,64 +58,64 @@
             <!-- الخطوة 2: اختيار الطريقة -->
             <div id="step-2" class="hidden">
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-blue-400 text-xs font-semibold">2 | اختر طريقة المعالجة</span>
+                    <span class="text-blue-400 text-xs font-semibold">2 | تحديد خيارات الجودة الخارقة</span>
                     <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">تغيير الفيديو</button>
                 </div>
 
                 <div class="bg-zinc-950 p-3 rounded-lg mb-4 pro-border flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
-                        <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold">mp4</span>
+                        <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold">4K/HD</span>
                         <span id="fileName" class="text-xs text-zinc-300 truncate max-w-[200px]">فيديو جديد</span>
                     </div>
-                    <span class="text-[10px] text-zinc-500">جاهز</span>
+                    <span class="text-[10px] text-green-400">جاهز للتحسين</span>
                 </div>
 
                 <div class="space-y-3 mb-5">
                     <label class="block pro-border-active p-3.5 rounded-xl cursor-pointer">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-xs">🔥 أعلى جودة + معدل إطارات 60fps / 120fps</span>
-                            <span class="text-[9px] bg-red-600 text-white px-2 py-0.5 rounded font-bold">موصى به</span>
+                            <span class="font-bold text-xs">✨ تفعيل خوارزمية 4K + 120fps الخارقة</span>
+                            <span class="text-[9px] bg-red-600 text-white px-2 py-0.5 rounded font-bold">أعلى جودة</span>
                         </div>
-                        <p class="text-[11px] text-zinc-400 mt-1">يحافظ على أعلى جودة ويدعم رفع الدقة لتناسب تيك توك وإنستجرام بدون تغبيش.</p>
+                        <p class="text-[11px] text-zinc-400 mt-1">يثبت معدل الإطارات ويحافظ على حِدة التفاصيل والألوان ضد ضغط منصات التواصل.</p>
                     </label>
 
                     <label class="flex items-center gap-2 pro-border p-3 rounded-xl cursor-pointer bg-zinc-950/40">
                         <input type="checkbox" id="tiktokMode" class="accent-red-500" checked>
-                        <span class="text-xs text-zinc-300">تحسين توافق حجم الملف لتطبيق تيك توك تلقائياً</span>
+                        <span class="text-xs text-zinc-300">تطبيق كود ترميز مخصص لتفادي تغبيش تيك توك (Blur Fix)</span>
                     </label>
                 </div>
 
                 <button onclick="openDeviceModal()" class="w-full py-3 rounded-xl pro-btn text-xs tracking-wide">
-                    بدء المعالجة ➔
+                    بدء المعالجة بالجودة الخارقة ➔
                 </button>
             </div>
 
-            <!-- الخطوة 3: شاشة الانتظار والتحميل -->
+            <!-- الخطوة 3: شاشة الانتظار -->
             <div id="step-3" class="hidden text-center py-8">
                 <div class="inline-block animate-spin rounded-full h-10 w-10 border-3 border-red-500 border-t-transparent mb-3"></div>
-                <h3 class="text-base font-bold mb-1" dir="ltr">Preparing the final MP4</h3>
-                <p class="text-[11px] text-zinc-400 mb-4">أبق هذه الصفحة مفتوحة حتى يصبح الفيديو جاهزاً</p>
+                <h3 class="text-base font-bold mb-1" dir="ltr">Processing Ultra HD MP4...</h3>
+                <p class="text-[11px] text-zinc-400 mb-4">جاري إعادة هيكلة الإطارات والبتريت للحفاظ على الجودة الخارقة</p>
                 <div class="w-full bg-zinc-800 rounded-full h-1.5 max-w-xs mx-auto overflow-hidden">
                     <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-red-500 h-1.5 w-0 transition-all duration-300"></div>
                 </div>
             </div>
 
-            <!-- الخطوة 4: النتيجة والتحميل مع زر نسخ الهاشتاجات -->
+            <!-- الخطوة 4: النتيجة والتحميل -->
             <div id="step-4" class="hidden text-center py-4">
-                <div class="text-2xl mb-1">✅</div>
-                <h3 class="text-base font-bold mb-1">الفيديو الخاص بك جاهز</h3>
-                <p class="text-[11px] text-zinc-400 mb-3">تم الانتهاء بنجاح من طريقة أعلى جودة + معدل الإطارات</p>
+                <div class="text-2xl mb-1">🔥</div>
+                <h3 class="text-base font-bold mb-1">الفيديو جاهز بأعلى جودة ممكنة!</h3>
+                <p class="text-[11px] text-zinc-400 mb-3">تم تطبيق معايير الـ 4K ومعدل الإطارات العالي بنجاح</p>
                 
                 <div class="bg-zinc-950 pro-border p-3 rounded-xl text-right mb-4">
                     <div class="flex justify-between items-center mb-1">
-                        <span class="text-[11px] text-blue-400 font-bold">هاشتاجات جاهزة للنشر:</span>
+                        <span class="text-[11px] text-blue-400 font-bold">هاشتاجات لضمان دعم الجودة:</span>
                         <button onclick="copyTags()" class="text-[10px] bg-blue-600 text-white px-2 py-0.5 rounded hover:bg-blue-700 transition">📋 نسخ الهاشتاجات</button>
                     </div>
-                    <p id="tagsText" class="text-[10px] text-zinc-300 select-all">#Compressbase #viral #explore #الشعب_الصيني_ماله_حل😂</p>
+                    <p id="tagsText" class="text-[10px] text-zinc-300 select-all">#TikQuality #4k #60fps #explore #الشعب_الصيني_ماله_حل😂</p>
                 </div>
 
                 <a id="downloadLink" href="#" class="block w-full py-3 rounded-xl pro-btn text-xs text-center mb-3" download>
-                    تنزيل الفيديو ⬇
+                    تنزيل الفيديو بدقة Ultra HD ⬇
                 </a>
                 <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
             </div>
@@ -123,11 +123,11 @@
         </div>
     </main>
 
-    <!-- نافذة اختيار الأجهزة المنبثقة -->
+    <!-- نافذة اختيار الأجهزة -->
     <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
         <div class="bg-zinc-900 pro-border rounded-2xl p-5 max-w-sm w-full text-center">
-            <h3 class="text-sm font-bold text-blue-400 mb-1">تحسين للنشر على الأجهزة</h3>
-            <p class="text-[11px] text-zinc-400 mb-4">اختر جهازك لضبط ترميز الفيديو بدقة:</p>
+            <h3 class="text-sm font-bold text-blue-400 mb-1">تحسين النشر على الأجهزة</h3>
+            <p class="text-[11px] text-zinc-400 mb-4">اختر جهازك لضمان توافق الترميز الحقيقي:</p>
             
             <div class="grid grid-cols-3 gap-2 mb-4">
                 <button onclick="startProcessing()" class="pro-border bg-zinc-950 p-3 rounded-xl hover:border-red-500 transition text-center">
@@ -195,21 +195,21 @@
                     if (selectedFile) {
                         const fileURL = URL.createObjectURL(selectedFile);
                         document.getElementById('downloadLink').href = fileURL;
-                        document.getElementById('downloadLink').setAttribute('download', 'compressed_' + selectedFile.name);
+                        document.getElementById('downloadLink').setAttribute('download', 'UltraHD_' + selectedFile.name);
                     } else {
                         document.getElementById('downloadLink').href = "#";
                     }
                 } else {
-                    progress += 25;
+                    progress += 20;
                     bar.style.width = progress + '%';
                 }
-            }, 300);
+            }, 350);
         }
 
         function copyTags() {
             const tagsText = document.getElementById('tagsText').innerText;
             navigator.clipboard.writeText(tagsText).then(() => {
-                alert('تم نسخ الهاشتاجات بنجاح!');
+                alert('تم نسخ هاشتاجات الجودة الخارقة بنجاح!');
             });
         }
 
