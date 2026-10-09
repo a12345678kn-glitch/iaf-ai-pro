@@ -1,125 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القاعدة ضغط - Pro Edition</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0b0b0b; color: #fff; font-family: Tahoma, sans-serif; }
-        .pro-btn { background: linear-gradient(135deg, #3b82f6, #ef4444); color: #fff; font-weight: bold; }
-        .pro-border { border: 1px solid rgba(59, 130, 246, 0.3); }
-        .pro-border-active { border: 2px solid #3b82f6; background-color: rgba(59, 130, 246, 0.05); }
-    </style>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12"><title>IAF VideoFix Pro</title>
+<style>
+:root{--bg:#080a10;--panel:#111521;--panel2:#171d2b;--line:#293247;--text:#f5f7ff;--muted:#9ba7bd;--accent:#8b5cf6;--accent2:#22d3ee;--good:#34d399;--danger:#fb7185}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#1d1740 0,transparent 36%),radial-gradient(ellipse at 0% 30%,#0b3040 0,transparent 32%),var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;min-height:100vh}button,input,select{font:inherit}button{cursor:pointer}.wrap{width:min(1120px,calc(100% - 28px));margin:auto}.top{display:flex;align-items:center;justify-content:space-between;padding:22px 0;gap:16px}.brand{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px}.logo{width:45px;height:45px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;color:#080a10;font-weight:1000;box-shadow:0 8px 30px #8b5cf633}.tag{font-size:12px;color:#c4b5fd;border:1px solid #59468a;background:#201638;padding:7px 11px;border-radius:99px}.hero{text-align:center;padding:35px 0 26px}.eyebrow{color:#67e8f9;font-size:13px;font-weight:800;letter-spacing:.5px}.hero h1{font-size:clamp(30px,5vw,52px);line-height:1.15;margin:13px 0}.grad{background:linear-gradient(90deg,#a78bfa,#67e8f9);color:transparent;background-clip:text}.hero p{color:var(--muted);max-width:700px;margin:0 auto;line-height:1.9}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:start;margin:16px 0 32px}.panel{background:linear-gradient(180deg,#141927f5,#0f131df5);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 20px 70px #0003}.panel h2{font-size:18px;margin:0 0 6px}.sub{font-size:13px;color:var(--muted);line-height:1.7;margin:0 0 18px}.drop{border:1.5px dashed #47516a;border-radius:17px;min-height:185px;display:flex;align-items:center;justify-content:center;text-align:center;padding:18px;background:#0b101b;transition:.2s}.drop.drag{border-color:var(--accent2);background:#10202a}.upload-icon{width:54px;height:54px;margin:0 auto 12px;border-radius:17px;background:#252044;color:#c4b5fd;display:grid;place-items:center;font-size:25px}.drop strong{display:block;margin-bottom:7px}.drop small{color:var(--muted)}.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:800;transition:transform .15s,opacity .15s}.btn:active{transform:scale(.98)}.primary{background:linear-gradient(100deg,var(--accent),#6366f1);color:white;box-shadow:0 8px 22px #6d45d544}.secondary{background:#20283a;color:#e7ebf5;border:1px solid #39445a}.btn:disabled{opacity:.45;cursor:not-allowed}.wide{width:100%;margin-top:16px}.fields{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:17px}.field label{display:block;color:#cbd5e1;font-size:13px;font-weight:700;margin-bottom:8px}.field select,.field input[type=number]{width:100%;background:#0b101b;color:var(--text);border:1px solid #354057;border-radius:11px;padding:12px;outline:none}.field select:focus,.field input:focus{border-color:#8b5cf6}.range-row{display:flex;align-items:center;justify-content:space-between;gap:12px}.range-row output{color:#c4b5fd;font-weight:900}.field input[type=range]{width:100%;accent-color:#a78bfa;margin-top:12px}.checks{display:flex;gap:12px;flex-wrap:wrap;margin-top:15px}.check{display:flex;align-items:center;gap:7px;color:#cbd5e1;font-size:13px}.check input{accent-color:#8b5cf6}.preview{display:none;margin-top:15px}.preview video{width:100%;max-height:300px;background:#000;border-radius:13px}.fileline{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:12px;color:var(--muted);margin-top:8px;overflow-wrap:anywhere}.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}.stat{padding:13px;background:#0c111c;border:1px solid #242d40;border-radius:13px}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:19px;margin-top:5px}.progress-wrap{margin-top:16px;display:none}.progress-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:9px}.bar{height:9px;border-radius:99px;background:#252d40;overflow:hidden}.bar>div{height:100%;width:0;background:linear-gradient(90deg,#8b5cf6,#22d3ee);border-radius:99px;transition:width .2s}.status{font-size:13px;color:var(--muted);margin-top:9px;line-height:1.7}.result{display:none;border:1px solid #236a5a;background:#0b211e;border-radius:15px;padding:15px;margin-top:15px}.result h3{margin:0 0 8px;color:#6ee7b7;font-size:16px}.result p{color:#b8d9d0;font-size:13px;line-height:1.7}.note{font-size:12px;line-height:1.8;color:#9ba7bd;margin-top:17px;padding:13px;border-radius:12px;background:#0b101b;border:1px solid #242d40}.note b{color:#e5e7eb}.footer{text-align:center;color:#748098;font-size:12px;padding:8px 0 28px}.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.pill{font-size:11px;padding:6px 9px;border:1px solid #30394c;border-radius:99px;color:#aebbd1;background:#111725}.hidden{display:none!important}@media(max-width:800px){.layout{grid-template-columns:1fr}.hero{padding-top:22px}.panel{padding:17px}.top{padding:15px 0}.brand{font-size:17px}.tag{font-size:10px}}@media(max-width:420px){.fields{grid-template-columns:1fr}.hero h1{font-size:31px}.stats{gap:7px}.stat strong{font-size:16px}}
+</style>
 </head>
-<body class="min-h-screen flex flex-col justify-between">
-
-    <header class="p-4 border-b border-zinc-800 flex justify-between items-center max-w-4xl mx-auto w-full">
-        <div class="flex items-center gap-2">
-            <span class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded text-sm">🗜️</span>
-            <span class="font-bold tracking-wider text-sm">القاعدة ضغط</span>
-        </div>
-        <div class="text-[11px] text-blue-400 bg-blue-950/40 px-3 py-1.5 rounded-lg pro-border">
-            استخدامات مجانية غير محدودة
-        </div>
-    </header>
-
-    <main class="max-w-2xl mx-auto w-full p-4 my-8">
-        <div class="text-center mb-6">
-            <h1 class="text-2xl md:text-3xl font-bold mb-2">طريقة التحميل</h1>
-            <p class="text-zinc-400 text-xs md:text-sm">اختر مقطع فيديو، وحدد طريقة، ثم قم بتنزيل الملف النهائي.</p>
-        </div>
-
-        <div class="bg-zinc-900/90 pro-border rounded-2xl p-5 md:p-6 shadow-xl">
-            
-            <div id="step-1">
-                <div class="text-blue-400 text-xs mb-3 font-semibold">1 | اختر الفيديو الخاص بك</div>
-                <div class="border-2 border-dashed border-zinc-700 rounded-xl p-6 text-center cursor-pointer hover:border-blue-500 transition mb-4" onclick="document.getElementById('videoFile').click()">
-                    <div class="text-2xl mb-1 text-blue-500">➕</div>
-                    <p class="text-xs font-semibold">حدد الفيديو</p>
-                    <p class="text-[10px] text-zinc-500 mt-1">أو اسحب الملف وأفلته هنا</p>
-                    <input type="file" id="videoFile" class="hidden" accept="video/*" onchange="fileSelected(this)">
-                </div>
-            </div>
-
-            <div id="step-2" class="hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-blue-400 text-xs font-semibold">2 | اختر طريقة المعالجة</span>
-                    <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">تغيير الفيديو</button>
-                </div>
-
-                <div class="bg-zinc-950 p-3 rounded-lg mb-4 pro-border flex items-center justify-between">
-                    <span id="fileName" class="text-xs text-zinc-300 truncate"></span>
-                    <span class="text-[10px] bg-blue-600/20 text-blue-400 px-2 py-0.5 rounded">جاهز</span>
-                </div>
-
-                <div class="space-y-3 mb-5">
-                    <label class="block pro-border-active p-3.5 rounded-xl cursor-pointer">
-                        <div class="flex justify-between items-center">
-                            <span class="font-bold text-xs">🔥 أعلى جودة + معدل إطارات 60fps</span>
-                            <span class="text-[9px] bg-red-600 text-white px-2 py-0.5 rounded font-bold">موصى به</span>
-                        </div>
-                        <p class="text-[11px] text-zinc-400 mt-1">يحافظ على أعلى جودة ويدعم رفع الدقة لتناسب تيك توك.</p>
-                    </label>
-                </div>
-
-                <button onclick="startProcessing()" class="w-full py-3 rounded-xl pro-btn text-xs tracking-wide">
-                    بدء المعالجة ➔
-                </button>
-            </div>
-
-            <div id="step-3" class="hidden text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-10 w-10 border-3 border-red-500 border-t-transparent mb-3"></div>
-                <h3 class="text-base font-bold mb-1" dir="ltr">Preparing the final MP4</h3>
-                <p class="text-[11px] text-zinc-400">جاري ضغط وتحسين الفيديو...</p>
-            </div>
-
-            <div id="step-4" class="hidden text-center py-4">
-                <div class="text-2xl mb-1">✅</div>
-                <h3 class="text-base font-bold mb-1">الفيديو الخاص بك جاهز</h3>
-                <p class="text-[11px] text-zinc-400 mb-4">تم الانتهاء من ضغط الفيديو بنجاح</p>
-                
-                <a id="downloadLink" href="#" class="block w-full py-3 rounded-xl pro-btn text-xs text-center mb-3" download>
-                    تنزيل الفيديو ⬇
-                </a>
-                <button onclick="resetAll()" class="text-[11px] text-zinc-400 underline">معالجة فيديو آخر 🔄</button>
-            </div>
-
-        </div>
-    </main>
-
-    <script>
-        let selectedFile = null;
-
-        function fileSelected(input) {
-            if (input.files && input.files[0]) {
-                selectedFile = input.files[0];
-                document.getElementById('fileName').innerText = selectedFile.name;
-                switchStep(2);
-            }
-        }
-
-        function startProcessing() {
-            switchStep(3);
-
-            setTimeout(() => {
-                switchStep(4);
-                const fileURL = URL.createObjectURL(selectedFile);
-                document.getElementById('downloadLink').href = fileURL;
-                document.getElementById('downloadLink').setAttribute('download', 'compressed_' + selectedFile.name);
-            }, 2000);
-        }
-
-        function switchStep(num) {
-            ['1', '2', '3', '4'].forEach(n => document.getElementById('step-' + n).classList.add('hidden'));
-            document.getElementById('step-' + num).classList.remove('hidden');
-        }
-
-        function resetAll() {
-            document.getElementById('videoFile').value = '';
-            selectedFile = null;
-            switchStep(1);
-        }
-    </script>
-</body>
-</html>
+<body><div class="wrap">
+<header class="top"><div class="brand"><div class="logo">IAF</div><div>VideoFix <span class="grad">PRO</span></div></div><div class="tag">● معالجة داخل المتصفح</div></header>
+<section class="hero"><div class="eyebrow">VIDEO OPTIMIZATION STUDIO</div><h1>خلّي فيديوهاتك <span class="grad">جاهزة للنشر</span></h1><p>جهّز الفيديو بإعدادات MP4 مناسبة لمنصات التواصل، واضبط الدقة ومعدل الإطارات والجودة من مكان واحد. تتم المعالجة على جهازك باستخدام FFmpeg WebAssembly.</p><div class="pillrow" style="justify-content:center"><span class="pill">MP4 / H.264</span><span class="pill">1080p و4K</span><span class="pill">30 / 60 FPS</span><span class="pill">خصوصية محلية</span></div></section>
+<main class="layout">
+<section class="panel"><h2>١. أضف الفيديو</h2><p class="sub">اختر ملفاً من هاتفك أو الكمبيوتر. للحصول على أفضل نتيجة، استخدم النسخة الأصلية الأعلى جودة.</p>
+<div class="drop" id="drop"><div><div class="upload-icon">⇧</div><strong>اسحب الفيديو إلى هنا</strong><small>أو اختر ملفاً من جهازك</small><div><button class="btn secondary" id="choose" style="margin-top:13px">اختيار فيديو</button></div><small style="display:block;margin-top:10px">MP4، MOV، WEBM وغيرها حسب دعم FFmpeg</small></div></div><input id="file" type="file" accept="video/*,.mkv,.mov,.mp4,.webm" class="hidden">
+<div class="preview" id="preview"><video id="video" controls playsinline></video><div class="fileline"><span id="filename">—</span><span id="filesize">—</span></div></div>
+<div class="fields"><div class="field"><label for="platform">المنصة المستهدفة</label><select id="platform"><option value="tiktok">TikTok</option><option value="instagram">Instagram Reels</option><option value="youtube">YouTube Shorts</option><option value="general">استخدام عام</option></select></div><div class="field"><label for="device">الجهاز المستهدف</label><select id="device"><option value="android">Android</option><option value="iphone">iPhone / iOS</option><option value="desktop">كمبيوتر</option></select></div><div class="field"><label for="resolution">الدقة القصوى</label><select id="resolution"><option value="source">الحفاظ على الدقة الأصلية</option><option value="720">720p HD</option><option value="1080" selected>1080p Full HD</option><option value="1440">1440p QHD</option><option value="2160">4K UHD</option></select></div><div class="field"><label for="fps">معدل الإطارات</label><select id="fps"><option value="source">الحفاظ على معدل المصدر</option><option value="30">30 FPS</option><option value="60" selected>60 FPS</option></select></div></div>
+<div class="field" style="margin-top:18px"><div class="range-row"><label for="quality" style="margin:0">الجودة (CRF)</label><output id="qualityOut">20 — عالية</output></div><input id="quality" type="range" min="16" max="30" value="20"><div class="fileline"><span>جودة أعلى</span><span>حجم أصغر</span></div></div>
+<div class="checks"><label class="check"><input id="audio" type="checkbox" checked> تضمين الصوت</label><label class="check"><input id="faststart" type="checkbox" checked> تحسين بدء تشغيل MP4</label></div>
+<button class="btn primary wide" id="process" disabled>⚡ ابدأ تحسين الفيديو</button><div class="status" id="loadStatus">اختر فيديو أولاً. عند بدء المعالجة قد يحتاج المتصفح إلى تنزيل محرك FFmpeg لأول مرة.</div>
+</section>
+<aside class="panel"><h2>٢. النتيجة والإحصائيات</h2><p class="sub">ستظهر هنا حالة المعالجة وحجم الملف الناتج ورابط التنزيل.</p>
+<div class="stats"><div class="stat"><span>حجم الفيديو الأصلي</span><strong id="beforeSize">—</strong></div><div class="stat"><span>حجم الفيديو الناتج</span><strong id="afterSize">—</strong></div><div class="stat"><span>الدقة المختارة</span><strong id="outRes">1080p</strong></div><div class="stat"><span>معدل الإطارات</span><strong id="outFps">60 FPS</strong></div></div>
+<div class="progress-wrap" id="progressWrap"><div class="progress-head"><span id="progressText">جارٍ التجهيز…</span><b id="progressPct">0%</b></div><div class="bar"><div id="progressBar"></div></div><div class="status" id="progressStatus">يرجى إبقاء الصفحة مفتوحة حتى اكتمال المعالجة.</div></div>
+<div class="result" id="result"><h3>✓ الفيديو جاهز</h3><p id="resultInfo">تمت معالجة الفيديو.</p><a id="download" class="btn primary" href="#" download="IAF-VideoFix.mp4" style="display:block;text-align:center;text-decoration:none">⬇ تنزيل الفيديو MP4</a></div>
+<div class="note"><b>معلومة مهمة:</b> رفع الدقة إلى 4K أو زيادة FPS لا يضيف تفاصيل حقيقية غير موجودة في المصدر. قد يعيد تيك توك ضغط الفيديو بعد النشر؛ هذه الأداة تجهّز الملف ولا تتحكم بمعالجة المنصة.</div>
+<div class="note"><b>الخصوصية:</b> المعالجة تتم داخل المتصفح ولا يُرفع ملف الفيديو إلى خادم هذا الموقع. قد يُنزَّل محرك FFmpeg من شبكة CDN عند أول استخدام. الملفات الكبيرة قد تحتاج ذاكرة كبيرة ووقتاً أطول.</div>
+</aside></main><footer class="footer">IAF VideoFix Pro · أداة تجهيز فيديو مستقلة وليست تابعة لـ TikTok أو Instagram.</footer></div>
+<script type="module">
+const $=id=>document.getElementById(id);let selectedFile=null,ffmpeg=null,loadingPromise=null,outputUrl=null,progressValue=0;
+const fmt=n=>{if(!Number.isFinite(n))return '—';const u=['B','KB','MB','GB'];let i=0;while(n>=1024&&i<u.length-1){n/=1024;i++}return `${n.toFixed(i?2:0)} ${u[i]}`};
+function setStatus(t){$('loadStatus').textContent=t}function setProgress(p,t){progressValue=Math.max(0,Math.min(100,p));$('progressBar').style.width=progressValue+'%';$('progressPct').textContent=Math.round(progressValue)+'%';if(t)$('progressText').textContent=t}
+function cleanOutput(){if(outputUrl){URL.revokeObjectURL(outputUrl);outputUrl=null}$('result').style.display='none';$('download').removeAttribute('href');$('afterSize').textContent='—'}
+function useFile(file){if(!file)return;if(!file.type.startsWith('video/')&&!/\.(mp4|mov|mkv|webm|avi|m4v)$/i.test(file.name)){setStatus('الملف المحدد لا يبدو ملف فيديو. اختر ملف فيديو آخر.');return}selectedFile=file;cleanOutput();$('preview').style.display='block';$('video').src=URL.createObjectURL(file);$('filename').textContent=file.name;$('filesize').textContent=fmt(file.size);$('beforeSize').textContent=fmt(file.size);$('process').disabled=false;setStatus('تم اختيار الفيديو. اضبط الإعدادات ثم ابدأ المعالجة.');updateOutputLabels()}
+$('choose').addEventListener('click',()=>$('file').click());$('file').addEventListener('change',e=>useFile(e.target.files[0]));const drop=$('drop');['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));drop.addEventListener('drop',e=>useFile(e.dataTransfer.files[0]));
+function updateOutputLabels(){let r=$('resolution').value,f=$('fps').value;$('outRes').textContent=r==='source'?'الأصلية':r+'p';$('outFps').textContent=f==='source'?'الأصلي':f+' FPS';let q=+$('quality').value;$('qualityOut').textContent=q<=18?`${q} — ممتازة`:q<=22?`${q} — عالية`:q<=26?`${q} — متوسطة`:`${q} — ضغط أعلى`}
+['resolution','fps','platform','device','quality'].forEach(id=>$(id).addEventListener('change',updateOutputLabels));$('quality').addEventListener('input',updateOutputLabels);
+async function loadFFmpeg(){if(ffmpeg)return ffmpeg;if(loadingPromise)return loadingPromise;loadingPromise=(async()=>{setStatus('جارٍ تحميل محرك المعالجة لأول مرة… قد يستغرق ذلك بعض الوقت.');const {FFmpeg}=await import('https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js');ffmpeg=new FFmpeg();ffmpeg.on('progress',({progress})=>{if(Number.isFinite(progress))setProgress(10+progress*85,'جارٍ تحويل الفيديو…')});ffmpeg.on('log',({message})=>{if(message&&/error|invalid|failed/i.test(message))$('progressStatus').textContent=message.slice(0,240)});await ffmpeg.load({coreURL:'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.js',wasmURL:'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd/ffmpeg-core.wasm'});return ffmpeg})().catch(e=>{loadingPromise=null;ffmpeg=null;throw e});return loadingPromise}
+$('process').addEventListener('click',async()=>{if(!selectedFile)return;const btn=$('process');btn.disabled=true;$('progressWrap').style.display='block';$('result').style.display='none';setProgress(2,'جارٍ بدء المعالجة…');$('progressStatus').textContent='قد يستغرق تحويل الفيديو وقتاً حسب مدته وقوة جهازك.';try{const engine=await loadFFmpeg();setProgress(8,'جارٍ تجهيز الملف…');const ext=(selectedFile.name.split('.').pop()||'mp4').toLowerCase().replace(/[^a-z0-9]/g,'');const inputName='input.'+ext;const outputName='iaf-videofix-output.mp4';await engine.writeFile(inputName,new Uint8Array(await selectedFile.arrayBuffer()));const args=['-i',inputName,'-map','0:v:0'];if($('audio').checked)args.push('-map','0:a:0?');else args.push('-an');args.push('-c:v','libx264','-preset','veryfast','-crf',$('quality').value,'-pix_fmt','yuv420p');const r=$('resolution').value;if(r!=='source'){args.push('-vf',`scale=w='min(${r=== '2160'?3840:r==='1440'?2560:r==='1080'?1920:1280},iw)':h='min(${r==='2160'?2160:r==='1440'?1440:r==='1080'?1080:720},ih)':force_original_aspect_ratio=decrease:force_divisible_by=2`)}const fps=$('fps').value;if(fps!=='source')args.push('-r',fps);args.push('-c:a','aac','-b:a','192k');if($('faststart').checked)args.push('-movflags','+faststart');args.push('-y',outputName);setProgress(10,'جارٍ تحويل الفيديو…');await engine.exec(args);setProgress(96,'جارٍ تجهيز الملف النهائي…');const data=await engine.readFile(outputName);const blob=new Blob([data],{type:'video/mp4'});outputUrl=URL.createObjectURL(blob);$('download').href=outputUrl;$('download').download=(selectedFile.name.replace(/\.[^.]+$/,'')||'video')+'-IAF-VideoFix.mp4';$('afterSize').textContent=fmt(blob.size);const diff=selectedFile.size?Math.round((1-blob.size/selectedFile.size)*100):0;let sizeText=diff>0?`انخفض الحجم بنحو ${diff}%`:`تغيّر الحجم بنحو ${Math.abs(diff)}% ${diff<0?'زيادة':'من دون فرق كبير'}`;$('resultInfo').textContent=`اكتملت المعالجة. ${sizeText}. النتيجة تعتمد على جودة الفيديو الأصلي والإعدادات المختارة.`;$('result').style.display='block';setProgress(100,'اكتملت المعالجة بنجاح');$('progressStatus').textContent='اضغط على زر التنزيل لحفظ ملف MP4 على جهازك.';setStatus('تمت المعالجة. يمكنك تنزيل الفيديو الآن.');try{await engine.deleteFile(inputName);await engine.deleteFile(outputName)}catch{}}
+catch(err){console.error(err);setStatus('تعذرت المعالجة: '+(err?.message||String(err))+' — جرّب ملفاً أصغر أو افتح الموقع في Chrome حديث.');$('progressStatus').textContent='تأكد من اتصال الإنترنت عند تحميل المحرك، وتوفر مساحة ذاكرة كافية.';setProgress(0,'حدث خطأ أثناء المعالجة')}finally{btn.disabled=false}});
+updateOutputLabels();
+</script></body></html>
