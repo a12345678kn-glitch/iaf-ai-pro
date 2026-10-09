@@ -3,263 +3,139 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>IAF VideoFix VIP</title>
+<title>IAF VideoCompress</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,Tahoma,sans-serif;background:#050505;color:#fff;min-height:100vh;overflow-x:hidden}
+body{font-family:Arial,Tahoma,sans-serif;background:#0a0a0a;color:#fff;min-height:100vh}
 .container{max-width:900px;margin:auto;padding:20px}
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #1a1500}
-.logo{font-size:24px;font-weight:900;background:linear-gradient(135deg,#fbbf24,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:1px}
-.vip-badge{background:linear-gradient(135deg,#fbbf24,#d97706);color:#000;padding:6px 14px;border-radius:20px;font-weight:900;font-size:11px;box-shadow:0 0 20px rgba(251,191,36,0.5);animation:glow 2s infinite}
-@keyframes glow{0%,100%{box-shadow:0 0 20px rgba(251,191,36,0.5)}50%{box-shadow:0 0 30px rgba(251,191,36,0.9)}}
-.hero{text-align:center;padding:40px 0 20px}
-.hero h1{font-size:36px;margin:10px 0;font-weight:900;line-height:1.2}
-.hero h1 span{background:linear-gradient(135deg,#fbbf24,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero p{color:#888;line-height:1.7;font-size:14px;margin-top:10px}
-.vip-banner{background:linear-gradient(135deg,#1a1500,#2a1f00);border:1px solid #fbbf24;border-radius:14px;padding:15px 20px;margin:20px 0;display:flex;justify-content:space-between;align-items:center;box-shadow:0 0 30px rgba(251,191,36,0.15)}
-.vip-banner-text{font-size:13px;color:#fbbf24;font-weight:bold}
-.vip-banner-icon{font-size:24px}
-.steps{display:flex;justify-content:space-between;margin:25px 0;position:relative}
-.steps::before{content:"";position:absolute;top:20px;left:10%;right:10%;height:2px;background:#1a1a1a;z-index:0}
-.step{text-align:center;position:relative;z-index:1;flex:1}
-.step-num{width:40px;height:40px;border-radius:50%;background:#111;border:2px solid #2a2a2a;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-weight:bold;color:#666;transition:.3s}
-.step.active .step-num{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;border-color:#fbbf24;box-shadow:0 0 20px rgba(251,191,36,0.5)}
-.step.done .step-num{background:#19e6b2;color:#000;border-color:#19e6b2}
-.step-label{font-size:11px;color:#666}
-.step.active .step-label,.step.done .step-label{color:#fff}
-.card{background:linear-gradient(135deg,#0d0d0d,#111);border:1px solid #1a1a1a;border-radius:16px;padding:20px;margin-top:15px;transition:.3s}
-.card.vip{border-color:#fbbf24;box-shadow:0 0 30px rgba(251,191,36,0.1)}
-.card h3{margin-bottom:15px;font-size:16px;color:#fbbf24;display:flex;align-items:center;gap:8px}
-.card h3 span{background:linear-gradient(135deg,#fbbf24,#d97706);color:#000;padding:2px 10px;border-radius:6px;font-size:12px;font-weight:900}
-.upload{border:2px dashed #2a2a2a;background:#080808;border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;display:block;transition:.3s}
-.upload:hover{border-color:#fbbf24;background:#0d0a00;transform:translateY(-2px)}
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #1a1a1a}
+.logo{font-size:22px;font-weight:900;color:#fbbf24}
+.badge{background:#1a1a1a;border:1px solid #2a2a2a;padding:6px 12px;border-radius:20px;color:#fbbf24;font-size:11px}
+.hero{text-align:center;padding:40px 0 30px}
+.hero h1{font-size:34px;margin:10px 0;color:#fff}
+.hero h1 span{color:#fbbf24}
+.hero p{color:#888;line-height:1.7;font-size:14px}
+.card{background:#111;border:1px solid #1a1a1a;border-radius:16px;padding:20px;margin-top:15px}
+.card h3{margin-bottom:15px;font-size:16px;color:#fbbf24}
+.upload{border:2px dashed #2a2a2a;background:#0d0d0d;border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;display:block;transition:.2s}
+.upload:hover{border-color:#fbbf24}
 .up-icon{font-size:44px;margin-bottom:12px}
-.upload h2{margin:5px 0;font-size:17px}
+.upload h2{margin:5px 0;font-size:18px}
 .upload p{color:#666;font-size:12px}
 input[type=file]{display:none}
-.note{background:#080808;border:1px solid #1a1a1a;border-radius:10px;padding:12px;margin-top:12px;font-size:11px;color:#888;text-align:center}
-.method{background:#080808;border:2px solid #1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s;position:relative}
-.method:hover{border-color:#3a3a3a}
-.method.active{border-color:#fbbf24;background:linear-gradient(135deg,#1a1500,#0d0a00);box-shadow:0 0 20px rgba(251,191,36,0.2)}
-.method.recommended{border-color:#fbbf24}
-.method-badge{position:absolute;top:-8px;left:15px;background:linear-gradient(135deg,#fbbf24,#d97706);color:#000;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:900}
-.method-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.method-title{font-weight:bold;font-size:14px;color:#fff}
-.method-tag{background:#1a1a1a;color:#fbbf24;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:bold}
-.method-desc{font-size:12px;color:#888;line-height:1.5}
-.device-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
-.device{background:#080808;border:2px solid #1a1a1a;border-radius:12px;padding:15px;text-align:center;cursor:pointer;transition:.2s}
-.device:hover{border-color:#3a3a3a}
-.device.active{border-color:#fbbf24;background:linear-gradient(135deg,#1a1500,#0d0a00);box-shadow:0 0 20px rgba(251,191,36,0.2)}
-.device-icon{font-size:28px;margin-bottom:8px}
-.device-name{font-size:13px;font-weight:bold}
-.device-desc{font-size:10px;color:#666;margin-top:4px}
-.primary-btn{width:100%;padding:18px;border-radius:14px;border:0;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;font-weight:900;font-size:16px;cursor:pointer;margin-top:15px;transition:.3s;box-shadow:0 0 20px rgba(251,191,36,0.3)}
-.primary-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 0 30px rgba(251,191,36,0.6)}
-.primary-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
 .hidden{display:none}
-.progress{height:10px;background:#111;border-radius:10px;overflow:hidden;margin-top:15px}
-.bar{height:100%;width:0%;background:linear-gradient(90deg,#fbbf24,#f59e0b);transition:width .3s;box-shadow:0 0 15px rgba(251,191,36,0.5)}
+.method{background:#0d0d0d;border:2px solid #1a1a1a;border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:.2s;position:relative}
+.method:hover{border-color:#2a2a2a}
+.method.active{border-color:#fbbf24;background:#1a1500}
+.method-title{font-weight:bold;font-size:14px;color:#fff;margin-bottom:6px}
+.method-desc{font-size:12px;color:#888;line-height:1.5}
+.primary-btn{width:100%;padding:16px;border-radius:12px;border:0;background:#fbbf24;color:#000;font-weight:900;font-size:15px;cursor:pointer;margin-top:15px}
+.primary-btn:hover:not(:disabled){background:#fcd34d}
+.primary-btn:disabled{opacity:.4;cursor:not-allowed}
+.progress{height:8px;background:#1a1a1a;border-radius:8px;overflow:hidden;margin-top:15px}
+.bar{height:100%;width:0%;background:#fbbf24;transition:width .3s}
 .status{text-align:center;color:#888;margin-top:12px;padding:10px;border-radius:10px;font-size:12px}
 .status.success{background:#0d2a1c;color:#19e6b2}
 .status.error{background:#2a0d0d;color:#ff6b6b}
-.result-box{text-align:center;padding:30px 20px}
-.result-icon{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#19e6b2,#0d9488);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:38px;color:#000;box-shadow:0 0 30px rgba(25,230,178,0.5);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.result-title{font-size:24px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#19e6b2,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.result-subtitle{color:#888;font-size:13px;margin-bottom:20px}
-.file-info{background:#080808;border:1px solid #1a1a1a;border-radius:10px;padding:12px;margin-bottom:15px;font-size:12px;display:flex;justify-content:space-between;align-items:center}
-.file-name{color:#fbbf24;font-weight:bold}
-.download-btn{display:block;width:100%;padding:18px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#000;text-align:center;border-radius:14px;font-weight:900;text-decoration:none;font-size:15px;margin-bottom:10px;box-shadow:0 0 20px rgba(251,191,36,0.3);transition:.3s}
-.download-btn:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(251,191,36,0.6)}
-.secondary-btn{width:100%;padding:14px;background:transparent;color:#fbbf24;border:1px solid #2a2a2a;border-radius:12px;font-weight:bold;cursor:pointer;font-size:13px;transition:.3s}
-.secondary-btn:hover{border-color:#fbbf24;background:#1a1500}
-.tip-box{background:linear-gradient(135deg,#1a1500,#0d0a00);border:1px solid #fbbf24;border-radius:12px;padding:15px;margin-top:15px;font-size:12px}
-.tip-box h4{margin-bottom:10px;color:#fbbf24;font-size:13px}
-.tip-box ul{padding-right:18px;line-height:1.8;color:#ccc}
-.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
-.info-item{background:#080808;padding:12px;border-radius:10px;text-align:center;border:1px solid #1a1a1a}
-.info-item b{display:block;font-size:15px;color:#fbbf24;font-weight:900}
-.info-item span{color:#666;font-size:10px}
-.doctor-list{margin-top:15px}
-.doctor-item{display:flex;justify-content:space-between;align-items:center;padding:12px;background:#080808;border-radius:10px;margin-bottom:8px;font-size:13px;border:1px solid #1a1a1a}
-.status-ok{color:#19e6b2;font-weight:bold}
-.status-bad{color:#ffb347;font-weight:bold}
-.status-warn{color:#ff6b6b;font-weight:bold}
-.vip-features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
-.vip-feature{background:linear-gradient(135deg,#1a1500,#0d0a00);border:1px solid #fbbf24;border-radius:12px;padding:12px;text-align:center;font-size:12px;color:#fbbf24;font-weight:bold}
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
+.info-box{background:#0d0d0d;padding:15px;border-radius:12px;border:1px solid #1a1a1a}
+.info-box h4{font-size:12px;color:#888;margin-bottom:8px}
+.info-box b{font-size:16px;color:#fbbf24}
+.download-btn{display:block;width:100%;padding:16px;background:#19e6b2;color:#000;text-align:center;border-radius:12px;font-weight:900;text-decoration:none;font-size:15px;margin-top:15px}
+.secondary-btn{width:100%;padding:14px;background:transparent;color:#fbbf24;border:1px solid #2a2a2a;border-radius:12px;font-weight:bold;cursor:pointer;font-size:13px;margin-top:10px}
+.video-preview{width:100%;max-height:300px;border-radius:12px;background:#000;margin-top:15px}
 footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
-footer span{color:#fbbf24}
 </style>
 </head>
 <body>
 <div class="container">
 <header>
-<div class="logo">IAF VideoFix</div>
-<div class="vip-badge">👑 VIP</div>
+<div class="logo">IAF VideoCompress</div>
+<div class="badge">⚡ سريع</div>
 </header>
 
 <section class="hero">
-<h1>خلّي فيديوك <span>يبدو احترافياً</span></h1>
-<p>معالجة ذكية بالذكاء الاصطناعي — بأعلى جودة VIP</p>
+<h1>اضغط فيديوهاتك <span>في ثوانٍ</span></h1>
+<p>ضغط محلي داخل المتصفح — بدون رفع، بدون انتظار</p>
 </section>
 
-<div class="vip-banner">
-<div class="vip-banner-text">👑 أنت الآن في الوضع VIP</div>
-<div class="vip-banner-icon">⚡</div>
-</div>
-
-<div class="steps" id="stepsBar">
-<div class="step active" id="step1"><div class="step-num">1</div><div class="step-label">الفيديو</div></div>
-<div class="step" id="step2"><div class="step-num">2</div><div class="step-label">الطريقة</div></div>
-<div class="step" id="step3"><div class="step-num">3</div><div class="step-label">التحميل</div></div>
-</div>
-
 <div class="card" id="uploadCard">
-<h3><span>1</span> اختر الفيديو</h3>
+<h3>📤 اختر الفيديو</h3>
 <label class="upload" for="videoInput">
-<div class="up-icon">👑</div>
-<h2>اختر فيديو للتحسين VIP</h2>
+<div class="up-icon">🎬</div>
+<h2>اختر فيديو</h2>
 <p>MP4 • MOV • WebM</p>
 </label>
 <input id="videoInput" type="file" accept="video/*">
-<div class="note">🔒 معالجة VIP — أعلى جودة وأسرع وقت</div>
 </div>
 
-<div class="card hidden vip" id="doctorCard">
-<h3>🔍 تحليل الفيديو (Video Doctor)</h3>
+<div class="card hidden" id="methodCard">
+<h3>📊 اختر مستوى الضغط</h3>
+
+<div class="method active" data-quality="high">
+<div class="method-title">🎯 جودة عالية</div>
+<div class="method-desc">أفضل جودة — تقليل طفيف بالحجم (مناسب للنشر)</div>
+</div>
+
+<div class="method" data-quality="medium">
+<div class="method-title">⚖️ متوازن</div>
+<div class="method-desc">توازن بين الجودة والحجم (موصى به)</div>
+</div>
+
+<div class="method" data-quality="low">
+<div class="method-title">📉 حجم صغير</div>
+<div class="method-desc">حجم أقل — جودة مقبولة (مناسب للواتساب)</div>
+</div>
+
+<button class="primary-btn" id="startBtn">▶️ ابدأ الضغط</button>
+</div>
+
+<div class="card hidden" id="resultCard">
+<h3>📊 النتيجة</h3>
 <div class="info-grid">
-<div class="info-item"><b id="resolution">—</b><span>الدقة</span></div>
-<div class="info-item"><b id="fps">—</b><span>FPS</span></div>
-<div class="info-item"><b id="size">—</b><span>الحجم</span></div>
+<div class="info-box">
+<h4>📦 الحجم الأصلي</h4>
+<b id="originalSize">—</b>
 </div>
-<div class="doctor-list" id="diagnosis"></div>
-</div>
-
-<div class="card hidden vip" id="methodCard">
-<h3><span>2</span> اختر الطريقة</h3>
-
-<div class="method recommended active" data-method="max">
-<div class="method-badge">👑 VIP</div>
-<div class="method-header">
-<div class="method-title">MAX QUALITY + FPS</div>
-<div class="method-tag">4K</div>
-</div>
-<div class="method-desc">أعلى جودة — 4K و 120 FPS. مثالي للمحتوى الاحترافي.</div>
-</div>
-
-<div class="method" data-method="fps">
-<div class="method-header">
-<div class="method-title">FPS Boost</div>
-<div class="method-tag">120 FPS</div>
-</div>
-<div class="method-desc">زيادة FPS — حركة سلسة واحترافية.</div>
-</div>
-
-<div class="method" data-method="tiktok">
-<div class="method-header">
-<div class="method-title">TikTok VIP</div>
-<div class="method-tag">Optimized</div>
-</div>
-<div class="method-desc">مثالي لـ TikTok و Instagram — بدون علامة مائية.</div>
-</div>
-
-<h3 style="margin-top:20px">🎯 اختر جهاز النشر</h3>
-<div class="device-grid">
-<div class="device" data-device="pc">
-<div class="device-icon">💻</div>
-<div class="device-name">PC</div>
-<div class="device-desc">Desktop / Laptop</div>
-</div>
-<div class="device active" data-device="android">
-<div class="device-icon">📱</div>
-<div class="device-name">Android</div>
-<div class="device-desc">جميع أجهزة Android</div>
-</div>
-<div class="device" data-device="apple">
-<div class="device-icon">🍎</div>
-<div class="device-name">Apple</div>
-<div class="device-desc">iPhone / iPad</div>
+<div class="info-box">
+<h4>✨ الحجم الجديد</h4>
+<b id="newSize" style="color:#19e6b2">—</b>
 </div>
 </div>
-
-<button class="primary-btn" id="startBtn">👑 ابدأ المعالجة VIP</button>
+<div class="info-box" style="margin-top:10px">
+<h4>💰 التوفير</h4>
+<b id="savings" style="color:#19e6b2">—</b>
+</div>
+<video id="previewVideo" class="video-preview" controls></video>
+<a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو المضغوط</a>
+<button class="secondary-btn" onclick="location.reload()">🔄 ضغط فيديو آخر</button>
 </div>
 
 <div class="card hidden" id="processingCard">
-<h3>⚡ المعالجة الجارية VIP</h3>
+<h3>⏳ جاري الضغط...</h3>
 <div class="progress"><div class="bar" id="progressBar"></div></div>
-<div class="status" id="statusText">رفع الفيديو...</div>
-<div class="vip-features">
-<div class="vip-feature">⚡ سرعة عالية</div>
-<div class="vip-feature">🎬 4K</div>
-<div class="vip-feature">🎞️ 120 FPS</div>
-<div class="vip-feature">✨ بدون علامة</div>
-</div>
+<div class="status" id="statusText">جاري المعالجة...</div>
 </div>
 
-<div class="card hidden vip" id="resultCard">
-<div class="result-box">
-<div class="result-icon">✓</div>
-<div class="result-title">الفيديو جاهز VIP!</div>
-<div class="result-subtitle">اكتملت المعالجة بأعلى جودة</div>
-</div>
-<div class="file-info">
-<span id="resultFileName" class="file-name">video.mp4</span>
-<span style="color:#19e6b2;font-weight:bold">👑 جاهز</span>
-</div>
-<a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو VIP</a>
-<button class="secondary-btn" onclick="location.reload()">🔄 معالجة فيديو آخر</button>
-<div class="tip-box">
-<h4>💡 نصائح VIP قبل الرفع:</h4>
-<ul>
-<li>استخدم TikTok Web (وضع Desktop)</li>
-<li>لا تعدّل الفيديو بعد التحسين</li>
-<li>استخدم #IAFVideoFix — أنت VIP!</li>
-</ul>
-</div>
-</div>
-
-<footer>IAF VideoFix <span>VIP</span> © 2026</footer>
+<footer>IAF VideoCompress © 2026</footer>
 </div>
 
 <script>
-const BACKEND_URL="https://iaf-ai-backend.a12345678kn.workers.dev";
 const input=document.getElementById("videoInput");
-const doctorCard=document.getElementById("doctorCard");
 const methodCard=document.getElementById("methodCard");
-const processingCard=document.getElementById("processingCard");
 const resultCard=document.getElementById("resultCard");
+const processingCard=document.getElementById("processingCard");
 const progressBar=document.getElementById("progressBar");
 const statusText=document.getElementById("statusText");
+const startBtn=document.getElementById("startBtn");
 let selectedFile=null;
-let selectedMethod="max";
-
-function setStep(n){
-for(let i=1;i<=3;i++){
-const s=document.getElementById("step"+i);
-s.classList.remove("active","done");
-if(i<n)s.classList.add("done");
-if(i===n)s.classList.add("active");
-}
-}
+let selectedQuality="high";
 
 input.addEventListener("change",function(){
 const file=this.files[0];
 if(!file)return;
 selectedFile=file;
-document.getElementById("size").textContent=formatSize(file.size);
-document.getElementById("resultFileName").textContent=file.name;
-const video=document.createElement("video");
-video.preload="metadata";
-video.onloadedmetadata=function(){
-document.getElementById("resolution").textContent=video.videoWidth+"×"+video.videoHeight;
-document.getElementById("fps").textContent="30";
-analyzeVideo(video);
-};
-video.src=URL.createObjectURL(file);
-setStep(2);
-doctorCard.classList.remove("hidden");
+document.getElementById("originalSize").textContent=formatSize(file.size);
 methodCard.classList.remove("hidden");
 });
 
@@ -267,92 +143,95 @@ document.querySelectorAll(".method").forEach(m=>{
 m.addEventListener("click",()=>{
 document.querySelectorAll(".method").forEach(x=>x.classList.remove("active"));
 m.classList.add("active");
-selectedMethod=m.dataset.method;
+selectedQuality=m.dataset.quality;
 });
 });
 
-document.querySelectorAll(".device").forEach(d=>{
-d.addEventListener("click",()=>{
-document.querySelectorAll(".device").forEach(x=>x.classList.remove("active"));
-d.classList.add("active");
-});
-});
-
-function analyzeVideo(video){
-const w=video.videoWidth,h=video.videoHeight;
-const items=[];
-if(h<1080)items.push({t:"الدقة منخفضة",s:"bad"});
-else items.push({t:"الدقة جيدة",s:"ok"});
-items.push({t:"تحليل السطوع",s:"warn"});
-items.push({t:"كشف الاهتزاز",s:"ok"});
-items.push({t:"تحليل الضوضاء",s:"warn"});
-const container=document.getElementById("diagnosis");
-container.innerHTML="";
-items.forEach(item=>{
-const div=document.createElement("div");
-div.className="doctor-item";
-const cls=item.s==="ok"?"status-ok":item.s==="bad"?"status-bad":"status-warn";
-const icon=item.s==="ok"?"✅":item.s==="bad"?"⚠️":"🔶";
-div.innerHTML='<span>'+icon+' '+item.t+'</span><span class="'+cls+'">'+(item.s==="ok"?"جيد":item.s==="bad"?"ضعيف":"متوسط")+'</span>';
-container.appendChild(div);
-});
-}
-
-document.getElementById("startBtn").addEventListener("click",async()=>{
+startBtn.addEventListener("click",async()=>{
 if(!selectedFile)return;
-setStep(3);
-processingCard.classList.remove("hidden");
-methodCard.classList.add("hidden");
-doctorCard.classList.add("hidden");
-const startBtn=document.getElementById("startBtn");
 startBtn.disabled=true;
+methodCard.classList.add("hidden");
+processingCard.classList.remove("hidden");
 try{
-const formData=new FormData();
-formData.append("video",selectedFile);
-formData.append("mode",selectedMethod);
-const response=await fetch(BACKEND_URL+"/enhance",{method:"POST",body:formData});
-if(!response.ok){
-const errText=await response.text();
-throw new Error("خطأ في السيرفر: "+errText);
+const qualitySettings={
+high:{width:1920,bitrate:5000000},
+medium:{width:1280,bitrate:2500000},
+low:{width:854,bitrate:1000000}
+};
+const settings=qualitySettings[selectedQuality];
+statusText.textContent="جاري قراءة الفيديو...";
+progressBar.style.width="20%";
+const video=document.createElement("video");
+video.src=URL.createObjectURL(selectedFile);
+video.muted=true;
+await new Promise(resolve=>{
+video.onloadedmetadata=resolve;
+});
+const targetWidth=Math.min(settings.width,video.videoWidth);
+const targetHeight=Math.round(video.videoHeight*(targetWidth/video.videoWidth));
+const canvas=document.createElement("canvas");
+canvas.width=targetWidth;
+canvas.height=targetHeight;
+const ctx=canvas.getContext("2d");
+statusText.textContent="جاري الضغط...";
+progressBar.style.width="40%";
+const stream=canvas.captureStream(30);
+const mimeType=MediaRecorder.isTypeSupported('video/webm;codecs=vp9')?'video/webm;codecs=vp9':'video/webm';
+const recorder=new MediaRecorder(stream,{
+mimeType:mimeType,
+videoBitsPerSecond:settings.bitrate
+});
+const chunks=[];
+recorder.ondataavailable=e=>{
+if(e.data.size>0)chunks.push(e.data);
+};
+const recordingDone=new Promise(resolve=>{
+recorder.onstop=resolve;
+});
+recorder.start(100);
+video.currentTime=0;
+await video.play();
+const duration=video.duration;
+const startTime=Date.now();
+let frameCount=0;
+async function captureFrame(){
+if(video.ended||video.currentTime>=duration){
+recorder.stop();
+return;
 }
-let prediction=await response.json();
-if(prediction.error)throw new Error(prediction.error);
-progressBar.style.width="35%";
-statusText.textContent="المعالجة VIP جارية...";
-let attempts=0;
-const maxAttempts=360;
-while(prediction.status!=="succeeded"&&prediction.status!=="failed"&&prediction.status!=="canceled"&&attempts<maxAttempts){
-await new Promise(r=>setTimeout(r,5000));
-attempts++;
-const pollRes=await fetch(BACKEND_URL+"/status/"+prediction.id);
-prediction=await pollRes.json();
-const progress=Math.min(35+attempts*0.3,95);
+ctx.drawImage(video,0,0,targetWidth,targetHeight);
+frameCount++;
+const progress=40+Math.min((video.currentTime/duration)*50,50);
 progressBar.style.width=progress+"%";
-statusText.textContent="الحالة VIP: "+translateStatus(prediction.status)+" ("+(attempts*5)+" ثانية)";
+statusText.textContent="جاري الضغط... "+Math.round((video.currentTime/duration)*100)+"%";
+requestAnimationFrame(captureFrame);
 }
-if(prediction.status==="succeeded"){
+video.onended=()=>{
+recorder.stop();
+};
+captureFrame();
+await recordingDone;
+statusText.textContent="جاري إنشاء الملف...";
+progressBar.style.width="95%";
+const blob=new Blob(chunks,{type:"video/webm"});
+const url=URL.createObjectURL(blob);
+document.getElementById("newSize").textContent=formatSize(blob.size);
+const savings=Math.round((1-blob.size/selectedFile.size)*100);
+document.getElementById("savings").textContent=savings+"% توفير";
+document.getElementById("previewVideo").src=url;
+document.getElementById("downloadBtn").href=url;
+document.getElementById("downloadBtn").download="compressed_"+selectedFile.name.replace(/\.[^.]+$/,".webm");
 progressBar.style.width="100%";
-statusText.textContent="✅ تم بنجاح VIP!";
+statusText.textContent="✅ تم الضغط بنجاح!";
 statusText.className="status success";
-const outputUrl=Array.isArray(prediction.output)?prediction.output[0]:prediction.output;
-document.getElementById("downloadBtn").href=outputUrl;
 processingCard.classList.add("hidden");
 resultCard.classList.remove("hidden");
-}else{
-throw new Error("فشلت المعالجة");
-}
 }catch(err){
-statusText.textContent="❌ "+err.message;
+console.error(err);
+statusText.textContent="❌ فشل: "+err.message;
 statusText.className="status error";
-progressBar.style.width="0%";
-startBtn.disabled=false;
 }
 });
-
-function translateStatus(s){
-const map={starting:"بدء",processing:"معالجة",succeeded:"نجح",failed:"فشل",canceled:"ألغي"};
-return map[s]||s;
-}
 
 function formatSize(bytes){
 if(bytes<1024*1024)return(bytes/1024).toFixed(1)+" KB";
