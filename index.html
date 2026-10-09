@@ -44,18 +44,28 @@ input[type=file]{display:none}
 .secondary-btn{width:100%;padding:14px;background:transparent;color:#fbbf24;border:1px solid #2a2a2a;border-radius:12px;font-weight:bold;cursor:pointer;font-size:13px;margin-top:10px}
 .video-preview{width:100%;max-height:300px;border-radius:12px;background:#000;margin-top:15px}
 footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
+.loading-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:20px}
+.spinner{width:50px;height:50px;border:4px solid #333;border-top-color:#fbbf24;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+
+<div class="loading-overlay" id="loadingOverlay">
+<div class="spinner"></div>
+<div style="color:#fbbf24">جاري تحميل محرك الضغط...</div>
+<div style="color:#888;font-size:12px" id="loadStatus">0%</div>
+</div>
+
 <div class="container">
 <header>
 <div class="logo">IAF VideoCompress</div>
-<div class="badge">⚡ MP4</div>
+<div class="badge">⚡ FFmpeg</div>
 </header>
 
 <section class="hero">
-<h1>اضغط فيديوهاتك <span>في ثوانٍ</span></h1>
-<p>ضغط محلي داخل المتصفح — MP4 + صوت</p>
+<h1>اضغط فيديوهاتك <span>بجودة احترافية</span></h1>
+<p>MP4 • صوت • بدون فقدان — كل شيء في المتصفح</p>
 </section>
 
 <div class="card" id="uploadCard">
@@ -63,7 +73,7 @@ footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
 <label class="upload" for="videoInput">
 <div class="up-icon">🎬</div>
 <h2>اختر فيديو</h2>
-<p>MP4 • MOV • WebM</p>
+<p>MP4 • MOV • WebM • AVI</p>
 </label>
 <input id="videoInput" type="file" accept="video/*">
 </div>
@@ -73,17 +83,17 @@ footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
 
 <div class="method active" data-quality="high">
 <div class="method-title">🎯 جودة عالية</div>
-<div class="method-desc">1080p • 5 Mbps — أفضل جودة</div>
+<div class="method-desc">CRF 23 • احترافي — جودة ممتازة</div>
 </div>
 
 <div class="method" data-quality="medium">
 <div class="method-title">⚖️ متوازن</div>
-<div class="method-desc">720p • 2.5 Mbps — موصى به</div>
+<div class="method-desc">CRF 28 • موصى به — توازن ممتاز</div>
 </div>
 
 <div class="method" data-quality="low">
 <div class="method-title">📉 حجم صغير</div>
-<div class="method-desc">480p • 1 Mbps — للواتساب</div>
+<div class="method-desc">CRF 32 • للواتساب — حجم أقل</div>
 </div>
 
 <button class="primary-btn" id="startBtn">▶️ ابدأ الضغط</button>
@@ -112,14 +122,19 @@ footer{text-align:center;color:#444;padding:30px 0;font-size:11px}
 <b id="savings" style="color:#19e6b2">—</b>
 </div>
 <video id="previewVideo" class="video-preview" controls></video>
-<a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو المضغوط</a>
+<a id="downloadBtn" class="download-btn" download>⬇️ تحميل الفيديو المضغوط (MP4)</a>
 <button class="secondary-btn" onclick="location.reload()">🔄 ضغط فيديو آخر</button>
 </div>
 
 <footer>IAF VideoCompress © 2026</footer>
 </div>
 
+<script src="https://unpkg.com/@ffmpeg/ffmpeg@0.12.10/dist/umd/ffmpeg.js"></script>
+<script src="https://unpkg.com/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
 <script>
+const { FFmpeg } = FFmpegWASM;
+const { fetchFile, toBlobURL } = FFmpegUtil;
+
 const input=document.getElementById("videoInput");
 const methodCard=document.getElementById("methodCard");
 const resultCard=document.getElementById("resultCard");
@@ -127,8 +142,52 @@ const processingCard=document.getElementById("processingCard");
 const progressBar=document.getElementById("progressBar");
 const statusText=document.getElementById("statusText");
 const startBtn=document.getElementById("startBtn");
+const loadingOverlay=document.getElementById("loadingOverlay");
+const loadStatus=document.getElementById("loadStatus");
+
+let ffmpeg=null;
 let selectedFile=null;
-let selectedQuality="high";
+let selectedQuality="medium";
+
+async function loadFFmpeg(){
+try{
+ffmpeg=new FFmpeg();
+ffmpeg.on("log",({message})=>{
+if(message.includes("frame=")){
+const match=message.match(/time=(\d+):(\d+):(\d+)/);
+if(match){
+const seconds=parseInt(match[1])*3600+parseInt(match[2])*60+parseInt(match[3]);
+const total=window.videoDuration||1;
+const progress=Math.min(20+(seconds/total)*70,90);
+progressBar.style.width=progress+"%";
+statusText.textContent="جاري الضغط... "+Math.round((seconds/total)*100)+"%";
+}
+}
+});
+
+ffmpeg.on("progress",({progress})=>{
+const p=Math.min(20+progress*70,90);
+progressBar.style.width=p+"%";
+});
+
+const baseURL="https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
+await ffmpeg.load({
+coreURL:await toBlobURL(baseURL+"/ffmpeg-core.js","text/javascript"),
+wasmURL:await toBlobURL(baseURL+"/ffmpeg-core.wasm","application/wasm"),
+});
+
+loadingOverlay.classList.add("hidden");
+}catch(err){
+console.error(err);
+loadStatus.textContent="❌ فشل التحميل";
+loadStatus.style.color="#ff6b6b";
+setTimeout(()=>{
+alert("فشل تحميل محرك الضغط. تأكد من الإنترنت وحاول مجدداً.");
+},500);
+}
+}
+
+loadFFmpeg();
 
 input.addEventListener("change",function(){
 const file=this.files[0];
@@ -147,111 +206,45 @@ selectedQuality=m.dataset.quality;
 });
 
 startBtn.addEventListener("click",async()=>{
-if(!selectedFile)return;
+if(!selectedFile||!ffmpeg)return;
 startBtn.disabled=true;
 methodCard.classList.add("hidden");
 processingCard.classList.remove("hidden");
+progressBar.style.width="5%";
+statusText.textContent="جاري قراءة الفيديو...";
 
 try{
-const settings={
-high:{width:1920,bitrate:5000000},
-medium:{width:1280,bitrate:2500000},
-low:{width:854,bitrate:1000000}
-};
-const cfg=settings[selectedQuality];
+const crfMap={high:"23",medium:"28",low:"32"};
+const crf=crfMap[selectedQuality];
 
-statusText.textContent="جاري قراءة الفيديو...";
-progressBar.style.width="10%";
+await ffmpeg.writeFile("input.mp4",await fetchFile(selectedFile));
+progressBar.style.width="15%";
 
 const video=document.createElement("video");
 video.src=URL.createObjectURL(selectedFile);
-video.muted=false;
-video.playsInline=true;
-await new Promise((resolve,reject)=>{
-video.onloadedmetadata=resolve;
-video.onerror=reject;
+await new Promise(r=>{
+video.onloadedmetadata=r;
 });
+window.videoDuration=video.duration;
 
-const targetWidth=Math.min(cfg.width,video.videoWidth);
-const targetHeight=Math.round(video.videoHeight*(targetWidth/video.videoWidth));
+statusText.textContent="جاري الضغط...";
 
-const canvas=document.createElement("canvas");
-canvas.width=targetWidth;
-canvas.height=targetHeight;
-const ctx=canvas.getContext("2d");
+await ffmpeg.exec([
+"-i","input.mp4",
+"-vcodec","libx264",
+"-crf",crf,
+"-preset","fast",
+"-acodec","aac",
+"-b:a","128k",
+"-movflags","+faststart",
+"output.mp4"
+]);
 
-statusText.textContent="جاري تجهيز المعالجة...";
-progressBar.style.width="20%";
-
-const stream=canvas.captureStream(30);
-const videoTrack=stream.getVideoTracks()[0];
-
-const mimeCandidates=[
-'video/mp4;codecs=avc1.42E01E,mp4a.40.2',
-'video/mp4;codecs=h264,aac',
-'video/mp4',
-'video/webm;codecs=h264,opus',
-'video/webm;codecs=vp9,opus',
-'video/webm'
-];
-
-let mimeType='';
-for(const m of mimeCandidates){
-if(MediaRecorder.isTypeSupported(m)){
-mimeType=m;
-break;
-}
-}
-
-if(!mimeType){
-throw new Error("المتصفح لا يدعم أي صيغة للتسجيل");
-}
-
-const recorder=new MediaRecorder(stream,{
-mimeType:mimeType,
-videoBitsPerSecond:cfg.bitrate,
-audioBitsPerSecond:128000
-});
-
-const chunks=[];
-recorder.ondataavailable=e=>{
-if(e.data.size>0)chunks.push(e.data);
-};
-
-const done=new Promise(resolve=>{
-recorder.onstop=resolve;
-});
-
-recorder.start(100);
-video.currentTime=0;
-await video.play();
-
-const duration=video.duration;
-
-function captureLoop(){
-if(video.ended||video.currentTime>=duration){
-if(recorder.state!=="inactive")recorder.stop();
-return;
-}
-ctx.drawImage(video,0,0,targetWidth,targetHeight);
-const progress=20+Math.min((video.currentTime/duration)*70,70);
-progressBar.style.width=progress+"%";
-statusText.textContent="جاري الضغط... "+Math.round((video.currentTime/duration)*100)+"%";
-requestAnimationFrame(captureLoop);
-}
-
-video.onended=()=>{
-if(recorder.state!=="inactive")recorder.stop();
-};
-
-captureLoop();
-await done;
-
-statusText.textContent="جاري إنشاء الملف...";
 progressBar.style.width="95%";
+statusText.textContent="جاري إنشاء الملف...";
 
-const ext=mimeType.includes("mp4")?"mp4":"webm";
-const blob=new Blob(chunks,{type:mimeType});
+const data=await ffmpeg.readFile("output.mp4");
+const blob=new Blob([data.buffer],{type:"video/mp4"});
 const url=URL.createObjectURL(blob);
 
 document.getElementById("newSize").textContent=formatSize(blob.size);
@@ -259,10 +252,10 @@ const savings=Math.round((1-blob.size/selectedFile.size)*100);
 document.getElementById("savings").textContent=savings+"% توفير";
 document.getElementById("previewVideo").src=url;
 document.getElementById("downloadBtn").href=url;
-document.getElementById("downloadBtn").download="compressed_"+selectedFile.name.replace(/\.[^.]+$/,"."+ext);
+document.getElementById("downloadBtn").download="compressed_"+selectedFile.name.replace(/\.[^.]+$/,".mp4");
 
 progressBar.style.width="100%";
-statusText.textContent="✅ تم الضغط بنجاح!";
+statusText.textContent="✅ تم الضغط بنجاح! (MP4 + صوت)";
 statusText.className="status success";
 processingCard.classList.add("hidden");
 resultCard.classList.remove("hidden");
