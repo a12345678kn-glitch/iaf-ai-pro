@@ -1,221 +1,65 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إبراهيم ال فارس | تحسين الفيديو PRO</title>
-    <style>
-        :root {
-            --bg: #080b14;
-            --panel: #111827;
-            --gold: #f5c928;
-            --gold-light: #ffe477;
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --border: #1e293b;
-            --primary: #7657ff;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Tahoma', 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            background: var(--panel);
-            width: 100%;
-            max-width: 550px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            padding: 40px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* تأثير الضوء في الخلفية */
-        .container::before {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(118, 87, 255, 0.1) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .content { position: relative; z-index: 1; }
-
-        h1 {
-            color: var(--gold);
-            font-size: 32px;
-            margin-bottom: 10px;
-            font-weight: 900;
-        }
-
-        p {
-            color: var(--muted);
-            font-size: 15px;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .upload-area {
-            border: 2px dashed var(--primary);
-            padding: 40px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-            background: rgba(118, 87, 255, 0.05);
-            margin-bottom: 25px;
-        }
-
-        .upload-area:hover {
-            background: rgba(118, 87, 255, 0.1);
-            border-color: var(--gold);
-        }
-
-        .upload-area span {
-            display: block;
-            color: var(--text);
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        #videoFile { display: none; }
-
-        .btn-optimize {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(45deg, var(--primary), #a28eff);
-            color: white;
-            border: none;
-            border-radius: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.4s;
-            box-shadow: 0 10px 20px rgba(118, 87, 255, 0.3);
-        }
-
-        .btn-optimize:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(118, 87, 255, 0.5);
-        }
-
-        .btn-optimize:disabled {
-            background: #444;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        #status {
-            margin-top: 20px;
-            font-size: 14px;
-            color: var(--gold-light);
-            min-height: 20px;
-        }
-
-        .download-btn {
-            display: none;
-            background: #00c853;
-            color: white;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 20px;
-            font-weight: bold;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <meta name="description" content="ضاغط الفيديو من إبراهيم الفارس — ضغط وتحويل MP4 بجودة قابلة للضبط داخل متصفحك.">
+  <title>إبراهيم الفارس | ضاغط الفيديو</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700;800&display=swap');
+    :root{color-scheme:dark;--bg:#0c121d;--surface:#121c2a;--surface2:#172438;--border:#28384d;--text:#f5f8fd;--muted:#a5b3c5;--red:#ff4659;--red2:#ff7180;--blue:#288bff;--blue2:#63b2ff;--ok:#53d5a0;--r:20px}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 88% -12%,#163d71 0,transparent 35%),radial-gradient(ellipse at -10% 32%,#4a1824 0,transparent 31%),var(--bg);font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;color:var(--text);min-height:100vh}button,input,select{font:inherit}button{cursor:pointer} .wrap{width:min(1120px,calc(100% - 36px));margin:auto}.header{height:76px;border-bottom:1px solid #ffffff12;display:flex;align-items:center}.nav{display:flex;justify-content:space-between;align-items:center;width:100%}.brand{display:flex;gap:12px;align-items:center;font-weight:800}.logo{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(140deg,var(--red),var(--blue));color:white;font-size:18px;box-shadow:0 6px 22px #288bff30}.navtag{font-size:12px;color:#c6d3e2;border:1px solid #ffffff20;background:#ffffff07;border-radius:999px;padding:8px 13px}.hero{padding:62px 0 31px}.pill{color:#c2dcff;font-size:13px;display:inline-flex;align-items:center;gap:8px}.pill i{width:8px;height:8px;border-radius:50%;background:var(--blue2);box-shadow:0 0 12px var(--blue)}h1{font-size:clamp(36px,6vw,62px);line-height:1.19;margin:17px 0 12px;letter-spacing:-1px}.gradient{background:linear-gradient(90deg,var(--red2),#f1f5ff 50%,var(--blue2));-webkit-background-clip:text;background-clip:text;color:transparent}.hero p{max-width:730px;color:var(--muted);line-height:1.9;margin:0;font-size:16px}.layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,.8fr);gap:18px;align-items:start}.panel{border:1px solid var(--border);border-radius:var(--r);background:linear-gradient(145deg,#152133ed,#101926f5);overflow:hidden;box-shadow:0 18px 60px #0003}.panelhead{display:flex;justify-content:space-between;align-items:center;padding:18px 21px;border-bottom:1px solid #ffffff12}.panelhead h2{margin:0;font-size:16px}.step{font-size:12px;color:var(--muted)}.drop{margin:18px;border:1px dashed #55708f;border-radius:16px;min-height:220px;display:grid;place-items:center;text-align:center;padding:24px;transition:.2s;background:#ffffff03}.drop.drag{border-color:var(--blue2);background:#288bff14}.dropIcon{width:50px;height:50px;border-radius:15px;margin:0 auto 12px;display:grid;place-items:center;color:#fff;font-size:22px;background:linear-gradient(135deg,var(--red),var(--blue))}.drop strong{font-size:16px}.drop p{font-size:12px;color:var(--muted);margin:8px 0 15px}.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:700;transition:.17s}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.blue{background:linear-gradient(120deg,#1673e5,var(--blue2));color:#fff}.red{background:linear-gradient(120deg,#e22c43,var(--red2));color:#fff}.secondary{color:#eaf2ff;border:1px solid #ffffff22;background:#ffffff0a}.btn:disabled{opacity:.48;cursor:not-allowed;transform:none}#fileInput{display:none}.preview{display:block;width:100%;max-height:390px;background:#05080c;object-fit:contain}.fileRow{padding:13px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid #ffffff12}.filename{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.filemeta{font-size:12px;color:var(--muted);white-space:nowrap}.hidden{display:none!important}.settings{padding:20px}.field{margin-bottom:17px}.field label{display:block;font-size:13px;color:#d9e5f5;margin-bottom:8px}.select,.range{width:100%}.select{border:1px solid #32445b;border-radius:11px;background:#0d1521;color:var(--text);padding:12px;outline:none}.select:focus{border-color:var(--blue2)}.hint{font-size:11px;color:var(--muted);line-height:1.7;margin-top:6px}.rangeLine{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--muted);margin-bottom:6px}.rangeLine b{color:white}.range{accent-color:var(--red)}.info{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin:15px 0}.info div{border:1px solid #ffffff12;border-radius:12px;padding:11px;background:#ffffff05}.info span{display:block;font-size:10px;color:var(--muted)}.info b{font-size:13px;display:block;margin-top:4px;overflow-wrap:anywhere}.wide{width:100%}.status{display:none;margin:0 18px 17px;border-radius:12px;padding:12px 13px;font-size:12px;line-height:1.7;background:#ffffff09;color:#d6e0ed}.status.show{display:block}.status.error{color:#ffb0b8;background:#ff465914}.status.good{color:#9cebc9;background:#53d5a012}.progress{height:7px;background:#ffffff12;border-radius:99px;margin-top:9px;overflow:hidden}.bar{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--blue2));transition:width .25s}.result{margin:0 18px 18px;padding:14px;border-radius:13px;background:#10251f;border:1px solid #53d5a033}.result strong{font-size:13px}.result p{font-size:12px;color:#c1d1cc;line-height:1.7;margin:6px 0 12px}.savings{color:#8ce6bd}.notice{padding:11px 12px;border:1px solid #ffffff11;border-radius:12px;color:#aab9ca;font-size:11px;line-height:1.8;margin-top:14px}.below{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:44px 0}.feature{border-top:1px solid var(--border);padding:16px 2px}.feature b{font-size:14px}.feature p{font-size:12px;color:var(--muted);line-height:1.8;margin:7px 0 0}.footer{padding:22px 0 30px;border-top:1px solid #ffffff12;color:var(--muted);font-size:12px}.footer .wrap{display:flex;justify-content:space-between;gap:12px}.brandmini{color:white}.loadState{color:var(--blue2)}@media(max-width:760px){.wrap{width:min(100% - 26px,600px)}.hero{padding:45px 0 24px}.hero p{font-size:14px}.layout{grid-template-columns:1fr}.below{grid-template-columns:1fr;gap:5px;margin:32px 0}.feature{padding:12px 0}.footer .wrap{flex-direction:column}.navtag{font-size:10px}.panelhead{padding:16px}.settings{padding:17px}.drop{min-height:190px}}
+  </style>
 </head>
 <body>
+<header class="header"><div class="wrap nav"><a class="brand" href="#"><span class="logo">إف</span><span>إبراهيم الفارس</span></a><span class="navtag">ضاغط فيديو · MP4 / H.264</span></div></header>
+<main class="wrap">
+  <section class="hero"><span class="pill"><i></i> تحويل وضغط حقيقي داخل المتصفح</span><h1>حجم أقل.<br><span class="gradient">تحكم أكبر.</span></h1><p>اضغط ملفات الفيديو فعليًا باستخدام FFmpeg WebAssembly، واضبط الجودة والدقة ومعدل الإطارات. اختر الملف ثم نزّل نسخة MP4 مضغوطة على جهازك.</p></section>
+  <section class="layout" aria-label="أداة ضغط الفيديو">
+    <article class="panel"><div class="panelhead"><h2>1 — اختر فيديو</h2><span class="step">MP4 · MOV · WebM وغيرها</span></div>
+      <div id="drop" class="drop"><div><div class="dropIcon">↑</div><strong>اسحب الفيديو إلى هنا</strong><p>أو اختر ملفًا من جهازك · يفضّل استخدام Chrome أو Edge الحديث</p><button id="pick" class="btn secondary" type="button">اختيار ملف فيديو</button><input id="fileInput" type="file" accept="video/*,.mp4,.mov,.mkv,.webm,.avi" /></div></div>
+      <video id="preview" class="preview hidden" controls playsinline></video>
+      <div id="fileRow" class="fileRow hidden"><span id="filename" class="filename"></span><span id="filemeta" class="filemeta"></span><button id="remove" class="btn secondary" type="button" style="padding:7px 10px">إزالة</button></div>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div id="result" class="result hidden"><strong>انتهى الضغط بنجاح</strong><p id="resultText"></p><a id="download" class="btn blue" download>تنزيل الفيديو المضغوط</a></div>
+    </article>
+    <aside class="panel"><div class="panelhead"><h2>2 — إعدادات الضغط</h2><span class="step">تحكم بالجودة والحجم</span></div><div class="settings">
+      <div class="field"><label for="quality">جودة الصورة (CRF)</label><div class="rangeLine"><span>أفضل جودة / ملف أكبر</span><b id="qualityValue">26</b><span>ضغط أعلى / حجم أقل</span></div><input id="quality" class="range" type="range" min="18" max="35" value="26"><div class="hint">القيمة الأقل تعطي جودة أعلى وحجمًا أكبر. القيمة الأعلى تضغط الملف أكثر. القيمة المقترحة 23–28.</div></div>
+      <div class="field"><label for="resolution">أقصى دقة إخراج</label><select id="resolution" class="select"><option value="0">الحفاظ على الدقة الأصلية</option><option value="1080">حتى 1080p</option><option value="720">حتى 720p</option><option value="480">حتى 480p</option></select></div>
+      <div class="field"><label for="fps">معدل الإطارات</label><select id="fps" class="select"><option value="0">الحفاظ على معدل المصدر</option><option value="30">30 إطارًا/ثانية</option><option value="25">25 إطارًا/ثانية</option><option value="24">24 إطارًا/ثانية</option></select><div class="hint">خفض FPS قد يقلل الحجم، لكنه قد يقلل سلاسة الحركة.</div></div>
+      <div class="field"><label for="audio">جودة الصوت</label><select id="audio" class="select"><option value="128">AAC — 128 kbps</option><option value="96">AAC — 96 kbps (أصغر)</option><option value="192">AAC — 192 kbps (أعلى)</option><option value="0">إزالة الصوت</option></select></div>
+      <div class="info"><div><span>الملف الأصلي</span><b id="originalSize">—</b></div><div><span>وقت المعالجة</span><b id="elapsed">—</b></div></div>
+      <button id="compress" class="btn red wide" type="button" disabled>ابدأ ضغط الفيديو</button>
+      <div id="progressWrap" class="progress hidden"><div id="bar" class="bar"></div></div>
+      <div id="progressLabel" class="hint hidden">جارٍ تجهيز محرك الضغط…</div>
+      <div class="notice"><b>مهم:</b> يعالج المتصفح الفيديو محليًا باستخدام FFmpeg؛ لا يُرفع ملفك لخادم التطبيق. عند أول استخدام يتم تنزيل مكتبة FFmpeg من CDN. الملفات الكبيرة قد تستهلك ذاكرة الجهاز، وتختلف السرعة باختلاف الجهاز والمتصفح.</div>
+    </div></aside>
+  </section>
+  <section class="below"><div class="feature"><b>ضغط فعلي بترميز H.264</b><p>يعاد ترميز الفيديو والصوت، وليس مجرد تغيير اسم الملف أو بياناته.</p></div><div class="feature"><b>إعدادات مفهومة</b><p>تحكم في CRF والدقة ومعدل الإطارات وصوت AAC قبل التصدير.</p></div><div class="feature"><b>ملفاتك على جهازك</b><p>المعالجة تتم داخل المتصفح. امسح الناتج من جهازك إذا لم تعد بحاجة إليه.</p></div></section>
+</main>
+<footer class="footer"><div class="wrap"><span class="brandmini">© <span id="year"></span> إبراهيم الفارس</span><span>ضاغط فيديو يعمل على المتصفح — WebAssembly / FFmpeg</span></div></footer>
+<script type="module">
+import { FFmpeg } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js';
+import { toBlobURL } from 'https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/esm/index.js';
 
-<div class="container">
-    <div class="content">
-        <h1>إبراهيم ال فارس PRO</h1>
-        <p>نظام تحسين الجودة الخارق لرفع الفيديوهات بدون تغبيش على تيك توك وإنستجرام</p>
-
-        <form id="uploadForm">
-            <label class="upload-area" id="dropzone">
-                <span id="fileLabel">اضغط هنا لرفع الفيديو 📁</span>
-                <input type="file" id="videoFile" accept="video/*" required>
-            </label>
-
-            <button type="submit" id="submitBtn" class="btn-optimize">بدء المعالجة الذكية ✨</button>
-        </form>
-
-        <div id="status"></div>
-        <a id="downloadBtn" class="download-btn" href="#" download>تحميل الفيديو المحسن 📥</a>
-    </div>
-</div>
-
-<script>
-    const fileInput = document.getElementById('videoFile');
-    const fileLabel = document.getElementById('fileLabel');
-    const form = document.getElementById('uploadForm');
-    const btn = document.getElementById('submitBtn');
-    const status = document.getElementById('status');
-    const downloadBtn = document.getElementById('downloadBtn');
-
-    // تحديث اسم الملف عند الاختيار
-    fileInput.onchange = () => {
-        if(fileInput.files.length > 0) {
-            fileLabel.innerText = "تم اختيار: " + fileInput.files[0].name;
-            fileLabel.style.color = "#f5c928";
-        }
-    };
-
-    form.onsubmit = async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData();
-        formData.append('video', fileInput.files[0]);
-
-        btn.disabled = true;
-        btn.innerText = "جاري المعالجة... يرجى الانتظار";
-        status.innerText = "يتم الآن تطبيق خوارزمية (CRF 18) لتحسين حدة البكسلات...";
-        downloadBtn.style.display = "none";
-
-        try {
-            // هنا يتم الربط مع السيرفر (الذي يعالج الفيديو فعلياً)
-            const response = await fetch('/optimize', { 
-                method: 'POST', 
-                body: formData 
-            });
-            const data = await response.json();
-
-            if(data.url) {
-                status.innerText = "تم التحسين بنجاح! الفيديو الآن جاهز للنشر بدقة خارقة.";
-                downloadBtn.href = data.url;
-                downloadBtn.style.display = "block";
-            } else {
-                status.innerText = "خطأ في المعالجة.";
-            }
-        } catch (err) {
-            // رسالة تظهر إذا لم يكن هناك سيرفر مربوط حالياً
-            status.innerHTML = "<span style='color:#ff4d4d;'>تنبيه: الواجهة تعمل بنجاح، ولكن تحتاج لربطها بسيرفر FFmpeg لتتم المعالجة.</span>";
-        } finally {
-            btn.disabled = false;
-            btn.innerText = "بدء المعالجة الذكية ✨";
-        }
-    };
+const $=id=>document.getElementById(id);
+const input=$('fileInput'),drop=$('drop'),preview=$('preview'),status=$('status');
+let selected=null,sourceURL=null,outputURL=null,engine=null,working=false,startedAt=0,progressListener=null;
+$('year').textContent=new Date().getFullYear();
+const bytes=n=>{if(!Number.isFinite(n))return '—';const u=['بايت','KB','MB','GB'];let i=0;while(n>=1024&&i<u.length-1){n/=1024;i++}return `${n.toFixed(i?1:0)} ${u[i]}`};
+function say(text,type=''){status.textContent=text;status.className='status show'+(type?' '+type:'')}
+function cleanResult(){if(outputURL){URL.revokeObjectURL(outputURL);outputURL=null}$('result').classList.add('hidden')}
+function reset(){if(working)return;cleanResult();if(sourceURL)URL.revokeObjectURL(sourceURL);sourceURL=null;selected=null;preview.pause();preview.removeAttribute('src');preview.load();preview.classList.add('hidden');drop.classList.remove('hidden');$('fileRow').classList.add('hidden');$('compress').disabled=true;$('originalSize').textContent='—';$('elapsed').textContent='—';input.value='';status.className='status';status.textContent=''}
+function chooseFile(file){if(!file)return;if(!file.type.startsWith('video/')&&!/\.(mp4|mov|mkv|webm|avi|m4v|3gp)$/i.test(file.name)){say('هذا الملف لا يبدو ملف فيديو. اختر ملف فيديو صالحًا.','error');return}if(file.size>750*1024*1024){say('حجم الملف أكبر من 750MB. قلل حجمه أو اختر ملفًا أصغر لتجنب نفاد ذاكرة المتصفح.','error');return}reset();selected=file;sourceURL=URL.createObjectURL(file);preview.src=sourceURL;preview.classList.remove('hidden');drop.classList.add('hidden');$('fileRow').classList.remove('hidden');$('filename').textContent=file.name;$('filename').title=file.name;$('filemeta').textContent=bytes(file.size);$('originalSize').textContent=bytes(file.size);$('compress').disabled=false;preview.onerror=()=>say('تعذر عرض المعاينة في هذا المتصفح. جرّب ملف MP4 أو استمر في المحاولة إذا كان الملف مدعومًا من FFmpeg.','error')}
+$('pick').addEventListener('click',()=>input.click());input.addEventListener('change',e=>chooseFile(e.target.files[0]));$('remove').addEventListener('click',reset);$('quality').addEventListener('input',e=>$('qualityValue').textContent=e.target.value);
+for(const ev of ['dragenter','dragover'])drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')});for(const ev of ['dragleave','drop'])drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')});drop.addEventListener('drop',e=>chooseFile(e.dataTransfer.files[0]));
+async function getEngine(){if(engine)return engine;const ff=new FFmpeg();ff.on('log',({message})=>{if(message&&/error|invalid|failed/i.test(message))console.warn('[FFmpeg]',message)});progressListener=({progress})=>{const pct=Math.max(1,Math.min(99,Math.round((progress||0)*100)));$('bar').style.width=pct+'%';$('progressLabel').textContent=`جارٍ ضغط الفيديو… ${pct}%`};ff.on('progress',progressListener);$('progressLabel').classList.remove('hidden');$('progressWrap').classList.remove('hidden');$('progressLabel').textContent='جارٍ تحميل محرك FFmpeg لأول مرة…';const base='https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd';try{await ff.load({coreURL:await toBlobURL(`${base}/ffmpeg-core.js`,'text/javascript'),wasmURL:await toBlobURL(`${base}/ffmpeg-core.wasm`,'application/wasm')})}catch(err){throw new Error('تعذر تحميل FFmpeg. تأكد من اتصال الإنترنت، وافتح الصفحة عبر HTTPS أو localhost (وليس file://)، ثم أعد المحاولة.')}engine=ff;return ff}
+function safeExt(name){const m=name.match(/\.([a-z0-9]{1,8})$/i);return m?m[1].toLowerCase():'mp4'}
+async function compress(){if(!selected||working)return;working=true;cleanResult();$('compress').disabled=true;$('compress').textContent='جارٍ الضغط…';$('bar').style.width='0%';$('progressWrap').classList.remove('hidden');$('progressLabel').classList.remove('hidden');$('elapsed').textContent='يعمل…';say('قد تستغرق المعالجة وقتًا. لا تغلق الصفحة أثناء الضغط.');startedAt=performance.now();let inputName='input.'+safeExt(selected.name),outputName='compressed.mp4';try{const ff=await getEngine();$('progressLabel').textContent='جارٍ نسخ الملف إلى مساحة المعالجة…';await ff.writeFile(inputName,new Uint8Array(await selected.arrayBuffer()));const crf=$('quality').value,res=Number($('resolution').value),fps=Number($('fps').value),audio=Number($('audio').value);const args=['-i',inputName,'-map','0:v:0','-map','0:a?'];if(res>0)args.push('-vf',`scale=w='min(${res},iw)':h='min(${res},ih)':force_original_aspect_ratio=decrease:force_divisible_by=2`);args.push('-c:v','libx264','-preset','veryfast','-crf',String(crf));if(fps>0)args.push('-r',String(fps));if(audio===0)args.push('-an');else args.push('-c:a','aac','-b:a',`${audio}k`);args.push('-movflags','+faststart','-pix_fmt','yuv420p','-y',outputName);$('progressLabel').textContent='جارٍ ترميز الفيديو…';await ff.exec(args);const data=await ff.readFile(outputName);const blob=new Blob([data.buffer],{type:'video/mp4'});if(!blob.size)throw new Error('لم ينتج FFmpeg ملفًا. تحقق من أن الفيديو يحتوي على مسار فيديو صالح.');if(outputURL)URL.revokeObjectURL(outputURL);outputURL=URL.createObjectURL(blob);const a=$('download');a.href=outputURL;a.download=(selected.name.replace(/\.[^.]+$/,'')||'video')+'_compressed.mp4';const reduction=(1-blob.size/selected.size)*100;const elapsed=((performance.now()-startedAt)/1000).toFixed(1);$('elapsed').textContent=`${elapsed} ثانية`;$('resultText').innerHTML=`الحجم الأصلي: <b>${bytes(selected.size)}</b> · الناتج: <b>${bytes(blob.size)}</b><br>${reduction>=0?`تخفيض الحجم: <b class="savings">${reduction.toFixed(1)}%</b>`:`الناتج أكبر من الأصل بـ <b>${Math.abs(reduction).toFixed(1)}%</b>`} · MP4 / H.264`;$('result').classList.remove('hidden');$('bar').style.width='100%';$('progressLabel').textContent='اكتمل الضغط. ملفك جاهز للتنزيل.';say('اكتمل ضغط الفيديو. اضغط زر التنزيل لحفظ النسخة المضغوطة.','good');try{await ff.deleteFile(inputName);await ff.deleteFile(outputName)}catch(_){}}
+catch(err){console.error(err);say(err?.message||'حدث خطأ أثناء ضغط الفيديو. جرّب ملفًا أصغر أو متصفحًا حديثًا.','error');$('progressLabel').textContent='لم يكتمل الضغط.'}
+finally{working=false;$('compress').disabled=!selected;$('compress').textContent='ابدأ ضغط الفيديو';if(!$('result').classList.contains('hidden'))$('progressLabel').textContent='اكتمل الضغط. ملفك جاهز للتنزيل.'}}
+$('compress').addEventListener('click',compress);window.addEventListener('beforeunload',()=>{if(sourceURL)URL.revokeObjectURL(sourceURL);if(outputURL)URL.revokeObjectURL(outputURL)});
 </script>
-
 </body>
 </html>
