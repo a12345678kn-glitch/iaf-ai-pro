@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إبراهيم آل فارس | تحسين جودة الفيديو بالذكاء الاصطناعي</title>
+    <title>إبراهيم آل فارس | محرك تحسين الفيديو بالذكاء الاصطناعي</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0b0c10;
-            --card-bg: #13151b;
-            --accent-gold: #ffc107;
-            --gold-glow: rgba(255, 193, 7, 0.3);
-            --text-color: #ffffff;
-            --text-sub: #9ea5b4;
-            --border-color: #242834;
+            --bg-dark: #090a0f;
+            --card-dark: #12141d;
+            --gold-primary: #ffb703;
+            --gold-glow: rgba(255, 183, 3, 0.25);
+            --border-glow: #232736;
+            --text-main: #f8f9fa;
+            --text-muted: #8c93a8;
         }
 
         * {
@@ -24,8 +24,8 @@
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -35,243 +35,214 @@
 
         header {
             width: 100%;
-            max-width: 800px;
+            max-width: 900px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 0;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-glow);
             margin-bottom: 30px;
         }
 
-        .logo {
-            font-size: 1.5rem;
+        .brand-logo {
+            font-size: 1.6rem;
             font-weight: 900;
-            color: var(--accent-gold);
-            text-shadow: 0 0 10px var(--gold-glow);
+            color: var(--gold-primary);
+            text-shadow: 0 0 12px var(--gold-glow);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .container {
-            width: 100%;
-            max-width: 650px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+        .ai-status {
+            background: rgba(255, 183, 3, 0.1);
+            border: 1px solid var(--gold-primary);
+            padding: 5px 12px;
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            font-size: 0.8rem;
+            color: var(--gold-primary);
+        }
+
+        .main-card {
+            width: 100%;
+            max-width: 750px;
+            background: var(--card-dark);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             text-align: center;
         }
 
-        h1 {
-            font-size: 2rem;
+        .main-title {
+            font-size: 2.2rem;
+            font-weight: 900;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #fff, var(--accent-gold));
+            background: linear-gradient(135deg, #ffffff, var(--gold-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p.subtitle {
-            color: var(--text-sub);
+        .subtitle {
+            color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
-        /* شريط الخطوات */
-        .steps {
+        /* Stepper UI */
+        .stepper {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             position: relative;
         }
 
-        .step {
+        .step-item {
             flex: 1;
             font-size: 0.85rem;
-            color: var(--text-sub);
-            position: relative;
-            z-index: 1;
+            color: var(--text-muted);
         }
 
-        .step.active {
-            color: var(--accent-gold);
+        .step-item.active {
+            color: var(--gold-primary);
             font-weight: bold;
         }
 
-        .step-num {
-            width: 30px;
-            height: 30px;
-            background: #1c1f2a;
-            border: 2px solid var(--border-color);
+        .step-badge {
+            width: 32px;
+            height: 32px;
+            background: #1a1d29;
+            border: 2px solid var(--border-glow);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 8px;
             color: #fff;
+            font-weight: bold;
         }
 
-        .step.active .step-num {
-            border-color: var(--accent-gold);
-            background: var(--accent-gold);
+        .step-item.active .step-badge {
+            background: var(--gold-primary);
             color: #000;
-            box-shadow: 0 0 12px var(--gold-glow);
+            border-color: var(--gold-primary);
+            box-shadow: 0 0 15px var(--gold-glow);
         }
 
-        /* خيارات الجودة والافتراضات */
-        .badges {
+        /* Feature Badges */
+        .ai-features {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 25px;
         }
 
-        .badge {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid var(--accent-gold);
-            color: var(--accent-gold);
-            padding: 6px 16px;
-            border-radius: 20px;
+        .ai-chip {
+            background: #181b26;
+            border: 1px solid var(--border-glow);
+            color: var(--gold-primary);
+            padding: 6px 14px;
+            border-radius: 12px;
             font-size: 0.85rem;
-            font-weight: bold;
+            font-weight: 700;
         }
 
-        /* صندوق الرفع */
-        .upload-area {
-            border: 2px dashed var(--accent-gold);
-            border-radius: 15px;
-            padding: 40px 20px;
-            background: rgba(255, 193, 7, 0.02);
+        /* Upload Container */
+        .upload-box {
+            border: 2px dashed var(--gold-primary);
+            border-radius: 16px;
+            padding: 45px 20px;
+            background: rgba(255, 183, 3, 0.02);
             cursor: pointer;
-            transition: 0.3s;
-            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            margin-bottom: 25px;
         }
 
-        .upload-area:hover {
-            background: rgba(255, 193, 7, 0.08);
-            box-shadow: 0 0 20px var(--gold-glow);
+        .upload-box:hover {
+            background: rgba(255, 183, 3, 0.06);
+            box-shadow: 0 0 25px var(--gold-glow);
         }
 
         .upload-icon {
-            font-size: 40px;
-            color: var(--accent-gold);
-            margin-bottom: 10px;
+            font-size: 45px;
+            margin-bottom: 12px;
         }
 
-        /* الأزرار */
-        .btn {
-            background: linear-gradient(135deg, #ffc107, #ff9800);
+        .action-btn {
+            background: linear-gradient(135deg, #ffb703, #fb8500);
             color: #000;
-            font-weight: bold;
+            font-weight: 900;
             border: none;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-size: 1rem;
+            padding: 16px 30px;
+            border-radius: 12px;
+            font-size: 1.05rem;
             cursor: pointer;
             width: 100%;
             transition: 0.3s;
-            box-shadow: 0 4px 15px var(--gold-glow);
+            box-shadow: 0 5px 20px var(--gold-glow);
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .action-btn:hover {
             transform: translateY(-2px);
-        }
-
-        /* قسم إدخال الرابط المباشر */
-        .link-input-group {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .link-input-group input {
-            flex: 1;
-            background: #1c1f2a;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 10px 15px;
-            color: #fff;
-            outline: none;
-        }
-
-        .link-input-group input:focus {
-            border-color: var(--accent-gold);
+            box-shadow: 0 8px 25px var(--gold-glow);
         }
 
         footer {
             margin-top: auto;
-            padding: 20px;
-            color: var(--text-sub);
-            font-size: 0.8rem;
+            padding: 25px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">إبراهيم آل فارس</div>
-        <div style="color: var(--text-sub); font-size: 0.9rem;">معالج الفيديوهات الذكي</div>
+        <div class="brand-logo">
+            <span>✨</span>
+            <span>إبراهيم آل فارس</span>
+        </div>
+        <div class="ai-status">محرّك الذكاء الاصطناعي: متصل ⚡</div>
     </header>
 
-    <div class="container">
-        <h1>طريقة التحسين والتنزيل</h1>
-        <p class="subtitle">قم برفع مقطع الفيديو الخاص بك للحصول على أعلى دقة ومعدل إطارات سلس</p>
+    <div class="main-card">
+        <h1 class="main-title">طريقة التحسين والتنزيل</h1>
+        <p class="subtitle">قم برفع مقطع الفيديو ليتم تحليله ومعالجته بتقنيات 4K Ultra HD و 120 FPS</p>
 
-        <!-- الشارات -->
-        <div class="badges">
-            <span class="badge">4K Ultra HD</span>
-            <span class="badge">60 FPS</span>
-            <span class="badge">120 FPS</span>
+        <div class="ai-features">
+            <div class="ai-chip">4K Super Resolution</div>
+            <div class="ai-chip">120 FPS Motion Smooth</div>
+            <div class="ai-chip">AI Noise Cleaning</div>
         </div>
 
-        <!-- الخطوات -->
-        <div class="steps">
-            <div class="step active">
-                <div class="step-num">1</div>
+        <div class="stepper">
+            <div class="step-item active">
+                <div class="step-badge">1</div>
                 <div>رفع الفيديو</div>
             </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                <div>اختر الجودة</div>
+            <div class="step-item">
+                <div class="step-badge">2</div>
+                <div>طريقة المعالجة</div>
             </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                <div>التنزيل</div>
+            <div class="step-item">
+                <div class="step-badge">3</div>
+                <div>التنزيل والمشاركة</div>
             </div>
         </div>
 
-        <!-- منطقة الرفع -->
-        <div class="upload-area" id="uploadBox">
-            <div class="upload-icon">⚡</div>
+        <div class="upload-box" onclick="document.getElementById('videoFile').click()">
+            <div class="upload-icon">🚀</div>
             <h3 style="margin-bottom: 8px;">اختر الفيديو الخاص بك</h3>
-            <p style="color: var(--text-sub); font-size: 0.85rem;">اسحب الفيديو هنا أو انقر للتصفح من جهازك</p>
-            <input type="file" id="fileInput" accept="video/*" style="display: none;">
+            <p style="color: var(--text-muted); font-size: 0.85rem;">يدعم البرنامج جميع صيغ الفيديو الشائعة (MP4, MOV, AVI)</p>
+            <input type="file" id="videoFile" accept="video/*" style="display: none;">
         </div>
 
-        <button class="btn" onclick="document.getElementById('fileInput').click()">رفع ملف الفيديو الآن</button>
-
-        <!-- رابط البث المباشر -->
-        <div class="link-input-group">
-            <input type="text" placeholder="أو استخدم رابط الفيديو المباشر هنا...">
-            <button class="btn" style="width: auto; padding: 10px 20px;">جلب</button>
-        </div>
+        <button class="action-btn" onclick="document.getElementById('videoFile').click()">بدء المعالجة المتقدمة الآن</button>
     </div>
 
     <footer>
-        جميع الحقوق محفوظة © إبراهيم آل فارس - منصة تحسين جودة الفيديوهات
+        جميع الحقوق محفوظة © منصة إبراهيم آل فارس للذكاء الاصطناعي
     </footer>
 
-    <script>
-        const uploadBox = document.getElementById('uploadBox');
-        const fileInput = document.getElementById('fileInput');
-
-        uploadBox.addEventListener('click', () => fileInput.click());
-
-        fileInput.addEventListener('change', (e) => {
-            if(e.target.files.length > 0) {
-                alert('تم اختيار الفيديو: ' + e.target.files[0].name + '\nسيتم الانتقال للخطوة التالية للتحسين!');
-            }
-        });
-    </script>
 </body>
 </html>
