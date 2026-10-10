@@ -39,7 +39,7 @@
 
         <div class="iraqi-card iraqi-border rounded-3xl p-6 shadow-2xl relative">
             
-            <!-- الخطوة 1: الرفع -->
+            <!-- الخطوة 1 -->
             <div id="step-1">
                 <div class="text-blue-400 text-xs mb-3 font-bold flex items-center gap-1">
                     <span>1</span> <span>| اختر الفيديو المراد تثبيته</span>
@@ -52,19 +52,17 @@
                 </div>
             </div>
 
-            <!-- الخطوة 2: المعاينة وضبط درجة التثبيت -->
+            <!-- الخطوة 2 -->
             <div id="step-2" class="hidden">
                 <div class="flex justify-between items-center mb-4">
                     <span class="text-blue-400 text-xs font-bold">2 | معاينة وإعدادات مانع الاهتزاز</span>
                     <button onclick="resetFlow()" class="text-[11px] text-gray-400 underline">تغيير الفيديو</button>
                 </div>
 
-                <!-- معاينة حية -->
                 <div class="mb-4 rounded-2xl overflow-hidden iraqi-border bg-black aspect-video flex items-center justify-center relative">
                     <video id="previewPlayer" class="w-full h-full object-contain" controls></video>
                 </div>
 
-                <!-- معلومات الملف -->
                 <div class="bg-gray-900 p-3.5 rounded-xl mb-4 iraqi-border flex items-center justify-between">
                     <div class="flex items-center gap-2.5">
                         <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold">MP4</span>
@@ -73,7 +71,6 @@
                     <span id="fileSize" class="text-[10px] text-gray-400 font-bold">0 MB</span>
                 </div>
 
-                <!-- خيارات درجة التثبيت -->
                 <div class="space-y-3 mb-5">
                     <div class="bg-gray-900/60 p-3 rounded-xl iraqi-border">
                         <label class="block text-xs font-bold text-gray-300 mb-1">قوة مانع الاهتزاز (Stabilization Power):</label>
@@ -98,7 +95,7 @@
                 </button>
             </div>
 
-            <!-- الخطوة 3: شاشة التثبيت والتحليل -->
+            <!-- الخطوة 3 -->
             <div id="step-3" class="hidden text-center py-8">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
                 <h3 class="text-sm font-bold mb-1" dir="ltr">Analyzing & Stabilizing Motion...</h3>
@@ -110,7 +107,7 @@
                 <span id="progressPercent" class="text-xs text-blue-400 font-bold">0%</span>
             </div>
 
-            <!-- الخطوة 4: التنزيل والملخص -->
+            <!-- الخطوة 4 -->
             <div id="step-4" class="hidden text-center py-4">
                 <div class="text-3xl mb-2">🎬</div>
                 <h3 class="text-base font-bold mb-1">تم تثبيت الفيديو بنجاح!</h3>
@@ -128,9 +125,9 @@
                     </div>
                 </div>
 
-                <button onclick="downloadFile()" class="block w-full py-3.5 rounded-xl iraqi-gradient text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
+                <a id="downloadBtn" class="block w-full py-3.5 rounded-xl iraqi-gradient text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
                     تنزيل الفيديو المثبت ⬇
-                </button>
+                </a>
                 <button onclick="resetFlow()" class="text-xs text-gray-400 underline cursor-pointer">تثبيت فيديو آخر 🔄</button>
             </div>
 
@@ -161,7 +158,6 @@
         </div>
     </div>
 
-    <!-- السكريبت والمنطق -->
     <script>
         const { createFFmpeg, fetchFile } = FFmpeg;
         const ffmpeg = createFFmpeg({ log: true });
@@ -224,7 +220,6 @@
                     
                     ffmpeg.FS('writeFile', inputName, await fetchFile(uploadedFile));
 
-                    // المرحلة الأولى: تحليل مسار الحركة وحساب متجه الاهتزاز
                     bar.style.width = '45%';
                     percentText.innerText = "45%";
                     statusText.innerText = "المرحلة 1: تحليل المتجهات الحركية واكتشاف الاهتزاز...";
@@ -235,7 +230,6 @@
                         '-f', 'null', '-'
                     );
 
-                    // المرحلة الثانية: تطبيق معالجة التثبيت وتنعيم الحواف مع الحفاظ على الجودة
                     bar.style.width = '80%';
                     percentText.innerText = "80%";
                     statusText.innerText = "المرحلة 2: تعويض الحركة وتعديل الأطر مع الحفاظ على النقاوة...";
@@ -257,6 +251,8 @@
                     const data = ffmpeg.FS('readFile', outputName);
                     finalBlob = new Blob([data.buffer], { type: 'video/mp4' });
 
+                    prepareDownloadLink(finalBlob);
+
                     bar.style.width = '100%';
                     percentText.innerText = "100%";
                     setTimeout(() => switchStep(4), 500);
@@ -275,6 +271,7 @@
                 if (p >= 100) {
                     clearInterval(interval);
                     finalBlob = uploadedFile;
+                    prepareDownloadLink(finalBlob);
                     switchStep(4);
                 } else {
                     p += 20;
@@ -285,22 +282,12 @@
             }, 350);
         }
 
-        function downloadFile() {
-            const blobToDownload = finalBlob || uploadedFile;
-            if (blobToDownload) {
-                const a = document.createElement('a');
-                const url = URL.createObjectURL(blobToDownload);
-                a.href = url;
-                a.download = 'Stabilized_' + (uploadedFile ? uploadedFile.name : 'video.mp4');
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    document.body.removeChild(a);
-                    window.URL.revokeObjectURL(url);
-                }, 100);
-            } else {
-                alert('عذراً، لم يتم العثور على الملف للتحميل');
-            }
+        // إصلاح آلية التحميل المباشر المتوافقة مع المتصفحات
+        function prepareDownloadLink(blob) {
+            const downloadBtn = document.getElementById('downloadBtn');
+            const fileUrl = URL.createObjectURL(blob);
+            downloadBtn.href = fileUrl;
+            downloadBtn.download = 'Stabilized_' + (uploadedFile ? uploadedFile.name : 'video.mp4');
         }
 
         function switchStep(num) {
