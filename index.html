@@ -1,309 +1,282 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تيك توك | إبراهيم آل فارس</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090d">
+<title>ابراهيم ال جبوري</title>
 
-        body {
-            background-color: #000;
-            color: #fff;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        /* حاوية التطبيق الرئيسية بحجم الهاتف */
-        .tiktok-container {
-            width: 100%;
-            max-width: 420px;
-            height: 100vh;
-            background: #121212;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8);
-        }
-
-        @media (min-width: 430px) {
-            .tiktok-container {
-                height: 850px;
-                border-radius: 25px;
-                border: 2px solid #222;
-            }
-        }
-
-        /* الهيدر العلوي */
-        .top-nav {
-            position: absolute;
-            top: 15px;
-            left: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            z-index: 10;
-            font-size: 1rem;
-            font-weight: 700;
-        }
-
-        .top-nav span {
-            color: #888;
-            cursor: pointer;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .top-nav span.active {
-            color: #fff;
-            border-bottom: 2px solid #ffb703;
-            padding-bottom: 3px;
-        }
-
-        /* منطقة عرض الفيديو */
-        .video-feed {
-            flex: 1;
-            position: relative;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .video-bg-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: #ffb703;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
-            padding: 20px;
-            background: radial-gradient(circle, #252836 0%, #090a0f 100%);
-        }
-
-        /* تفاصيل الفيديو ووصفه في الأسفل */
-        .video-info {
-            position: absolute;
-            bottom: 70px;
-            right: 15px;
-            left: 70px;
-            z-index: 5;
-            text-align: right;
-        }
-
-        .username {
-            font-weight: 900;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            color: #fff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-        }
-
-        .caption {
-            font-size: 0.9rem;
-            color: #ddd;
-            margin-bottom: 8px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
-        }
-
-        .hashtags {
-            color: #ffb703;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-
-        /* الأزرار الجانبية (إعجاب، تعليقات، مشاركة) */
-        .sidebar-actions {
-            position: absolute;
-            bottom: 80px;
-            left: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            z-index: 5;
-        }
-
-        .action-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .action-btn {
-            width: 45px;
-            height: 45px;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(5px);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.2s;
-        }
-
-        .action-btn:hover {
-            transform: scale(1.1);
-            background: rgba(255, 183, 3, 0.2);
-            border-color: #ffb703;
-        }
-
-        .action-count {
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-        }
-
-        /* شريط التنقل السفلي */
-        .bottom-nav {
-            height: 60px;
-            background: #000;
-            border-top: 1px solid #222;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 10;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #777;
-            font-size: 0.7rem;
-            cursor: pointer;
-        }
-
-        .nav-item.active {
-            color: #fff;
-        }
-
-        .nav-item span.icon {
-            font-size: 1.2rem;
-            margin-bottom: 2px;
-        }
-
-        /* زر الإضافة (+) المميز في المنتصف */
-        .add-video-btn {
-            width: 42px;
-            height: 28px;
-            background: linear-gradient(90deg, #ffb703, #ff0050);
-            border-radius: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #000;
-            font-weight: 900;
-            font-size: 1.2rem;
-            box-shadow: 0 0 10px rgba(255,183,3,0.5);
-        }
-    </style>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#08090d;--panel:#11131b;--line:#262936;--text:#fff;--muted:#a4a8b7;--accent:#ff3158}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif}
+header{height:65px;position:sticky;top:0;z-index:10;background:#0b0c12ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.logo{font-size:19px;font-weight:900;color:#fff}
+.logo span{color:var(--accent)}
+button,.upload-label{border:0;border-radius:10px;padding:11px 15px;background:var(--accent);color:white;font-weight:bold;cursor:pointer}
+button:active{transform:scale(.97)}
+.layout{max-width:1100px;margin:auto;display:grid;grid-template-columns:220px minmax(0,650px);gap:20px;padding:20px 12px}
+aside{position:sticky;top:85px;height:max-content;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}
+.nav{width:100%;display:block;text-align:right;background:transparent;color:white;margin:5px 0}
+.nav.active{background:#27202b;color:#ff6481}
+.profile{text-align:center;padding:10px 0 20px}
+.avatar{width:65px;height:65px;border-radius:50%;margin:auto auto 10px;display:grid;place-items:center;background:linear-gradient(135deg,#ff3158,#7544ff);font-size:25px;font-weight:bold}
+.small{font-size:12px;color:var(--muted);line-height:1.8}
+main{min-width:0}
+.hero{padding:20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(130deg,#191320,#10121c);margin-bottom:16px}
+.hero h1{font-size:24px;margin:0 0 8px}
+.hero p{color:var(--muted);line-height:1.8;margin:0 0 15px}
+.upload-label{display:inline-block}
+#file{display:none}
+.tabs{display:flex;gap:8px;margin:12px 0}
+.tabs button{background:var(--panel);border:1px solid var(--line);flex:1}
+.tabs button.active{background:var(--accent);border-color:var(--accent)}
+.feed{display:grid;gap:18px}
+.post{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
+.post-head{display:flex;align-items:center;gap:10px;padding:12px}
+.mini-avatar{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,#ff3158,#7544ff);display:grid;place-items:center;font-weight:bold}
+.post-user{font-weight:bold;font-size:14px}
+.post-time{font-size:12px;color:var(--muted);margin-top:4px}
+.video-wrap{position:relative;background:#000;max-height:650px;display:flex;justify-content:center}
+video{display:block;width:100%;max-height:650px;object-fit:contain;background:#000}
+.caption{padding:12px 14px;line-height:1.7;overflow-wrap:anywhere}
+.actions{display:flex;gap:8px;padding:0 12px 12px;flex-wrap:wrap}
+.actions button{background:#20222d;padding:9px 12px}
+.actions button.liked{color:#ff6580}
+.comment-area{padding:0 12px 12px}
+.comment-area input{width:100%;background:#090a10;border:1px solid var(--line);border-radius:9px;color:white;padding:12px;margin-bottom:8px}
+.comments{font-size:13px;color:#ddd;line-height:1.8}
+.empty{text-align:center;padding:40px 12px;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:16px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#292b37;color:white;padding:12px 18px;border-radius:12px;display:none;z-index:99;max-width:90%;text-align:center}
+@media(max-width:700px){
+ .layout{display:block;padding:12px 8px}
+ aside{display:none}
+ header{height:58px}
+ .hero h1{font-size:21px}
+ .video-wrap video{max-height:72vh}
+}
+</style>
 </head>
+
 <body>
+<header>
+  <div class="logo">ابراهيم <span>ال جبوري</span></div>
+  <label for="file" class="upload-label">＋ نشر فيديو</label>
+</header>
 
-    <div class="tiktok-container">
-        <!-- شريط التنقل العلوي -->
-        <div class="top-nav">
-            <span>متابعة</span>
-            <span class="active">لك</span>
-        </div>
+<div class="layout">
+  <aside>
+    <div class="profile">
+      <div class="avatar">إ</div>
+      <strong>ابراهيم ال جبوري</strong>
+      <div class="small">منصتك للفيديوهات القصيرة</div>
+    </div>
+    <button class="nav active" onclick="showTab('all',this)">⌂ الرئيسية</button>
+    <button class="nav" onclick="showTab('mine',this)">▣ فيديوهاتي</button>
+    <button class="nav" onclick="chooseVideo()">＋ أضف فيديو</button>
+    <hr style="border-color:#262936">
+    <div class="small">نسخة تجريبية تعمل في المتصفح. المنشورات محفوظة على هذا الجهاز فقط.</div>
+  </aside>
 
-        <!-- عرض الفيديو الرئيسي -->
-        <div class="video-feed">
-            <div class="video-bg-placeholder">
-                <div style="font-size: 40px; margin-bottom: 10px;">✨📱</div>
-                <div>عروض وتصاميم 4K 120fps</div>
-                <div style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">إبراهيم آل فارس</div>
-            </div>
+  <main>
+    <section class="hero">
+      <h1>عالمك، فيديوهاتك 🎬</h1>
+      <p>انشر مقاطعك، شارك إبداعك، وتابع فيديوهاتك في مكان واحد.</p>
+      <label for="file" class="upload-label">＋ اختر فيديو للنشر</label>
+      <input id="file" type="file" accept="video/*" multiple>
+      <div class="small" style="margin-top:12px">اختر فيديو من جهازك. يفضّل تجربة مقطع صغير أولاً.</div>
+    </section>
 
-            <!-- معلومات الفيديو -->
-            <div class="video-info">
-                <div class="username">@Ibrahim_AlFares</div>
-                <div class="caption">شرح الطريقة الخرافية لرفع جودة الفيديوهات وتثبيت الإطارات بدقة مذهلة 😍🔥</div>
-                <div class="hashtags">#4k #120fps #explore #ابراهيم_ال_فارس #اكسبلور</div>
-            </div>
-
-            <!-- الأزرار الجانبية التفاعلية -->
-            <div class="sidebar-actions">
-                <div class="action-item" onclick="toggleLike(this)">
-                    <div class="action-btn" id="likeIcon">❤️</div>
-                    <span class="action-count" id="likeCount">14.2K</span>
-                </div>
-                <div class="action-item">
-                    <div class="action-btn">💬</div>
-                    <span class="action-count">842</span>
-                </div>
-                <div class="action-item">
-                    <div class="action-btn">⭐</div>
-                    <span class="action-count">3.1K</span>
-                </div>
-                <div class="action-item">
-                    <div class="action-btn">↗️</div>
-                    <span class="action-count">1.5K</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- شريط التنقل السفلي لتطبيق تيك توك -->
-        <div class="bottom-nav">
-            <div class="nav-item active">
-                <span class="icon">🏠</span>
-                <span>الرئيسية</span>
-            </div>
-            <div class="nav-item">
-                <span class="icon">👥</span>
-                <span>الأصدقاء</span>
-            </div>
-            <div class="item">
-                <div class="add-video-btn">+</div>
-            </div>
-            <div class="nav-item">
-                <span class="icon">📥</span>
-                <span>الوارد</span>
-            </div>
-            <div class="nav-item">
-                <span class="icon">👤</span>
-                <span>الملف الشخصي</span>
-            </div>
-        </div>
+    <div class="tabs">
+      <button class="active" id="allTab" onclick="showTab('all',this)">كل الفيديوهات</button>
+      <button id="mineTab" onclick="showTab('mine',this)">فيديوهاتي</button>
     </div>
 
-    <script>
-        // تفاعل زر الإعجاب عند الضغط عليه
-        let liked = false;
-        function toggleLike(element) {
-            liked = !liked;
-            const countElem = document.getElementById('likeCount');
-            const iconElem = document.getElementById('likeIcon');
-            if(liked) {
-                iconElem.style.transform = 'scale(1.3)';
-                countElem.innerText = '14.3K';
-                element.style.color = '#ff0050';
-            } else {
-                iconElem.style.transform = 'scale(1)';
-                countElem.innerText = '14.2K';
-                element.style.color = '#fff';
-            }
-        }
-    </script>
+    <section id="feed" class="feed"></section>
+  </main>
+</div>
+
+<footer>© <span id="year"></span> ابراهيم ال جبوري — جميع الحقوق محفوظة</footer>
+<div id="toast"></div>
+
+<script>
+const STORAGE_KEY = "ibrahim_aljubouri_demo_v1";
+let posts = [];
+let currentTab = "all";
+let objectUrls = [];
+
+const feed = document.getElementById("feed");
+const fileInput = document.getElementById("file");
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function toast(message){
+  const el=document.getElementById("toast");
+  el.textContent=message;
+  el.style.display="block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>el.style.display="none",2800);
+}
+
+function chooseVideo(){fileInput.click()}
+
+function loadPosts(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
+    posts=saved.map(p=>({...p,videoUrl:"",mine:true}));
+  }catch(e){posts=[]}
+  render();
+}
+
+function savePosts(){
+  // لا نحفظ ملفات الفيديو داخل localStorage؛ نحفظ بيانات المنشور فقط.
+  const safe=posts.filter(p=>p.mine).map(p=>({
+    id:p.id,caption:p.caption,likes:p.likes||0,
+    comments:p.comments||[],created:p.created
+  }));
+  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(safe))}
+  catch(e){toast("مساحة التخزين ممتلئة؛ بعض البيانات لم تُحفظ")}
+}
+
+fileInput.addEventListener("change",()=>{
+  const files=Array.from(fileInput.files||[]);
+  if(!files.length)return;
+
+  files.forEach(file=>{
+    if(!file.type.startsWith("video/")){
+      toast("الملف المحدد ليس فيديو");
+      return;
+    }
+    if(file.size>100*1024*1024){
+      toast("حجم الفيديو أكبر من 100 ميغابايت");
+      return;
+    }
+    const url=URL.createObjectURL(file);
+    objectUrls.push(url);
+    const caption=prompt("اكتب وصف الفيديو (اختياري):")||"";
+    posts.unshift({
+      id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+      caption,likes:0,comments:[],created:Date.now(),
+      videoUrl:url,mine:true
+    });
+  });
+  fileInput.value="";
+  currentTab="all";
+  updateTabs();
+  render();
+  toast("تمت إضافة الفيديو للعرض على هذا الجهاز");
+});
+
+function showTab(tab,button){
+  currentTab=tab;
+  updateTabs();
+  render();
+}
+
+function updateTabs(){
+  document.getElementById("allTab").classList.toggle("active",currentTab==="all");
+  document.getElementById("mineTab").classList.toggle("active",currentTab==="mine");
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
+}
+
+function render(){
+  feed.innerHTML="";
+  const visible=currentTab==="mine"?posts.filter(p=>p.mine):posts;
+
+  if(!visible.length){
+    feed.innerHTML=`<div class="empty">
+      <div style="font-size:35px;margin-bottom:10px">🎬</div>
+      <strong>لا توجد فيديوهات حتى الآن</strong>
+      <p>اضغط «نشر فيديو» واختر أول مقطع لك.</p>
+    </div>`;
+    return;
+  }
+
+  visible.forEach(post=>{
+    const card=document.createElement("article");
+    card.className="post";
+    const date=new Date(post.created||Date.now()).toLocaleDateString("ar-IQ");
+    const video=post.videoUrl
+      ? `<div class="video-wrap"><video controls playsinline preload="metadata" src="${post.videoUrl}"></video></div>`
+      : `<div class="empty">الفيديو الأصلي غير محفوظ بعد إعادة تحميل الصفحة.<br>أعد رفعه لعرضه مرة أخرى.</div>`;
+
+    card.innerHTML=`
+      <div class="post-head">
+        <div class="mini-avatar">إ</div>
+        <div><div class="post-user">ابراهيم ال جبوري</div>
+        <div class="post-time">${date}</div></div>
+      </div>
+      ${video}
+      <div class="caption">${escapeHTML(post.caption||"")}</div>
+      <div class="actions">
+        <button class="like-btn">♥ إعجاب <span>${post.likes||0}</span></button>
+        <button class="comment-btn">💬 التعليقات (${(post.comments||[]).length})</button>
+        <button class="share-btn">↗ مشاركة</button>
+        ${post.mine?'<button class="delete-btn">🗑 حذف</button>':""}
+      </div>
+      <div class="comment-area" style="display:none">
+        <input class="comment-input" maxlength="300" placeholder="اكتب تعليقاً...">
+        <button class="send-comment">إرسال التعليق</button>
+        <div class="comments"></div>
+      </div>`;
+
+    card.querySelector(".like-btn").addEventListener("click",()=>{
+      post.likes=(post.likes||0)+1;
+      savePosts();
+      render();
+    });
+
+    const area=card.querySelector(".comment-area");
+    card.querySelector(".comment-btn").addEventListener("click",()=>{
+      area.style.display=area.style.display==="none"?"block":"none";
+      drawComments(post,card);
+    });
+
+    card.querySelector(".send-comment").addEventListener("click",()=>{
+      const input=card.querySelector(".comment-input");
+      const value=input.value.trim();
+      if(!value)return toast("اكتب تعليقاً أولاً");
+      post.comments=post.comments||[];
+      post.comments.push(value);
+      savePosts();
+      render();
+      toast("تمت إضافة التعليق");
+    });
+
+    card.querySelector(".share-btn").addEventListener("click",async()=>{
+      try{
+        await navigator.clipboard.writeText(location.href);
+        toast("تم نسخ رابط الصفحة. هذا ليس رابط فيديو منفرداً.");
+      }catch(e){toast("انسخ رابط الصفحة من شريط المتصفح")}
+    });
+
+    const del=card.querySelector(".delete-btn");
+    if(del)del.addEventListener("click",()=>{
+      if(!confirm("هل تريد حذف هذا المنشور؟"))return;
+      posts=posts.filter(p=>p.id!==post.id);
+      savePosts();
+      render();
+      toast("تم حذف المنشور");
+    });
+
+    feed.appendChild(card);
+    drawComments(post,card);
+  });
+}
+
+function drawComments(post,card){
+  const box=card.querySelector(".comments");
+  if(!box)return;
+  box.innerHTML=(post.comments||[]).map(c=>`<div>💬 ${escapeHTML(c)}</div>`).join("");
+}
+
+loadPosts();
+</script>
 </body>
 </html>
