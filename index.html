@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إبراهيم آل فارس | محرك تحسين الفيديو بالذكاء الاصطناعي</title>
+    <title>تيك توك | إبراهيم آل فارس</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-dark: #090a0f;
-            --card-dark: #12141d;
-            --gold-primary: #ffb703;
-            --gold-glow: rgba(255, 183, 3, 0.25);
-            --border-glow: #232736;
-            --text-main: #f8f9fa;
-            --text-muted: #8c93a8;
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -24,225 +14,296 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            min-height: 100vh;
+            background-color: #000;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* حاوية التطبيق الرئيسية بحجم الهاتف */
+        .tiktok-container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: #121212;
+            position: relative;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            padding: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
 
-        header {
+        @media (min-width: 430px) {
+            .tiktok-container {
+                height: 850px;
+                border-radius: 25px;
+                border: 2px solid #222;
+            }
+        }
+
+        /* الهيدر العلوي */
+        .top-nav {
+            position: absolute;
+            top: 15px;
+            left: 0;
             width: 100%;
-            max-width: 900px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid var(--border-glow);
-            margin-bottom: 30px;
-        }
-
-        .brand-logo {
-            font-size: 1.6rem;
-            font-weight: 900;
-            color: var(--gold-primary);
-            text-shadow: 0 0 12px var(--gold-glow);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ai-status {
-            background: rgba(255, 183, 3, 0.1);
-            border: 1px solid var(--gold-primary);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: var(--gold-primary);
-        }
-
-        .main-card {
-            width: 100%;
-            max-width: 750px;
-            background: var(--card-dark);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            text-align: center;
-        }
-
-        .main-title {
-            font-size: 2.2rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #ffffff, var(--gold-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 30px;
-        }
-
-        /* Stepper UI */
-        .stepper {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 35px;
-            position: relative;
-        }
-
-        .step-item {
-            flex: 1;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .step-item.active {
-            color: var(--gold-primary);
-            font-weight: bold;
-        }
-
-        .step-badge {
-            width: 32px;
-            height: 32px;
-            background: #1a1d29;
-            border: 2px solid var(--border-glow);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 8px;
-            color: #fff;
-            font-weight: bold;
-        }
-
-        .step-item.active .step-badge {
-            background: var(--gold-primary);
-            color: #000;
-            border-color: var(--gold-primary);
-            box-shadow: 0 0 15px var(--gold-glow);
-        }
-
-        /* Feature Badges */
-        .ai-features {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .ai-chip {
-            background: #181b26;
-            border: 1px solid var(--border-glow);
-            color: var(--gold-primary);
-            padding: 6px 14px;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            gap: 20px;
+            z-index: 10;
+            font-size: 1rem;
             font-weight: 700;
         }
 
-        /* Upload Container */
-        .upload-box {
-            border: 2px dashed var(--gold-primary);
-            border-radius: 16px;
-            padding: 45px 20px;
-            background: rgba(255, 183, 3, 0.02);
+        .top-nav span {
+            color: #888;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 25px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        .upload-box:hover {
-            background: rgba(255, 183, 3, 0.06);
-            box-shadow: 0 0 25px var(--gold-glow);
+        .top-nav span.active {
+            color: #fff;
+            border-bottom: 2px solid #ffb703;
+            padding-bottom: 3px;
         }
 
-        .upload-icon {
-            font-size: 45px;
-            margin-bottom: 12px;
+        /* منطقة عرض الفيديو */
+        .video-feed {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .video-bg-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffb703;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle, #252836 0%, #090a0f 100%);
+        }
+
+        /* تفاصيل الفيديو ووصفه في الأسفل */
+        .video-info {
+            position: absolute;
+            bottom: 70px;
+            right: 15px;
+            left: 70px;
+            z-index: 5;
+            text-align: right;
+        }
+
+        .username {
+            font-weight: 900;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .caption {
+            font-size: 0.9rem;
+            color: #ddd;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .hashtags {
+            color: #ffb703;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* الأزرار الجانبية (إعجاب، تعليقات، مشاركة) */
+        .sidebar-actions {
+            position: absolute;
+            bottom: 80px;
+            left: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 5;
+        }
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
         }
 
         .action-btn {
-            background: linear-gradient(135deg, #ffb703, #fb8500);
-            color: #000;
-            font-weight: 900;
-            border: none;
-            padding: 16px 30px;
-            border-radius: 12px;
-            font-size: 1.05rem;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
-            box-shadow: 0 5px 20px var(--gold-glow);
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: 0.2s;
         }
 
         .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px var(--gold-glow);
+            transform: scale(1.1);
+            background: rgba(255, 183, 3, 0.2);
+            border-color: #ffb703;
         }
 
-        footer {
-            margin-top: auto;
-            padding: 25px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
+        .action-count {
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        }
+
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            height: 60px;
+            background: #000;
+            border-top: 1px solid #222;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #777;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #fff;
+        }
+
+        .nav-item span.icon {
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+
+        /* زر الإضافة (+) المميز في المنتصف */
+        .add-video-btn {
+            width: 42px;
+            height: 28px;
+            background: linear-gradient(90deg, #ffb703, #ff0050);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #000;
+            font-weight: 900;
+            font-size: 1.2rem;
+            box-shadow: 0 0 10px rgba(255,183,3,0.5);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-logo">
-            <span>✨</span>
-            <span>إبراهيم آل فارس</span>
-        </div>
-        <div class="ai-status">محرّك الذكاء الاصطناعي: متصل ⚡</div>
-    </header>
-
-    <div class="main-card">
-        <h1 class="main-title">طريقة التحسين والتنزيل</h1>
-        <p class="subtitle">قم برفع مقطع الفيديو ليتم تحليله ومعالجته بتقنيات 4K Ultra HD و 120 FPS</p>
-
-        <div class="ai-features">
-            <div class="ai-chip">4K Super Resolution</div>
-            <div class="ai-chip">120 FPS Motion Smooth</div>
-            <div class="ai-chip">AI Noise Cleaning</div>
+    <div class="tiktok-container">
+        <!-- شريط التنقل العلوي -->
+        <div class="top-nav">
+            <span>متابعة</span>
+            <span class="active">لك</span>
         </div>
 
-        <div class="stepper">
-            <div class="step-item active">
-                <div class="step-badge">1</div>
-                <div>رفع الفيديو</div>
+        <!-- عرض الفيديو الرئيسي -->
+        <div class="video-feed">
+            <div class="video-bg-placeholder">
+                <div style="font-size: 40px; margin-bottom: 10px;">✨📱</div>
+                <div>عروض وتصاميم 4K 120fps</div>
+                <div style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">إبراهيم آل فارس</div>
             </div>
-            <div class="step-item">
-                <div class="step-badge">2</div>
-                <div>طريقة المعالجة</div>
+
+            <!-- معلومات الفيديو -->
+            <div class="video-info">
+                <div class="username">@Ibrahim_AlFares</div>
+                <div class="caption">شرح الطريقة الخرافية لرفع جودة الفيديوهات وتثبيت الإطارات بدقة مذهلة 😍🔥</div>
+                <div class="hashtags">#4k #120fps #explore #ابراهيم_ال_فارس #اكسبلور</div>
             </div>
-            <div class="step-item">
-                <div class="step-badge">3</div>
-                <div>التنزيل والمشاركة</div>
+
+            <!-- الأزرار الجانبية التفاعلية -->
+            <div class="sidebar-actions">
+                <div class="action-item" onclick="toggleLike(this)">
+                    <div class="action-btn" id="likeIcon">❤️</div>
+                    <span class="action-count" id="likeCount">14.2K</span>
+                </div>
+                <div class="action-item">
+                    <div class="action-btn">💬</div>
+                    <span class="action-count">842</span>
+                </div>
+                <div class="action-item">
+                    <div class="action-btn">⭐</div>
+                    <span class="action-count">3.1K</span>
+                </div>
+                <div class="action-item">
+                    <div class="action-btn">↗️</div>
+                    <span class="action-count">1.5K</span>
+                </div>
             </div>
         </div>
 
-        <div class="upload-box" onclick="document.getElementById('videoFile').click()">
-            <div class="upload-icon">🚀</div>
-            <h3 style="margin-bottom: 8px;">اختر الفيديو الخاص بك</h3>
-            <p style="color: var(--text-muted); font-size: 0.85rem;">يدعم البرنامج جميع صيغ الفيديو الشائعة (MP4, MOV, AVI)</p>
-            <input type="file" id="videoFile" accept="video/*" style="display: none;">
+        <!-- شريط التنقل السفلي لتطبيق تيك توك -->
+        <div class="bottom-nav">
+            <div class="nav-item active">
+                <span class="icon">🏠</span>
+                <span>الرئيسية</span>
+            </div>
+            <div class="nav-item">
+                <span class="icon">👥</span>
+                <span>الأصدقاء</span>
+            </div>
+            <div class="item">
+                <div class="add-video-btn">+</div>
+            </div>
+            <div class="nav-item">
+                <span class="icon">📥</span>
+                <span>الوارد</span>
+            </div>
+            <div class="nav-item">
+                <span class="icon">👤</span>
+                <span>الملف الشخصي</span>
+            </div>
         </div>
-
-        <button class="action-btn" onclick="document.getElementById('videoFile').click()">بدء المعالجة المتقدمة الآن</button>
     </div>
 
-    <footer>
-        جميع الحقوق محفوظة © منصة إبراهيم آل فارس للذكاء الاصطناعي
-    </footer>
-
+    <script>
+        // تفاعل زر الإعجاب عند الضغط عليه
+        let liked = false;
+        function toggleLike(element) {
+            liked = !liked;
+            const countElem = document.getElementById('likeCount');
+            const iconElem = document.getElementById('likeIcon');
+            if(liked) {
+                iconElem.style.transform = 'scale(1.3)';
+                countElem.innerText = '14.3K';
+                element.style.color = '#ff0050';
+            } else {
+                iconElem.style.transform = 'scale(1)';
+                countElem.innerText = '14.2K';
+                element.style.color = '#fff';
+            }
+        }
+    </script>
 </body>
 </html>
