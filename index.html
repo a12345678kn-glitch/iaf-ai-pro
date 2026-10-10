@@ -1,282 +1,394 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#08090d">
-<title>ابراهيم ال جبوري</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#080b12">
+<title>سباق السيارات | إبراهيم ال جبوري</title>
 <style>
-*{box-sizing:border-box}
-:root{--bg:#08090d;--panel:#11131b;--line:#262936;--text:#fff;--muted:#a4a8b7;--accent:#ff3158}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Tahoma,sans-serif}
-header{height:65px;position:sticky;top:0;z-index:10;background:#0b0c12ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px}
-.logo{font-size:19px;font-weight:900;color:#fff}
-.logo span{color:var(--accent)}
-button,.upload-label{border:0;border-radius:10px;padding:11px 15px;background:var(--accent);color:white;font-weight:bold;cursor:pointer}
-button:active{transform:scale(.97)}
-.layout{max-width:1100px;margin:auto;display:grid;grid-template-columns:220px minmax(0,650px);gap:20px;padding:20px 12px}
-aside{position:sticky;top:85px;height:max-content;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:15px}
-.nav{width:100%;display:block;text-align:right;background:transparent;color:white;margin:5px 0}
-.nav.active{background:#27202b;color:#ff6481}
-.profile{text-align:center;padding:10px 0 20px}
-.avatar{width:65px;height:65px;border-radius:50%;margin:auto auto 10px;display:grid;place-items:center;background:linear-gradient(135deg,#ff3158,#7544ff);font-size:25px;font-weight:bold}
-.small{font-size:12px;color:var(--muted);line-height:1.8}
-main{min-width:0}
-.hero{padding:20px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(130deg,#191320,#10121c);margin-bottom:16px}
-.hero h1{font-size:24px;margin:0 0 8px}
-.hero p{color:var(--muted);line-height:1.8;margin:0 0 15px}
-.upload-label{display:inline-block}
-#file{display:none}
-.tabs{display:flex;gap:8px;margin:12px 0}
-.tabs button{background:var(--panel);border:1px solid var(--line);flex:1}
-.tabs button.active{background:var(--accent);border-color:var(--accent)}
-.feed{display:grid;gap:18px}
-.post{overflow:hidden;border:1px solid var(--line);border-radius:16px;background:var(--panel)}
-.post-head{display:flex;align-items:center;gap:10px;padding:12px}
-.mini-avatar{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,#ff3158,#7544ff);display:grid;place-items:center;font-weight:bold}
-.post-user{font-weight:bold;font-size:14px}
-.post-time{font-size:12px;color:var(--muted);margin-top:4px}
-.video-wrap{position:relative;background:#000;max-height:650px;display:flex;justify-content:center}
-video{display:block;width:100%;max-height:650px;object-fit:contain;background:#000}
-.caption{padding:12px 14px;line-height:1.7;overflow-wrap:anywhere}
-.actions{display:flex;gap:8px;padding:0 12px 12px;flex-wrap:wrap}
-.actions button{background:#20222d;padding:9px 12px}
-.actions button.liked{color:#ff6580}
-.comment-area{padding:0 12px 12px}
-.comment-area input{width:100%;background:#090a10;border:1px solid var(--line);border-radius:9px;color:white;padding:12px;margin-bottom:8px}
-.comments{font-size:13px;color:#ddd;line-height:1.8}
-.empty{text-align:center;padding:40px 12px;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:16px}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#292b37;color:white;padding:12px 18px;border-radius:12px;display:none;z-index:99;max-width:90%;text-align:center}
-@media(max-width:700px){
- .layout{display:block;padding:12px 8px}
- aside{display:none}
- header{height:58px}
- .hero h1{font-size:21px}
- .video-wrap video{max-height:72vh}
-}
+*{box-sizing:border-box;touch-action:manipulation}
+body{margin:0;background:#080b12;color:white;font-family:Arial,Tahoma,sans-serif;overflow:hidden;user-select:none}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+#hud{position:fixed;inset:0;pointer-events:none}
+.panel{background:#090e18cf;border:1px solid #ffffff30;border-radius:14px;padding:10px 14px;backdrop-filter:blur(8px)}
+.top{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+.brand{font-weight:900;color:#ffca28;font-size:14px}
+.stat{text-align:center;min-width:80px}
+.stat small{display:block;color:#c5ccda;font-size:11px;margin-bottom:4px}
+.stat strong{font-size:22px}
+#speed{color:#50e5ff}
+#score{color:#ffcf40}
+#mission{position:absolute;top:94px;left:50%;transform:translateX(-50%);width:max-content;max-width:85%;text-align:center;font-size:12px;color:#ffe082}
+#controls{position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-end;padding:0 18px;gap:12px}
+.cluster{display:flex;gap:12px}
+.ctrl{pointer-events:auto;width:66px;height:66px;border:1px solid #ffffff65;border-radius:50%;background:#0c1428a8;color:white;font-size:27px;font-weight:bold;box-shadow:0 5px 18px #0005}
+.ctrl:active,.ctrl.on{background:#ff3158}
+.ctrl.gas{height:82px;width:74px;border-radius:22px;background:#13a879c9}
+.ctrl.brake{height:62px;width:65px;border-radius:20px;background:#c42c43b8;font-size:20px}
+#overlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#040711b9;z-index:5;padding:20px}
+.box{width:min(420px,100%);text-align:center;padding:28px 22px;border:1px solid #ffffff28;border-radius:22px;background:linear-gradient(145deg,#151c2d,#090c14);box-shadow:0 25px 80px #0008}
+h1{font-size:27px;margin:0 0 10px;color:#ffca28}
+.box p{color:#c3cada;line-height:1.8;font-size:14px}
+.primary{border:0;border-radius:12px;background:linear-gradient(90deg,#ff3158,#ff8c32);color:white;padding:14px 28px;font-size:17px;font-weight:bold;width:100%;margin-top:12px}
+#pause{pointer-events:auto;border:0;color:white;background:#0c1428bd;border-radius:10px;padding:9px 12px}
+#sound{pointer-events:auto;border:0;background:#172033;color:white;border-radius:10px;padding:9px}
+#help{font-size:12px;color:#aeb8cc}
+@media(min-width:800px){.ctrl{width:75px;height:75px}#controls{padding:0 35px;bottom:25px}}
 </style>
 </head>
-
 <body>
-<header>
-  <div class="logo">ابراهيم <span>ال جبوري</span></div>
-  <label for="file" class="upload-label">＋ نشر فيديو</label>
-</header>
+<canvas id="game"></canvas>
 
-<div class="layout">
-  <aside>
-    <div class="profile">
-      <div class="avatar">إ</div>
-      <strong>ابراهيم ال جبوري</strong>
-      <div class="small">منصتك للفيديوهات القصيرة</div>
-    </div>
-    <button class="nav active" onclick="showTab('all',this)">⌂ الرئيسية</button>
-    <button class="nav" onclick="showTab('mine',this)">▣ فيديوهاتي</button>
-    <button class="nav" onclick="chooseVideo()">＋ أضف فيديو</button>
-    <hr style="border-color:#262936">
-    <div class="small">نسخة تجريبية تعمل في المتصفح. المنشورات محفوظة على هذا الجهاز فقط.</div>
-  </aside>
-
-  <main>
-    <section class="hero">
-      <h1>عالمك، فيديوهاتك 🎬</h1>
-      <p>انشر مقاطعك، شارك إبداعك، وتابع فيديوهاتك في مكان واحد.</p>
-      <label for="file" class="upload-label">＋ اختر فيديو للنشر</label>
-      <input id="file" type="file" accept="video/*" multiple>
-      <div class="small" style="margin-top:12px">اختر فيديو من جهازك. يفضّل تجربة مقطع صغير أولاً.</div>
-    </section>
-
-    <div class="tabs">
-      <button class="active" id="allTab" onclick="showTab('all',this)">كل الفيديوهات</button>
-      <button id="mineTab" onclick="showTab('mine',this)">فيديوهاتي</button>
-    </div>
-
-    <section id="feed" class="feed"></section>
-  </main>
+<div id="hud">
+ <div class="top">
+  <div class="panel">
+   <div class="brand">🏁 إبراهيم ال جبوري</div>
+   <div style="font-size:11px;color:#c5ccda;margin-top:5px">سباق السرعة</div>
+  </div>
+  <div class="panel stat">
+   <small>النقاط</small><strong id="score">0</strong>
+  </div>
+  <div class="panel stat">
+   <small>السرعة KM/H</small><strong id="speed">0</strong>
+  </div>
+  <div class="panel stat">
+   <small>العملات</small><strong id="coins" style="color:#ffcf40">0</strong>
+  </div>
+  <div style="display:flex;gap:5px">
+   <button id="sound">🔊</button>
+   <button id="pause">Ⅱ</button>
+  </div>
+ </div>
+ <div id="mission" class="panel">🎯 الهدف: اجمع العملات وتجنب السيارات</div>
+ <div id="controls">
+  <div class="cluster">
+   <button class="ctrl" id="left">◀</button>
+   <button class="ctrl" id="right">▶</button>
+  </div>
+  <div class="cluster">
+   <button class="ctrl brake" id="brake">فرامل</button>
+   <button class="ctrl gas" id="gas">▲<br><small style="font-size:10px">بنزين</small></button>
+  </div>
+ </div>
 </div>
 
-<footer>© <span id="year"></span> ابراهيم ال جبوري — جميع الحقوق محفوظة</footer>
-<div id="toast"></div>
+<div id="overlay">
+ <div class="box">
+  <div style="font-size:52px">🏎️</div>
+  <h1 id="title">سباق السيارات</h1>
+  <p id="description">تسابق على الطريق، تجاوز السيارات، اجمع العملات الذهبية وحاول تحقيق أعلى نتيجة. اللعبة مصممة لتعمل على شاشة الهاتف والكمبيوتر.</p>
+  <p id="help">◀ ▶ للتوجيه — ▲ للتسارع — فرامل لتخفيف السرعة</p>
+  <button class="primary" id="start">ابدأ السباق 🚀</button>
+ </div>
+</div>
 
 <script>
-const STORAGE_KEY = "ibrahim_aljubouri_demo_v1";
-let posts = [];
-let currentTab = "all";
-let objectUrls = [];
+(()=>{
+"use strict";
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
+const $=id=>document.getElementById(id);
+let W=0,H=0,dpr=1;
+let running=false,paused=false,over=false;
+let score=0,coins=0,distance=0,speed=0;
+let playerX=0,lane=0,roadScroll=0;
+let enemies=[],pickups=[],particles=[];
+let spawnTimer=0,coinTimer=0,lastTime=0;
+let best=Number(localStorage.getItem("iafRaceBest")||0);
+let keys={left:false,right:false,gas:false,brake:false};
+let soundOn=true,audio=null;
+const colors=["#24c8ff","#ff3158","#ffd33d","#b35cff","#42e28d","#f5f5f5"];
+const rand=(a,b)=>a+Math.random()*(b-a);
+const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 
-const feed = document.getElementById("feed");
-const fileInput = document.getElementById("file");
-
-document.getElementById("year").textContent = new Date().getFullYear();
-
-function toast(message){
-  const el=document.getElementById("toast");
-  el.textContent=message;
-  el.style.display="block";
-  clearTimeout(window.toastTimer);
-  window.toastTimer=setTimeout(()=>el.style.display="none",2800);
+function resize(){
+ dpr=Math.min(devicePixelRatio||1,2);
+ W=innerWidth;H=innerHeight;
+ canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+ ctx.setTransform(dpr,0,0,dpr,0,0);
 }
+addEventListener("resize",resize);resize();
 
-function chooseVideo(){fileInput.click()}
-
-function loadPosts(){
-  try{
-    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");
-    posts=saved.map(p=>({...p,videoUrl:"",mine:true}));
-  }catch(e){posts=[]}
-  render();
+function roadAt(y){
+ const horizon=H*.29;
+ const t=clamp((y-horizon)/(H-horizon),0,1);
+ const half=W*(.055+.43*Math.pow(t,.88));
+ return {center:W*.5+Math.sin(roadScroll*.001)*W*.025*t,half,t};
 }
-
-function savePosts(){
-  // لا نحفظ ملفات الفيديو داخل localStorage؛ نحفظ بيانات المنشور فقط.
-  const safe=posts.filter(p=>p.mine).map(p=>({
-    id:p.id,caption:p.caption,likes:p.likes||0,
-    comments:p.comments||[],created:p.created
-  }));
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(safe))}
-  catch(e){toast("مساحة التخزين ممتلئة؛ بعض البيانات لم تُحفظ")}
+function rounded(x,y,w,h,r,color){
+ ctx.fillStyle=color;ctx.beginPath();
+ ctx.roundRect(x,y,w,h,r);ctx.fill();
 }
-
-fileInput.addEventListener("change",()=>{
-  const files=Array.from(fileInput.files||[]);
-  if(!files.length)return;
-
-  files.forEach(file=>{
-    if(!file.type.startsWith("video/")){
-      toast("الملف المحدد ليس فيديو");
-      return;
-    }
-    if(file.size>100*1024*1024){
-      toast("حجم الفيديو أكبر من 100 ميغابايت");
-      return;
-    }
-    const url=URL.createObjectURL(file);
-    objectUrls.push(url);
-    const caption=prompt("اكتب وصف الفيديو (اختياري):")||"";
-    posts.unshift({
-      id:Date.now().toString(36)+Math.random().toString(36).slice(2,7),
-      caption,likes:0,comments:[],created:Date.now(),
-      videoUrl:url,mine:true
-    });
-  });
-  fileInput.value="";
-  currentTab="all";
-  updateTabs();
-  render();
-  toast("تمت إضافة الفيديو للعرض على هذا الجهاز");
-});
-
-function showTab(tab,button){
-  currentTab=tab;
-  updateTabs();
-  render();
+function polygon(points,color){
+ ctx.fillStyle=color;ctx.beginPath();
+ ctx.moveTo(points[0][0],points[0][1]);
+ for(let i=1;i<points.length;i++)ctx.lineTo(points[i][0],points[i][1]);
+ ctx.closePath();ctx.fill();
 }
-
-function updateTabs(){
-  document.getElementById("allTab").classList.toggle("active",currentTab==="all");
-  document.getElementById("mineTab").classList.toggle("active",currentTab==="mine");
+function drawCar(x,y,w,h,color,isPlayer=false){
+ ctx.save();
+ ctx.translate(x,y);
+ // shadow
+ ctx.fillStyle="#0008";ctx.beginPath();
+ ctx.ellipse(0,h*.43,w*.62,h*.16,0,0,Math.PI*2);ctx.fill();
+ // wheels
+ rounded(-w*.53,-h*.23,w*.20,h*.42,4,"#111318");
+ rounded(w*.33,-h*.23,w*.20,h*.42,4,"#111318");
+ rounded(-w*.53,h*.12,w*.20,h*.42,4,"#111318");
+ rounded(w*.33,h*.12,w*.20,h*.42,4,"#111318");
+ // body
+ polygon([[-w*.35,-h*.48],[w*.35,-h*.48],[w*.48,-h*.20],
+ [w*.50,h*.27],[w*.34,h*.47],[-w*.34,h*.47],
+ [-w*.50,h*.27],[-w*.48,-h*.20]],color);
+ // roof and glass
+ polygon([[-w*.29,-h*.23],[w*.29,-h*.23],[w*.23,h*.12],[-w*.23,h*.12]],"#101e30");
+ polygon([[-w*.25,-h*.19],[w*.25,-h*.19],[w*.20,-h*.03],[-w*.20,-h*.03]],"#4e7c9d");
+ // windshield reflection
+ ctx.strokeStyle="#ffffff7a";ctx.lineWidth=1;
+ ctx.beginPath();ctx.moveTo(-w*.17,-h*.15);ctx.lineTo(-w*.03,-h*.04);ctx.stroke();
+ if(isPlayer){
+  rounded(-w*.40,h*.27,w*.22,h*.08,2,"#ff354a");
+  rounded(w*.18,h*.27,w*.22,h*.08,2,"#ff354a");
+  ctx.shadowColor="#ff233c";ctx.shadowBlur=12;
+  rounded(-w*.38,h*.28,w*.18,h*.04,2,"#ff3948");
+  rounded(w*.20,h*.28,w*.18,h*.04,2,"#ff3948");
+ }else{
+  rounded(-w*.40,-h*.40,w*.18,h*.07,2,"#fff0aa");
+  rounded(w*.22,-h*.40,w*.18,h*.07,2,"#fff0aa");
+ }
+ ctx.restore();
 }
-
-function escapeHTML(value){
-  return String(value).replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
+function drawBackground(){
+ const sky=ctx.createLinearGradient(0,0,0,H*.65);
+ sky.addColorStop(0,"#162746");sky.addColorStop(.5,"#547d9b");sky.addColorStop(1,"#f6a35c");
+ ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);
+ // sunset
+ const sun=ctx.createRadialGradient(W*.78,H*.28,2,W*.78,H*.28,H*.14);
+ sun.addColorStop(0,"#fff7c2");sun.addColorStop(1,"#ffb84b00");
+ ctx.fillStyle=sun;ctx.fillRect(0,0,W,H*.65);
+ ctx.fillStyle="#ffe7a3";ctx.beginPath();ctx.arc(W*.78,H*.28,Math.min(W,H)*.035,0,Math.PI*2);ctx.fill();
+ // distant mountains
+ polygon([[0,H*.42],[W*.08,H*.31],[W*.17,H*.39],[W*.28,H*.26],[W*.40,H*.40],[W*.53,H*.29],[W*.65,H*.39],[W*.77,H*.30],[W*.91,H*.39],[W,H*.33],[W,H*.6],[0,H*.6]],"#344d60");
+ polygon([[0,H*.45],[W*.16,H*.37],[W*.25,H*.43],[W*.39,H*.34],[W*.51,H*.43],[W*.7,H*.35],[W*.85,H*.44],[W,H*.38],[W,H*.61],[0,H*.61]],"#526b70");
+ // roadside grass
+ ctx.fillStyle="#304b3b";ctx.fillRect(0,H*.43,W,H*.57);
 }
-
-function render(){
-  feed.innerHTML="";
-  const visible=currentTab==="mine"?posts.filter(p=>p.mine):posts;
-
-  if(!visible.length){
-    feed.innerHTML=`<div class="empty">
-      <div style="font-size:35px;margin-bottom:10px">🎬</div>
-      <strong>لا توجد فيديوهات حتى الآن</strong>
-      <p>اضغط «نشر فيديو» واختر أول مقطع لك.</p>
-    </div>`;
-    return;
+function drawRoad(){
+ const horizon=H*.29;
+ const bottom=H+10;
+ const top=roadAt(horizon),bot=roadAt(bottom);
+ polygon([[top.center-top.half,horizon],[top.center+top.half,horizon],[bot.center+bot.half,bottom],[bot.center-bot.half,bottom]],"#343b45");
+ // road shoulder
+ for(const side of [-1,1]){
+  polygon([[top.center+side*top.half,horizon],[top.center+side*(top.half+W*.012),horizon],[bot.center+side*(bot.half+W*.025),bottom],[bot.center+side*bot.half,bottom]],"#d7d4c7");
+ }
+ // asphalt texture lines
+ const stripes=24;
+ for(let i=0;i<stripes;i++){
+  const t=((i/stripes+roadScroll*.0007)%1);
+  const y=horizon+Math.pow(t,1.5)*(H-horizon);
+  const next=horizon+Math.pow(Math.min(1,t+.018),1.5)*(H-horizon);
+  const r=roadAt(y),r2=roadAt(next);
+  const ww=1+t*4;
+  if(i%2===0){
+   polygon([[r.center-r.half,y],[r.center+r.half,y],[r2.center+r2.half,next],[r2.center-r2.half,next]],"#ffffff03");
   }
-
-  visible.forEach(post=>{
-    const card=document.createElement("article");
-    card.className="post";
-    const date=new Date(post.created||Date.now()).toLocaleDateString("ar-IQ");
-    const video=post.videoUrl
-      ? `<div class="video-wrap"><video controls playsinline preload="metadata" src="${post.videoUrl}"></video></div>`
-      : `<div class="empty">الفيديو الأصلي غير محفوظ بعد إعادة تحميل الصفحة.<br>أعد رفعه لعرضه مرة أخرى.</div>`;
-
-    card.innerHTML=`
-      <div class="post-head">
-        <div class="mini-avatar">إ</div>
-        <div><div class="post-user">ابراهيم ال جبوري</div>
-        <div class="post-time">${date}</div></div>
-      </div>
-      ${video}
-      <div class="caption">${escapeHTML(post.caption||"")}</div>
-      <div class="actions">
-        <button class="like-btn">♥ إعجاب <span>${post.likes||0}</span></button>
-        <button class="comment-btn">💬 التعليقات (${(post.comments||[]).length})</button>
-        <button class="share-btn">↗ مشاركة</button>
-        ${post.mine?'<button class="delete-btn">🗑 حذف</button>':""}
-      </div>
-      <div class="comment-area" style="display:none">
-        <input class="comment-input" maxlength="300" placeholder="اكتب تعليقاً...">
-        <button class="send-comment">إرسال التعليق</button>
-        <div class="comments"></div>
-      </div>`;
-
-    card.querySelector(".like-btn").addEventListener("click",()=>{
-      post.likes=(post.likes||0)+1;
-      savePosts();
-      render();
-    });
-
-    const area=card.querySelector(".comment-area");
-    card.querySelector(".comment-btn").addEventListener("click",()=>{
-      area.style.display=area.style.display==="none"?"block":"none";
-      drawComments(post,card);
-    });
-
-    card.querySelector(".send-comment").addEventListener("click",()=>{
-      const input=card.querySelector(".comment-input");
-      const value=input.value.trim();
-      if(!value)return toast("اكتب تعليقاً أولاً");
-      post.comments=post.comments||[];
-      post.comments.push(value);
-      savePosts();
-      render();
-      toast("تمت إضافة التعليق");
-    });
-
-    card.querySelector(".share-btn").addEventListener("click",async()=>{
-      try{
-        await navigator.clipboard.writeText(location.href);
-        toast("تم نسخ رابط الصفحة. هذا ليس رابط فيديو منفرداً.");
-      }catch(e){toast("انسخ رابط الصفحة من شريط المتصفح")}
-    });
-
-    const del=card.querySelector(".delete-btn");
-    if(del)del.addEventListener("click",()=>{
-      if(!confirm("هل تريد حذف هذا المنشور؟"))return;
-      posts=posts.filter(p=>p.id!==post.id);
-      savePosts();
-      render();
-      toast("تم حذف المنشور");
-    });
-
-    feed.appendChild(card);
-    drawComments(post,card);
-  });
+  // lane dividers
+  for(let k=1;k<3;k++){
+   const x=r.center-r.half+(r.half*2*k/3);
+   const x2=r2.center-r2.half+(r2.half*2*k/3);
+   if((Math.floor((t*25+roadScroll*.002))%2)===0)
+    polygon([[x-ww/2,y],[x+ww/2,y],[x2+ww/2,next],[x2-ww/2,next]],"#e7edf0b8");
+  }
+ }
+ // roadside poles
+ for(let i=0;i<12;i++){
+  const t=((i/12+roadScroll*.0008)%1);
+  const y=horizon+Math.pow(t,1.8)*(H-horizon);
+  const r=roadAt(y);
+  const size=3+t*20;
+  for(const side of [-1,1]){
+   const x=r.center+side*(r.half+size*1.3);
+   ctx.fillStyle="#1d2a27";
+   ctx.fillRect(x-size*.08,y-size*3,size*.16,size*3);
+   ctx.fillStyle="#ffe5a0";
+   ctx.fillRect(x-size*.30,y-size*3,size*.6,size*.6);
+  }
+ }
 }
-
-function drawComments(post,card){
-  const box=card.querySelector(".comments");
-  if(!box)return;
-  box.innerHTML=(post.comments||[]).map(c=>`<div>💬 ${escapeHTML(c)}</div>`).join("");
+function spawnEnemy(){
+ const laneN=Math.floor(rand(0,3));
+ enemies.push({lane:laneN,z:0,color:colors[Math.floor(rand(0,colors.length))],speed:rand(.45,.85),w:0,h:0,passed:false});
 }
+function spawnCoin(){
+ pickups.push({lane:Math.floor(rand(0,3)),z:0,spin:rand(0,6)});
+}
+function laneX(l,z){
+ const y=H*.29+Math.pow(z,1.55)*(H*.77);
+ const r=roadAt(y);
+ return r.center-r.half+(r.half*2*(l+.5)/3);
+}
+function drawObjects(){
+ for(const e of enemies){
+  const y=H*.29+Math.pow(e.z,1.55)*(H*.77);
+  const size=.16+e.z*.84;
+  const w=Math.min(W*.19, W*.075*size+8);
+  const h=w*1.55;
+  e.w=w;e.h=h;
+  drawCar(laneX(e.lane,e.z),y,w,h,e.color,false);
+ }
+ for(const c of pickups){
+  const y=H*.29+Math.pow(c.z,1.55)*(H*.77);
+  const x=laneX(c.lane,c.z),r=4+c.z*15;
+  ctx.save();ctx.translate(x,y);ctx.rotate(c.spin);
+  ctx.shadowColor="#ffd238";ctx.shadowBlur=14;
+  ctx.fillStyle="#ffcd32";ctx.beginPath();ctx.ellipse(0,0,r*.7,r,0,0,Math.PI*2);ctx.fill();
+  ctx.shadowBlur=0;ctx.strokeStyle="#fff4b2";ctx.lineWidth=2;
+  ctx.beginPath();ctx.ellipse(0,0,r*.4,r*.68,0,0,Math.PI*2);ctx.stroke();
+  ctx.restore();
+ }
+}
+function playerPos(){
+ const y=H*.82;
+ const r=roadAt(y);
+ return {x:r.center+playerX*r.half*.80,y,w:Math.min(W*.24,Math.max(44,W*.13)),h:Math.min(H*.23,Math.max(75,H*.17))};
+}
+function drawPlayer(){
+ const p=playerPos();
+ drawCar(p.x,p.y,p.w,p.h,"#e62c43",true);
+}
+function addBurst(x,y,color){
+ for(let i=0;i<12;i++)particles.push({x,y,vx:rand(-120,120),vy:rand(-160,70),life:rand(.25,.7),color});
+}
+function drawParticles(dt){
+ for(let i=particles.length-1;i>=0;i--){
+  const p=particles[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=150*dt;p.life-=dt;
+  ctx.globalAlpha=clamp(p.life*2,0,1);ctx.fillStyle=p.color;
+  ctx.fillRect(p.x,p.y,4,4);
+  if(p.life<=0)particles.splice(i,1);
+ }
+ ctx.globalAlpha=1;
+}
+function update(dt){
+ if(!running||paused||over)return;
+ const target=keys.gas?1:keys.brake?.15:.55;
+ speed+=(target-speed)*dt*(keys.gas?1.6:keys.brake?3:.45);
+ speed=clamp(speed,0,1);
+ roadScroll+=dt*(200+speed*850);
+ distance+=dt*(speed*120);
+ score+=Math.round(dt*speed*45);
+ if(keys.left)playerX-=dt*1.5*(.7+speed);
+ if(keys.right)playerX+=dt*1.5*(.7+speed);
+ playerX=clamp(playerX,-.91,.91);
 
-loadPosts();
+ spawnTimer-=dt;
+ if(spawnTimer<=0){
+  spawnEnemy();spawnTimer=rand(.65,1.25)/(0.65+speed*.5);
+ }
+ coinTimer-=dt;
+ if(coinTimer<=0){spawnCoin();coinTimer=rand(.45,.95)}
+
+ for(let i=enemies.length-1;i>=0;i--){
+  const e=enemies[i];
+  e.z+=dt*(.14+speed*.25)*(1-e.speed*.25);
+  if(e.z>1.15){
+   if(!e.passed){score+=100;e.passed=true}
+   enemies.splice(i,1);continue;
+  }
+  if(e.z>.84&&e.z<1.04){
+   const p=playerPos();
+   if(Math.abs(laneX(e.lane,e.z)-p.x)<p.w*.68){
+    addBurst(p.x,p.y,"#ff654c");
+    endGame(false);return;
+   }
+  }
+ }
+ for(let i=pickups.length-1;i>=0;i--){
+  const c=pickups[i];c.z+=dt*(.18+speed*.28);c.spin+=dt*3;
+  if(c.z>.83&&c.z<1.04){
+   const p=playerPos();
+   if(Math.abs(laneX(c.lane,c.z)-p.x)<p.w*.65){
+    coins++;score+=250;addBurst(p.x,p.y-20,"#ffcf40");
+    pickups.splice(i,1);continue;
+   }
+  }
+  if(c.z>1.12)pickups.splice(i,1);
+ }
+ $("score").textContent=score;
+ $("coins").textContent=coins;
+ $("speed").textContent=Math.round(speed*280);
+ $("mission").textContent=coins<10?"🎯 الهدف: اجمع 10 عملات ذهبية ("+coins+"/10)":"🏆 ممتاز! استمر واجمع أكبر عدد من النقاط";
+}
+function draw(){
+ drawBackground();drawRoad();drawObjects();drawPlayer();
+ drawParticles(Math.min((performance.now()-lastTime)/1000,.04));
+}
+function loop(now){
+ const dt=Math.min((now-lastTime)/1000,.04)||0;
+ lastTime=now;
+ update(dt);draw();
+ requestAnimationFrame(loop);
+}
+function start(){
+ score=0;coins=0;distance=0;speed=0;playerX=0;roadScroll=0;
+ enemies=[];pickups=[];particles=[];spawnTimer=.4;coinTimer=.8;
+ over=false;paused=false;running=true;
+ $("overlay").style.display="none";
+ $("pause").textContent="Ⅱ";
+ lastTime=performance.now();
+}
+function endGame(won){
+ running=false;over=true;
+ if(score>best){best=score;localStorage.setItem("iafRaceBest",best)}
+ $("title").textContent=won?"🏆 فزت بالسباق!":"💥 انتهى السباق";
+ $("description").innerHTML="نتيجتك: <b style='color:#ffca28'>"+score+"</b><br>العملات: "+coins+"<br>أفضل نتيجة: "+best;
+ $("help").textContent=won?"إنجاز رائع!":"تجنب السيارات وحاول مرة أخرى.";
+ $("start").textContent="إعادة السباق 🔄";
+ $("overlay").style.display="flex";
+}
+$("start").addEventListener("click",start);
+$("pause").addEventListener("click",()=>{
+ if(!running||over)return;
+ paused=!paused;
+ $("pause").textContent=paused?"▶":"Ⅱ";
+ $("title").textContent=paused?"اللعبة متوقفة":"سباق السيارات";
+ if(paused){
+  $("description").textContent="اضغط متابعة حتى ترجع للسباق.";
+  $("start").textContent="متابعة السباق";
+  $("overlay").style.display="flex";
+ }else{
+  $("overlay").style.display="none";
+ }
+});
+$("sound").addEventListener("click",()=>{
+ soundOn=!soundOn;$("sound").textContent=soundOn?"🔊":"🔇";
+ toastSound();
+});
+function toastSound(){
+ $("mission").textContent=soundOn?"🔊 المؤثرات الصوتية مفعلة عند توفرها":"🔇 الصوت مغلق";
+}
+function bindHold(id,key){
+ const el=$(id);
+ const on=e=>{e.preventDefault();keys[key]=true;el.classList.add("on")};
+ const off=e=>{e.preventDefault();keys[key]=false;el.classList.remove("on")};
+ el.addEventListener("pointerdown",on);
+ ["pointerup","pointercancel","pointerleave"].forEach(ev=>el.addEventListener(ev,off));
+}
+bindHold("left","left");bindHold("right","right");
+bindHold("gas","gas");bindHold("brake","brake");
+addEventListener("keydown",e=>{
+ const map={ArrowLeft:"left",a:"left",ArrowRight:"right",d:"right",ArrowUp:"gas"," ":"gas",ArrowDown:"brake",s:"brake"};
+ const k=map[e.key];if(k){keys[k]=true;e.preventDefault()}
+ if(e.key==="Escape"&&running){paused=!paused;$("overlay").style.display=paused?"flex":"none"}
+});
+addEventListener("keyup",e=>{
+ const map={ArrowLeft:"left",a:"left",ArrowRight:"right",d:"right",ArrowUp:"gas"," ":"gas",ArrowDown:"brake",s:"brake"};
+ if(map[e.key])keys[map[e.key]]=false;
+});
+document.addEventListener("visibilitychange",()=>{if(document.hidden&&running&&!paused){paused=true;$("overlay").style.display="flex";$("description").textContent="اللعبة متوقفة مؤقتاً."; $("start").textContent="متابعة السباق"}});
+requestAnimationFrame(loop);
+})();
 </script>
 </body>
 </html>
