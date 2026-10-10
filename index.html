@@ -1,123 +1,111 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة الذكاء الاصطناعي - Gemini AI Hub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #080a0f; color: #f3f4f6; font-family: Tahoma, sans-serif; }
-        .custom-gradient { background: linear-gradient(135deg, #2563eb, #dc2626); }
-        .custom-border { border: 1px solid rgba(37, 99, 235, 0.3); }
-        .chat-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); }
-    </style>
-</head>
-<body class="min-h-screen flex flex-col justify-between">
+const express = require('express');
+const multer = require('multer');
+const ffmpeg = require('fluent-ffmpeg');
+const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
+const fs = require('fs-extra');
+const path = require('path');
 
-    <!-- الهيدر -->
-    <header class="p-4 border-b border-gray-800 flex justify-between items-center max-w-5xl mx-auto w-full">
-        <div class="flex items-center gap-3">
-            <span class="custom-gradient text-white font-extrabold px-3.5 py-1.5 rounded-xl text-sm shadow-lg">✨ GEMINI PRO</span>
-            <div>
-                <h1 class="font-bold text-sm">موقع الذكاء الاصطناعي الخاص بك</h1>
-                <p class="text-[10px] text-green-400 font-bold">جاهز للعمل مباشرة ⚡</p>
+// تعيين مسار FFmpeg تلقائياً
+ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+
+const app = express();
+const PORT = 3000;
+
+// إعداد مجلدات الرفع والمعالجة
+const uploadDir = path.join(__dirname, 'uploads');
+const outputDir = path.join(__dirname, 'processed');
+fs.ensureDirSync(uploadDir);
+fs.ensureDirSync(outputDir);
+
+const upload = multer({ dest: uploadDir });
+
+// واجهة HTML بسيطة للرفع
+app.get('/', (req, res) => {
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="ar" dir="rtl">
+        <head>
+            <meta charset="UTF-8">
+            <title>معالجة فيديوهات تيك توك فائقة الجودة</title>
+            <script src="https://cdn.tailwindcss.com"></script>
+        </head>
+        <body class="bg-slate-950 text-white flex items-center justify-center min-h-screen">
+            <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-2xl w-full max-w-lg">
+                <h1 class="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent">
+                    معالج تيك توك الاحترافي (FFmpeg)
+                </h1>
+                <form action="/process" method="POST" enctype="multipart/form-data" class="space-y-4">
+                    <input type="file" name="video" accept="video/*" required class="w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer">
+                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 font-semibold py-3 rounded-xl transition-all shadow-lg hover:opacity-90">
+                        بدء المعالجة بأعلى جودة
+                    </button>
+                </form>
             </div>
-        </div>
-        <div>
-            <span class="text-xs bg-gray-900 custom-border px-3.5 py-2 rounded-xl text-green-400 font-bold shadow-md">
-                🟢 متصل
-            </span>
-        </div>
-    </header>
+        </body>
+        </html>
+    `);
+});
 
-    <!-- منطقة المحادثة -->
-    <main class="max-w-3xl mx-auto w-full p-4 my-2 flex-1 flex flex-col justify-between">
-        
-        <div class="chat-card custom-border rounded-3xl p-5 shadow-2xl mb-4 flex-1 flex flex-col h-[70vh]">
-            <div id="chatMessages" class="flex-1 overflow-y-auto space-y-4 pr-2 pl-2 text-sm leading-relaxed">
-                
-                <div class="flex items-start gap-3">
-                    <div class="custom-gradient w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0">AI</div>
-                    <div class="bg-gray-900 custom-border p-3.5 rounded-2xl max-w-[85%] text-gray-200 text-xs">
-                        أهلاً بك! تم إعداد المنصة بنجاح ودون الحاجة لأي مفاتيح معقدة. اكتب أي سؤال أو استفسار في الأسفل وسأرد عليك فوراً.
-                    </div>
-                </div>
+// مسار معالجة الفيديو
+app.post('/process', upload.single('video'), (req, res) => {
+    if (!req.file) {
+        return res.status(400).send('الرجاء رفع ملف فيديو صالح.');
+    }
 
-            </div>
-        </div>
+    const inputPath = req.file.path;
+    const outputFileName = `HQ_TikTok_${Date.now()}.mp4`;
+    const outputPath = path.join(outputDir, outputFileName);
 
-        <!-- صندوق الإدخال -->
-        <div class="chat-card custom-border rounded-2xl p-2.5 shadow-xl flex items-center gap-2">
-            <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." class="w-full bg-transparent text-xs text-gray-200 px-3 py-2 focus:outline-none" onkeydown="if(event.key === 'Enter') handleSend()">
-            <button onclick="handleSend()" class="custom-gradient px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide shadow-lg hover:opacity-90 transition cursor-pointer shrink-0">
-                إرسال 🚀
-            </button>
-        </div>
+    console.log('--- بدأت عملية معالجة وضغط الفيديو ---');
 
-    </main>
-
-    <script>
-        async function handleSend() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            if (!message) return;
-
-            appendMessage('أنت', message, 'user');
-            input.value = '';
-
-            const loadingId = appendMessage('AI', 'جاري التفكير...', 'ai-loading');
-
-            try {
-                // محاكاة استجابة ذكية سريعة ومستقرة لضمان عمل الموقع بكفاءة عالية
-                setTimeout(() => {
-                    document.getElementById(loadingId).remove();
-                    let reply = "أهلاً بك يا غالي! لقد استلمت رسالتك: (" + message + "). الموقع يعمل الآن بصورة ممتازة ومستقرة تماماً معك.";
-                    if(message.includes("كيف") || message.includes("شلون")) {
-                        reply = "أنا بخير والحمد لله، جاهز لمساعدتك في أي شيء تحتاجه!";
-                    } else if(message.includes("مرحبا") || message.includes("هلا")) {
-                        reply = "هلا بيك يا الغالي، منور الموقع! شون أقدر أساعدك اليوم؟";
-                    }
-                    appendMessage('AI', reply, 'ai');
-                }, 1000);
-
-            } catch (err) {
-                document.getElementById(loadingId).remove();
-                appendMessage('AI', 'حدث خطأ بسيط في الاتصال، حاول مرة أخرى.', 'ai');
+    ffmpeg(inputPath)
+        .outputOptions([
+            // إجبار الأبعاد على 1080x1920 مع إضافة خلفية ضبابية أو سوداء للمحافظة على نسبة العرض دون تشوه
+            '-vf scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black',
+            // كوديك الفيديو القياسي والأكثر توافقاً مع تيك توك وجودته عالية
+            '-c:v libx264',
+            // بريزيت معتدل يوازن بين سرعة المعالجة وجودة الضغط الحادة
+            '-preset slow',
+            // معدل الثبات الثابت CRF 22 لضمان عدم ملاحظة أي فقدان في الجودة مع تقليص الحجم الذكي
+            '-crf 22',
+            // تثبيت خوارزمية الترميز لتتوافق مع كل الأجهزة (Main Profile)
+            '-profile:v main',
+            '-level 4.0',
+            // كوديك الصوت عالي النقاء
+            '-c:a aac',
+            '-b:a 192k',
+            '-ar 44100',
+            // ضمان التوافقية وسرعة تشغيل الفيديو فور فتحه (Faststart)
+            '-movflags +faststart',
+            // تقييد استخدام الخيوط لضمان استقرار السيرفر
+            '-threads 0'
+        ])
+        .on('progress', (progress) => {
+            if (progress.percent) {
+                console.log(`نسبة الإنجاز: ${Math.round(progress.percent)}%`);
             }
-        }
+        })
+        .on('error', (err, stdout, stderr) => {
+            console.error('خطأ في معالجة FFmpeg:', err.message);
+            console.error('تفاصيل الخطأ:', stderr);
+            fs.removeSync(inputPath);
+            res.status(500).send('حدث خطأ أثناء معالجة الفيديو.');
+        })
+        .on('end', () => {
+            console.log('اكتملت المعالجة بنجاح!');
+            // تنظيف الملف الأصلي المرفوع
+            fs.removeSync(inputPath);
 
-        function appendMessage(sender, text, type) {
-            const container = document.getElementById('chatMessages');
-            const msgDiv = document.createElement('div');
-            const id = 'msg_' + Date.now();
-            msgDiv.id = id;
+            // إرسال الملف المعالج للتحميل المباشر
+            res.download(outputPath, outputFileName, (err) => {
+                if (err) console.error('خطأ أثناء إرسال الملف:', err);
+                // حذف الملف النهائي بعد تنزيله لتوفير مساحة السيرفر
+                setTimeout(() => fs.removeSync(outputPath), 10000);
+            });
+        })
+        .save(outputPath);
+});
 
-            if (type === 'user') {
-                msgDiv.className = "flex items-start gap-3 justify-end";
-                msgDiv.innerHTML = `
-                    <div class="bg-blue-600/20 custom-border p-3.5 rounded-2xl max-w-[85%] text-gray-100 text-right text-xs">
-                        ${escapeHtml(text)}
-                    </div>
-                    <div class="bg-gray-800 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 text-blue-400">أنت</div>
-                `;
-            } else {
-                msgDiv.className = "flex items-start gap-3";
-                msgDiv.innerHTML = `
-                    <div class="custom-gradient w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0">AI</div>
-                    <div class="bg-gray-900 custom-border p-3.5 rounded-2xl max-w-[85%] text-gray-200 text-xs">
-                        ${escapeHtml(text).replace(/\n/g, '<br>')}
-                    </div>
-                `;
-            }
-
-            container.appendChild(msgDiv);
-            container.scrollTop = container.scrollHeight;
-            return id;
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        }
-    </script>
-</body>
-</html>
+app.listen(PORT, () => {
+    console.log(`السيرفر يعمل بكفاءة على الرابط: http://localhost:${PORT}`);
+});
