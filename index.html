@@ -3,287 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Iraqi Ultimate Stabilizer Pro - النسخة الخارقة</title>
+    <title>منصة الذكاء الاصطناعي - Gemini AI Hub</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     <style>
-        body { background-color: #030508; color: #fff; font-family: Tahoma, sans-serif; }
-        .iraqi-gradient { background: linear-gradient(135deg, #2563eb, #dc2626); }
-        .iraqi-border { border: 1px solid rgba(37, 99, 235, 0.4); }
-        .iraqi-card { background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(16px); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.9); }
+        body { background-color: #080a0f; color: #f3f4f6; font-family: Tahoma, sans-serif; }
+        .custom-gradient { background: linear-gradient(135deg, #2563eb, #dc2626); }
+        .custom-border { border: 1px solid rgba(37, 99, 235, 0.3); }
+        .chat-card { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
 
     <!-- الهيدر -->
-    <header class="p-4 border-b border-gray-800/80 flex justify-between items-center max-w-4xl mx-auto w-full">
+    <header class="p-4 border-b border-gray-800 flex justify-between items-center max-w-5xl mx-auto w-full">
         <div class="flex items-center gap-3">
-            <span class="iraqi-gradient text-white font-extrabold px-3.5 py-1.5 rounded-xl text-sm shadow-xl">🇮🇶 ULTRA PRO</span>
+            <span class="custom-gradient text-white font-extrabold px-3.5 py-1.5 rounded-xl text-sm shadow-lg">✨ GEMINI PRO</span>
             <div>
-                <h1 class="font-bold text-sm tracking-wide">المنظومة العراقية الخارقة للتثبيت</h1>
-                <p class="text-[10px] text-blue-400">معالجة حقيقية بمحرك الثنائيات (Two-Pass Engine)</p>
+                <h1 class="font-bold text-sm">موقع الذكاء الاصطناعي الخاص بك</h1>
+                <p class="text-[10px] text-gray-400">ربط مباشر مع محرك Google Gemini</p>
             </div>
         </div>
-        <div id="engineStatus" class="text-xs text-yellow-400 bg-yellow-950/40 px-3 py-1.5 rounded-xl iraqi-border">
-            جاري تحميل محرك المعالجة الفعلي...
+        <div>
+            <button onclick="toggleApiKeyModal()" class="text-xs bg-gray-900 custom-border px-3.5 py-2 rounded-xl text-blue-400 hover:text-white transition font-bold shadow-md cursor-pointer">
+                🔑 إعداد التوكن (API Key)
+            </button>
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي -->
-    <main class="max-w-xl mx-auto w-full p-4 my-6">
-        <div class="text-center mb-6">
-            <h2 class="text-2xl md:text-3xl font-extrabold mb-1">إزالة الاهتزاز الحقيقي 100%</h2>
-            <p class="text-gray-400 text-xs md:text-sm">أداة متقدمة تحلل حركة الكاميرا وتعيد هندسة الإطارات لإنتاج فيديو ثابت تماماً.</p>
+    <!-- منطقة المحادثة -->
+    <main class="max-w-3xl mx-auto w-full p-4 my-2 flex-1 flex flex-col justify-between">
+        
+        <div class="chat-card custom-border rounded-3xl p-5 shadow-2xl mb-4 flex-1 flex flex-col h-[70vh]">
+            <div id="chatMessages" class="flex-1 overflow-y-auto space-y-4 pr-2 pl-2 text-sm leading-relaxed">
+                
+                <div class="flex items-start gap-3">
+                    <div class="custom-gradient w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                    <div class="bg-gray-900 custom-border p-3.5 rounded-2xl max-w-[85%] text-gray-200 text-xs">
+                        أهلاً بك! اضغط على زر <strong>"إعداد التوكن"</strong> بالأعلى، الصق التوكن الخاص بك مرة واحدة فقط ليتم حفظه في متصفحك وتتمكن من الدردشة فوراً.
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div class="iraqi-card iraqi-border rounded-3xl p-6 shadow-2xl relative">
-            
-            <!-- الخطوة 1 -->
-            <div id="step-1">
-                <div class="text-blue-400 text-xs mb-3 font-bold flex items-center gap-1">
-                    <span>1</span> <span>| ارفع الفيديو المراد معالجته</span>
-                </div>
-                <div class="border-2 border-dashed border-gray-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition mb-4 bg-gray-900/40" onclick="document.getElementById('videoFile').click()">
-                    <div class="text-4xl mb-2 text-blue-500">📁</div>
-                    <p class="text-xs font-bold">اختر الفيديو المهتز من جهازك</p>
-                    <p class="text-[10px] text-gray-500 mt-1">يدعم كافة الصيغ (MP4, MOV, AVI, MKV)</p>
-                    <input type="file" id="videoFile" class="hidden" accept="video/*" onchange="fileSelected(this)">
-                </div>
-            </div>
-
-            <!-- الخطوة 2 -->
-            <div id="step-2" class="hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <span class="text-blue-400 text-xs font-bold">2 | إعدادات التثبيت الفائق</span>
-                    <button onclick="resetFlow()" class="text-[11px] text-gray-400 underline">تغيير الفيديو</button>
-                </div>
-
-                <div class="mb-4 rounded-2xl overflow-hidden iraqi-border bg-black aspect-video flex items-center justify-center relative">
-                    <video id="previewPlayer" class="w-full h-full object-contain" controls></video>
-                </div>
-
-                <div class="bg-gray-900 p-3.5 rounded-xl mb-4 iraqi-border flex items-center justify-between">
-                    <div class="flex items-center gap-2.5">
-                        <span class="bg-blue-600/20 text-blue-400 px-2 py-1 rounded text-[10px] font-bold">MP4</span>
-                        <span id="fileName" class="text-xs text-gray-200 truncate max-w-[180px]">فيديو</span>
-                    </div>
-                    <span id="fileSize" class="text-[10px] text-gray-400 font-bold">0 MB</span>
-                </div>
-
-                <div class="space-y-3 mb-5">
-                    <div class="bg-gray-900/60 p-3 rounded-xl iraqi-border">
-                        <label class="block text-xs font-bold text-gray-300 mb-1">درجة قوة التثبيت (Shakiness):</label>
-                        <select id="shakiness" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg iraqi-border focus:outline-none">
-                            <option value="10">قوي جداً (للاهتزازات العنيفة والحركة السريعة)</option>
-                            <option value="6" selected>متوازن ومثالي (يوصى به لمعظم الفيديوهات)</option>
-                            <option value="3">خفيف (للاهتزاز البسيط باليد)</option>
-                        </select>
-                    </div>
-
-                    <div class="bg-gray-900/60 p-3 rounded-xl iraqi-border">
-                        <label class="block text-xs font-bold text-gray-300 mb-1">معامل جودة النقاوة (CRF):</label>
-                        <select id="crfQuality" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg iraqi-border focus:outline-none">
-                            <option value="20" selected>نقاوة عالية جداً بدون أي تغبيش (CRF 20)</option>
-                            <option value="24">جودة ممتازة وحجم ملف أصغر (CRF 24)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <button onclick="openDeviceModal()" class="w-full py-3.5 rounded-xl iraqi-gradient text-xs font-bold tracking-wide shadow-lg hover:opacity-90 transition cursor-pointer">
-                    بدء المعالجة الخارقة الحقيقية ⚡
-                </button>
-            </div>
-
-            <!-- الخطوة 3 -->
-            <div id="step-3" class="hidden text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4"></div>
-                <h3 class="text-sm font-bold mb-1" dir="ltr">Two-Pass Real Processing...</h3>
-                <p id="statusText" class="text-xs text-gray-400 mb-4">جاري تحليل مسارات الحركة وتطبيق خوارزميات التثبيت...</p>
-                
-                <div class="w-full bg-gray-800 rounded-full h-2.5 max-w-xs mx-auto overflow-hidden mb-2 iraqi-border">
-                    <div id="progressBar" class="iraqi-gradient h-2.5 w-0 transition-all duration-300"></div>
-                </div>
-                <span id="progressPercent" class="text-xs text-blue-400 font-bold">0%</span>
-            </div>
-
-            <!-- الخطوة 4 -->
-            <div id="step-4" class="hidden text-center py-4">
-                <div class="text-3xl mb-2">🎉</div>
-                <h3 class="text-base font-bold mb-1">تمت معالجة وتثبيت الفيديو بنجاح</h3>
-                <p class="text-xs text-gray-400 mb-4">تم إلغاء الاهتزازات وإعادة هندسة الأطر بنجاح تام</p>
-                
-                <div class="bg-gray-900 iraqi-border p-3.5 rounded-2xl text-right mb-4 space-y-1.5">
-                    <div class="text-xs text-blue-400 font-bold">📊 ملخص العملية الحقيقية:</div>
-                    <div class="flex justify-between text-[11px] text-gray-300 border-b border-gray-800 pb-1">
-                        <span>نوع المعالجة:</span>
-                        <span class="font-bold text-green-400">Two-Pass Real Stabilization</span>
-                    </div>
-                    <div class="flex justify-between text-[11px] text-gray-300 pt-0.5">
-                        <span>الحالة:</span>
-                        <span class="font-bold text-blue-400">تم إنتاج ملف فيديو جديد كلياً</span>
-                    </div>
-                </div>
-
-                <a id="downloadBtn" class="block w-full py-3.5 rounded-xl iraqi-gradient text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
-                    تنزيل الفيديو المثبت ⬇
-                </a>
-                <button onclick="resetFlow()" class="text-xs text-gray-400 underline cursor-pointer">معالجة فيديو آخر 🔄</button>
-            </div>
-
+        <!-- صندوق الإدخال -->
+        <div class="chat-card custom-border rounded-2xl p-2.5 shadow-xl flex items-center gap-2">
+            <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." class="w-full bg-transparent text-xs text-gray-200 px-3 py-2 focus:outline-none" onkeydown="if(event.key === 'Enter') handleSend()">
+            <button onclick="handleSend()" class="custom-gradient px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide shadow-lg hover:opacity-90 transition cursor-pointer shrink-0">
+                إرسال 🚀
+            </button>
         </div>
+
     </main>
 
-    <!-- مودال اختيار الأجهزة -->
-    <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-gray-900 iraqi-border rounded-3xl p-5 max-w-sm w-full text-center shadow-2xl">
-            <h3 class="text-sm font-bold text-blue-400 mb-1.5">اختر جهازك لتوافقية التصدير</h3>
-            <p class="text-xs text-gray-400 mb-4">لتحسين ترميز الحركات والألوان:</p>
+    <!-- نافذة التوكن -->
+    <div id="apiModal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-gray-900 custom-border rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
+            <h3 class="text-sm font-bold text-blue-400 mb-2">إدخال مفتاح Gemini API Key</h3>
+            <p class="text-xs text-gray-400 mb-4">الصق التوكن الخاص بك هنا (سيتم حفظه في جهازك فقط بأمان):</p>
             
-            <div class="grid grid-cols-3 gap-2.5 mb-4">
-                <button onclick="startRealProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
-                    <div class="text-xl mb-1">📱</div>
-                    <div class="text-xs font-bold">ايفون</div>
-                </button>
-                <button onclick="startRealProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
-                    <div class="text-xl mb-1">🤖</div>
-                    <div class="text-xs font-bold">اندرويد</div>
-                </button>
-                <button onclick="startRealProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
-                    <div class="text-xl mb-1">💻</div>
-                    <div class="text-xs font-bold">كمبيوتر</div>
-                </button>
+            <input type="password" id="apiKeyInput" placeholder="AQ..." class="w-full bg-gray-950 custom-border p-3 rounded-xl text-xs text-gray-200 mb-4 focus:outline-none text-left" dir="ltr">
+            
+            <div class="flex gap-2">
+                <button onclick="saveApiKey()" class="w-full py-2.5 rounded-xl custom-gradient text-xs font-bold cursor-pointer">حفظ</button>
+                <button onclick="toggleApiKeyModal()" class="w-full py-2.5 rounded-xl bg-gray-800 text-xs text-gray-400 cursor-pointer">إلغاء</button>
             </div>
-            <button onclick="closeModal()" class="text-xs text-gray-400 underline cursor-pointer">إلغاء</button>
         </div>
     </div>
 
-    <!-- السكريبت والمنطق البرمجي الثقيل -->
     <script>
-        const { createFFmpeg, fetchFile } = FFmpeg;
-        const ffmpeg = createFFmpeg({ log: true });
-        let uploadedFile = null;
-        let finalBlob = null;
+        let apiKey = localStorage.getItem('gemini_api_key') || '';
 
-        async function initEngine() {
-            try {
-                await ffmpeg.load();
-                document.getElementById('engineStatus').innerText = "المحرك الحقيقي جاهز ⚡";
-                document.getElementById('engineStatus').className = "text-xs text-green-400 bg-green-950/40 px-3.5 py-2 rounded-xl iraqi-border";
-            } catch (e) {
-                document.getElementById('engineStatus').innerText = "خطأ في تهيئة المحرك الثقيل";
+        function toggleApiKeyModal() {
+            const modal = document.getElementById('apiModal');
+            modal.classList.toggle('hidden');
+            if(!modal.classList.contains('hidden') && apiKey) {
+                document.getElementById('apiKeyInput').value = apiKey;
             }
         }
-        initEngine();
 
-        function fileSelected(input) {
-            if (input.files && input.files[0]) {
-                uploadedFile = input.files[0];
-                const sizeStr = (uploadedFile.size / (1024*1024)).toFixed(1) + ' MB';
+        function saveApiKey() {
+            const val = document.getElementById('apiKeyInput').value.trim();
+            if (val) {
+                apiKey = val;
+                localStorage.setItem('gemini_api_key', apiKey);
+                alert('تم حفظ التوكن في متصفحك بنجاح!');
+                toggleApiKeyModal();
+            } else {
+                alert('الرجاء إدخال توكن صحيح.');
+            }
+        }
+
+        async function handleSend() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            if (!apiKey) {
+                alert('الرجاء إدخال التوكن (API Key) أولاً عبر الزر العلوي.');
+                toggleApiKeyModal();
+                return;
+            }
+
+            appendMessage('أنت', message, 'user');
+            input.value = '';
+
+            const loadingId = appendMessage('AI', 'جاري التفكير والمعالجة عبر Gemini...', 'ai-loading');
+
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
                 
-                document.getElementById('fileName').innerText = uploadedFile.name;
-                document.getElementById('fileSize').innerText = sizeStr;
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: message }] }]
+                    })
+                });
 
-                const videoUrl = URL.createObjectURL(uploadedFile);
-                document.getElementById('previewPlayer').src = videoUrl;
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
 
-                switchStep(2);
-            }
-        }
-
-        function openDeviceModal() {
-            document.getElementById('deviceModal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('deviceModal').classList.add('hidden');
-        }
-
-        async function startRealProcessing() {
-            closeModal();
-            switchStep(3);
-            const bar = document.getElementById('progressBar');
-            const percentText = document.getElementById('progressPercent');
-            const statusText = document.getElementById('statusText');
-
-            const shakinessVal = document.getElementById('shakiness').value;
-            const crfVal = document.getElementById('crfQuality').value;
-
-            try {
-                if (!uploadedFile || !ffmpeg.isLoaded()) {
-                    alert('المحرك غير جاهز أو لم تقم باختيار ملف');
-                    switchStep(2);
-                    return;
+                if (data.candidates && data.candidates[0].content.parts[0].text) {
+                    const reply = data.candidates[0].content.parts[0].text;
+                    appendMessage('AI', reply, 'ai');
+                } else {
+                    appendMessage('AI', 'حدث خطأ في الاستجابة. تأكد من صحة التوكن المرفق.', 'ai');
                 }
 
-                bar.style.width = '10%';
-                percentText.innerText = "10%';";
-                statusText.innerText = "جاري قراءة ملف الفيديو وتحميله لذاكرة المعالجة...";
-
-                const inputName = "input_" + Date.now() + ".mp4";
-                const outputName = "output_" + Date.now() + ".mp4";
-                const transformFile = "transforms_" + Date.now() + ".trf";
-
-                ffmpeg.FS('writeFile', inputName, await fetchFile(uploadedFile));
-
-                // المرور الأول: تحليل الاهتزازات
-                bar.style.width = '30%';
-                percentText.innerText = "30%";
-                statusText.innerText = "المرحلة 1/2: تحليل مسار الحركة واستخراج متجهات التثبيت...";
-
-                await ffmpeg.run(
-                    '-i', inputName,
-                    '-vf', `vidstabdetect=shakiness=${shakinessVal}:accuracy=15:result=${transformFile}`,
-                    '-f', 'null', '-'
-                );
-
-                // المرور الثاني: إعادة تطبيق وتثبيت الأطر بحسب الإحداثيات المستخرجة
-                bar.style.width = '70%';
-                percentText.innerText = "70%";
-                statusText.innerText = "المرحلة 2/2: معالجة الإطارات، تنعيم الحركة، وضبط النقاوة...";
-
-                await ffmpeg.run(
-                    '-i', inputName,
-                    '-vf', `vidstabtransform=smoothing=30:input=${transformFile}:interpol=bicubic:zoom=1`,
-                    '-vcodec', 'libx264',
-                    '-crf', crfVal,
-                    '-preset', 'medium',
-                    '-pix_fmt', 'yuv420p',
-                    outputName
-                );
-
-                bar.style.width = '95%';
-                percentText.innerText = "95%";
-                statusText.innerText = "جاري تصدير الملف النهائي الجديد...";
-
-                const data = ffmpeg.FS('readFile', outputName);
-                finalBlob = new Blob([data.buffer], { type: 'video/mp4' });
-
-                const downloadBtn = document.getElementById('downloadBtn');
-                downloadBtn.href = URL.createObjectURL(finalBlob);
-                downloadBtn.download = 'UltraStabilized_' + uploadedFile.name;
-
-                bar.style.width = '100%';
-                percentText.innerText = "100%";
-                setTimeout(() => switchStep(4), 500);
-
             } catch (err) {
-                console.error(err);
-                alert('حدث ضغط هائل على ذاكرة المتصفح. يفضل استخدام فيديو بحجم أصغر أو مدة أقصر لإتمام المعالجة.');
-                switchStep(2);
+                document.getElementById(loadingId).remove();
+                appendMessage('AI', 'تعذر الاتصال بسيرفرات Gemini. تحقق من الاتصال.', 'ai');
             }
         }
 
-        function switchStep(num) {
-            [1, 2, 3, 4].forEach(i => document.getElementById('step-' + i).classList.add('hidden'));
-            document.getElementById('step-' + num).classList.remove('hidden');
+        function appendMessage(sender, text, type) {
+            const container = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            const id = 'msg_' + Date.now();
+            msgDiv.id = id;
+
+            if (type === 'user') {
+                msgDiv.className = "flex items-start gap-3 justify-end";
+                msgDiv.innerHTML = `
+                    <div class="bg-blue-600/20 custom-border p-3.5 rounded-2xl max-w-[85%] text-gray-100 text-right text-xs">
+                        ${escapeHtml(text)}
+                    </div>
+                    <div class="bg-gray-800 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 text-blue-400">أنت</div>
+                `;
+            } else {
+                msgDiv.className = "flex items-start gap-3";
+                msgDiv.innerHTML = `
+                    <div class="custom-gradient w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0">AI</div>
+                    <div class="bg-gray-900 custom-border p-3.5 rounded-2xl max-w-[85%] text-gray-200 text-xs">
+                        ${escapeHtml(text).replace(/\n/g, '<br>')}
+                    </div>
+                `;
+            }
+
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+            return id;
         }
 
-        function resetFlow() {
-            document.getElementById('videoFile').value = '';
-            uploadedFile = null;
-            finalBlob = null;
-            switchStep(1);
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
         }
     </script>
 </body>
