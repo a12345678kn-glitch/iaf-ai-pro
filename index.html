@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Al-Iraqi Video Stabilizer Pro - أداة منع اهتزاز الفيديو</title>
+    <title>Al-Iraqi Ultimate Stabilizer Pro - النسخة الخارقة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
     <style>
-        body { background-color: #05070b; color: #fff; font-family: Tahoma, sans-serif; }
-        .iraqi-gradient { background: linear-gradient(135deg, #1d4ed8, #b91c1c); }
-        .iraqi-border { border: 1px solid rgba(29, 78, 216, 0.35); }
-        .iraqi-card { background: rgba(10, 14, 20, 0.96); backdrop-filter: blur(16px); }
-        .modal-bg { background-color: rgba(0, 0, 0, 0.88); }
+        body { background-color: #030508; color: #fff; font-family: Tahoma, sans-serif; }
+        .iraqi-gradient { background: linear-gradient(135deg, #2563eb, #dc2626); }
+        .iraqi-border { border: 1px solid rgba(37, 99, 235, 0.4); }
+        .iraqi-card { background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(16px); }
+        .modal-bg { background-color: rgba(0, 0, 0, 0.9); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between">
@@ -19,22 +19,22 @@
     <!-- الهيدر -->
     <header class="p-4 border-b border-gray-800/80 flex justify-between items-center max-w-4xl mx-auto w-full">
         <div class="flex items-center gap-3">
-            <span class="iraqi-gradient text-white font-extrabold px-3.5 py-1.5 rounded-xl text-sm shadow-xl">🇮🇶 STABILIZER PRO</span>
+            <span class="iraqi-gradient text-white font-extrabold px-3.5 py-1.5 rounded-xl text-sm shadow-xl">🇮🇶 ULTRA PRO</span>
             <div>
-                <h1 class="font-bold text-sm tracking-wide">مانع اهتزاز الفيديو العراقي</h1>
-                <p class="text-[10px] text-blue-400">تثبيت سينمائي تلقائي + الحفاظ الكامل على الجودة</p>
+                <h1 class="font-bold text-sm tracking-wide">المنظومة العراقية الخارقة للتثبيت</h1>
+                <p class="text-[10px] text-blue-400">معالجة حقيقية بمحرك الثنائيات (Two-Pass Engine)</p>
             </div>
         </div>
         <div id="engineStatus" class="text-xs text-yellow-400 bg-yellow-950/40 px-3 py-1.5 rounded-xl iraqi-border">
-            جاري تهيئة محرك التثبيت...
+            جاري تحميل محرك المعالجة الفعلي...
         </div>
     </header>
 
     <!-- المحتوى الرئيسي -->
     <main class="max-w-xl mx-auto w-full p-4 my-6">
         <div class="text-center mb-6">
-            <h2 class="text-2xl md:text-3xl font-extrabold mb-1">تثبيت الفيديو الخارق (VidStab)</h2>
-            <p class="text-gray-400 text-xs md:text-sm">إزالة الاهتزازات والحركات المفاجئة مع تحسين انسيابية الإطارات بدقة عالية.</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold mb-1">إزالة الاهتزاز الحقيقي 100%</h2>
+            <p class="text-gray-400 text-xs md:text-sm">أداة متقدمة تحلل حركة الكاميرا وتعيد هندسة الإطارات لإنتاج فيديو ثابت تماماً.</p>
         </div>
 
         <div class="iraqi-card iraqi-border rounded-3xl p-6 shadow-2xl relative">
@@ -42,12 +42,12 @@
             <!-- الخطوة 1 -->
             <div id="step-1">
                 <div class="text-blue-400 text-xs mb-3 font-bold flex items-center gap-1">
-                    <span>1</span> <span>| اختر الفيديو المراد تثبيته</span>
+                    <span>1</span> <span>| ارفع الفيديو المراد معالجته</span>
                 </div>
                 <div class="border-2 border-dashed border-gray-700 rounded-2xl p-8 text-center cursor-pointer hover:border-blue-500 transition mb-4 bg-gray-900/40" onclick="document.getElementById('videoFile').click()">
-                    <div class="text-4xl mb-2 text-blue-500">📹</div>
-                    <p class="text-xs font-bold">حدد الفيديو المهتز من جهازك</p>
-                    <p class="text-[10px] text-gray-500 mt-1">يدعم كافة صيغ الفيديو (MP4, MOV, MKV, AVI)</p>
+                    <div class="text-4xl mb-2 text-blue-500">📁</div>
+                    <p class="text-xs font-bold">اختر الفيديو المهتز من جهازك</p>
+                    <p class="text-[10px] text-gray-500 mt-1">يدعم كافة الصيغ (MP4, MOV, AVI, MKV)</p>
                     <input type="file" id="videoFile" class="hidden" accept="video/*" onchange="fileSelected(this)">
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <!-- الخطوة 2 -->
             <div id="step-2" class="hidden">
                 <div class="flex justify-between items-center mb-4">
-                    <span class="text-blue-400 text-xs font-bold">2 | معاينة وإعدادات مانع الاهتزاز</span>
+                    <span class="text-blue-400 text-xs font-bold">2 | إعدادات التثبيت الفائق</span>
                     <button onclick="resetFlow()" class="text-[11px] text-gray-400 underline">تغيير الفيديو</button>
                 </div>
 
@@ -73,33 +73,33 @@
 
                 <div class="space-y-3 mb-5">
                     <div class="bg-gray-900/60 p-3 rounded-xl iraqi-border">
-                        <label class="block text-xs font-bold text-gray-300 mb-1">قوة مانع الاهتزاز (Stabilization Power):</label>
-                        <select id="stabLevel" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg iraqi-border focus:outline-none">
-                            <option value="10">تثبيت سينمائي قوي جداً (للمقاطع شديدة الحركة)</option>
-                            <option value="6" selected>تثبيت متوازن (موصى به لجميع الفيديوهات)</option>
-                            <option value="3">تثبيت خفيف (إزالة اهتزاز اليد البسيط)</option>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">درجة قوة التثبيت (Shakiness):</label>
+                        <select id="shakiness" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg iraqi-border focus:outline-none">
+                            <option value="10">قوي جداً (للاهتزازات العنيفة والحركة السريعة)</option>
+                            <option value="6" selected>متوازن ومثالي (يوصى به لمعظم الفيديوهات)</option>
+                            <option value="3">خفيف (للاهتزاز البسيط باليد)</option>
                         </select>
                     </div>
 
                     <div class="bg-gray-900/60 p-3 rounded-xl iraqi-border">
-                        <label class="block text-xs font-bold text-gray-300 mb-1">مستوى الحفاظ على الجودة:</label>
-                        <select id="qualityPreset" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg iraqi-border focus:outline-none">
-                            <option value="18">جودة سينمائية فائقة بدون أي أثر للتغبيش (CRF 18)</option>
-                            <option value="22" selected>جودة ممتازة + تحسين للألوان (CRF 22)</option>
+                        <label class="block text-xs font-bold text-gray-300 mb-1">معامل جودة النقاوة (CRF):</label>
+                        <select id="crfQuality" class="w-full bg-gray-950 text-xs text-gray-200 p-2.5 rounded-lg iraqi-border focus:outline-none">
+                            <option value="20" selected>نقاوة عالية جداً بدون أي تغبيش (CRF 20)</option>
+                            <option value="24">جودة ممتازة وحجم ملف أصغر (CRF 24)</option>
                         </select>
                     </div>
                 </div>
 
                 <button onclick="openDeviceModal()" class="w-full py-3.5 rounded-xl iraqi-gradient text-xs font-bold tracking-wide shadow-lg hover:opacity-90 transition cursor-pointer">
-                    بدء معالجة وتثبيت الحركة ⚡
+                    بدء المعالجة الخارقة الحقيقية ⚡
                 </button>
             </div>
 
             <!-- الخطوة 3 -->
             <div id="step-3" class="hidden text-center py-8">
-                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4"></div>
-                <h3 class="text-sm font-bold mb-1" dir="ltr">Analyzing & Stabilizing Motion...</h3>
-                <p id="statusText" class="text-xs text-gray-400 mb-4">جاري تحليل مسارات الحركة وإزالة الاهتزاز التلقائي...</p>
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-red-500 border-t-transparent mb-4"></div>
+                <h3 class="text-sm font-bold mb-1" dir="ltr">Two-Pass Real Processing...</h3>
+                <p id="statusText" class="text-xs text-gray-400 mb-4">جاري تحليل مسارات الحركة وتطبيق خوارزميات التثبيت...</p>
                 
                 <div class="w-full bg-gray-800 rounded-full h-2.5 max-w-xs mx-auto overflow-hidden mb-2 iraqi-border">
                     <div id="progressBar" class="iraqi-gradient h-2.5 w-0 transition-all duration-300"></div>
@@ -109,47 +109,47 @@
 
             <!-- الخطوة 4 -->
             <div id="step-4" class="hidden text-center py-4">
-                <div class="text-3xl mb-2">🎬</div>
-                <h3 class="text-base font-bold mb-1">تم تثبيت الفيديو بنجاح!</h3>
-                <p class="text-xs text-gray-400 mb-4">تم إلغاء الاهتزازات وتنعيم الحركة مع الحفاظ التام على النقاوة والجودة</p>
+                <div class="text-3xl mb-2">🎉</div>
+                <h3 class="text-base font-bold mb-1">تمت معالجة وتثبيت الفيديو بنجاح</h3>
+                <p class="text-xs text-gray-400 mb-4">تم إلغاء الاهتزازات وإعادة هندسة الأطر بنجاح تام</p>
                 
                 <div class="bg-gray-900 iraqi-border p-3.5 rounded-2xl text-right mb-4 space-y-1.5">
-                    <div class="text-xs text-blue-400 font-bold">📊 ملخص عملية المعالجة:</div>
+                    <div class="text-xs text-blue-400 font-bold">📊 ملخص العملية الحقيقية:</div>
                     <div class="flex justify-between text-[11px] text-gray-300 border-b border-gray-800 pb-1">
-                        <span>حالة الحركة:</span>
-                        <span class="font-bold text-green-400">تثبيت سلس وسينمائي</span>
+                        <span>نوع المعالجة:</span>
+                        <span class="font-bold text-green-400">Two-Pass Real Stabilization</span>
                     </div>
                     <div class="flex justify-between text-[11px] text-gray-300 pt-0.5">
-                        <span>مستوى الجودة المحفوظة:</span>
-                        <span class="font-bold text-blue-400">100% Original Sharpness</span>
+                        <span>الحالة:</span>
+                        <span class="font-bold text-blue-400">تم إنتاج ملف فيديو جديد كلياً</span>
                     </div>
                 </div>
 
                 <a id="downloadBtn" class="block w-full py-3.5 rounded-xl iraqi-gradient text-xs font-bold text-center mb-3 shadow-lg cursor-pointer">
                     تنزيل الفيديو المثبت ⬇
                 </a>
-                <button onclick="resetFlow()" class="text-xs text-gray-400 underline cursor-pointer">تثبيت فيديو آخر 🔄</button>
+                <button onclick="resetFlow()" class="text-xs text-gray-400 underline cursor-pointer">معالجة فيديو آخر 🔄</button>
             </div>
 
         </div>
     </main>
 
-    <!-- مودال اختيار الجهاز -->
+    <!-- مودال اختيار الأجهزة -->
     <div id="deviceModal" class="fixed inset-0 modal-bg hidden flex items-center justify-center p-4 z-50">
         <div class="bg-gray-900 iraqi-border rounded-3xl p-5 max-w-sm w-full text-center shadow-2xl">
-            <h3 class="text-sm font-bold text-blue-400 mb-1.5">اختر منصة التصدير</h3>
-            <p class="text-xs text-gray-400 mb-4">لضبط ترميز الحركة والألوان المتوافق:</p>
+            <h3 class="text-sm font-bold text-blue-400 mb-1.5">اختر جهازك لتوافقية التصدير</h3>
+            <p class="text-xs text-gray-400 mb-4">لتحسين ترميز الحركات والألوان:</p>
             
             <div class="grid grid-cols-3 gap-2.5 mb-4">
-                <button onclick="startProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
+                <button onclick="startRealProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
                     <div class="text-xl mb-1">📱</div>
                     <div class="text-xs font-bold">ايفون</div>
                 </button>
-                <button onclick="startProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
+                <button onclick="startRealProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
                     <div class="text-xl mb-1">🤖</div>
                     <div class="text-xs font-bold">اندرويد</div>
                 </button>
-                <button onclick="startProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
+                <button onclick="startRealProcessing()" class="iraqi-border bg-gray-950 p-3 rounded-2xl text-center hover:border-red-500 transition cursor-pointer">
                     <div class="text-xl mb-1">💻</div>
                     <div class="text-xs font-bold">كمبيوتر</div>
                 </button>
@@ -158,6 +158,7 @@
         </div>
     </div>
 
+    <!-- السكريبت والمنطق البرمجي الثقيل -->
     <script>
         const { createFFmpeg, fetchFile } = FFmpeg;
         const ffmpeg = createFFmpeg({ log: true });
@@ -167,10 +168,10 @@
         async function initEngine() {
             try {
                 await ffmpeg.load();
-                document.getElementById('engineStatus').innerText = "محرك التثبيت جاهز ⚡";
+                document.getElementById('engineStatus').innerText = "المحرك الحقيقي جاهز ⚡";
                 document.getElementById('engineStatus').className = "text-xs text-green-400 bg-green-950/40 px-3.5 py-2 rounded-xl iraqi-border";
             } catch (e) {
-                document.getElementById('engineStatus').innerText = "وضع التثبيت الذكي النشط";
+                document.getElementById('engineStatus').innerText = "خطأ في تهيئة المحرك الثقيل";
             }
         }
         initEngine();
@@ -184,8 +185,7 @@
                 document.getElementById('fileSize').innerText = sizeStr;
 
                 const videoUrl = URL.createObjectURL(uploadedFile);
-                const player = document.getElementById('previewPlayer');
-                player.src = videoUrl;
+                document.getElementById('previewPlayer').src = videoUrl;
 
                 switchStep(2);
             }
@@ -199,95 +199,79 @@
             document.getElementById('deviceModal').classList.add('hidden');
         }
 
-        async function startProcessing() {
+        async function startRealProcessing() {
             closeModal();
             switchStep(3);
             const bar = document.getElementById('progressBar');
             const percentText = document.getElementById('progressPercent');
             const statusText = document.getElementById('statusText');
 
-            const stabShakiness = document.getElementById('stabLevel').value;
-            const qualityCRF = document.getElementById('qualityPreset').value;
+            const shakinessVal = document.getElementById('shakiness').value;
+            const crfVal = document.getElementById('crfQuality').value;
 
             try {
-                if (uploadedFile && ffmpeg.isLoaded()) {
-                    bar.style.width = '15%';
-                    percentText.innerText = "15%";
-                    statusText.innerText = "جاري قراءة إطارات الفيديو والتهيئة...";
-
-                    const inputName = "in_" + Date.now() + ".mp4";
-                    const outputName = "out_" + Date.now() + ".mp4";
-                    
-                    ffmpeg.FS('writeFile', inputName, await fetchFile(uploadedFile));
-
-                    bar.style.width = '45%';
-                    percentText.innerText = "45%";
-                    statusText.innerText = "المرحلة 1: تحليل المتجهات الحركية واكتشاف الاهتزاز...";
-                    
-                    await ffmpeg.run(
-                        '-i', inputName,
-                        '-vf', `vidstabdetect=shakiness=${stabShakiness}:accuracy=15:result=transforms.trf`,
-                        '-f', 'null', '-'
-                    );
-
-                    bar.style.width = '80%';
-                    percentText.innerText = "80%";
-                    statusText.innerText = "المرحلة 2: تعويض الحركة وتعديل الأطر مع الحفاظ على النقاوة...";
-
-                    await ffmpeg.run(
-                        '-i', inputName,
-                        '-vf', `vidstabtransform=smoothing=30:input=transforms.trf:interpol=bicubic`,
-                        '-vcodec', 'libx264',
-                        '-crf', qualityCRF,
-                        '-preset', 'fast',
-                        '-pix_fmt', 'yuv420p',
-                        outputName
-                    );
-
-                    bar.style.width = '95%';
-                    percentText.innerText = "95%";
-                    statusText.innerText = "جاري استخراج الفيديو المثبت النهائي...";
-
-                    const data = ffmpeg.FS('readFile', outputName);
-                    finalBlob = new Blob([data.buffer], { type: 'video/mp4' });
-
-                    prepareDownloadLink(finalBlob);
-
-                    bar.style.width = '100%';
-                    percentText.innerText = "100%";
-                    setTimeout(() => switchStep(4), 500);
-                } else {
-                    fallbackSimulation(bar, percentText, statusText);
+                if (!uploadedFile || !ffmpeg.isLoaded()) {
+                    alert('المحرك غير جاهز أو لم تقم باختيار ملف');
+                    switchStep(2);
+                    return;
                 }
+
+                bar.style.width = '10%';
+                percentText.innerText = "10%';";
+                statusText.innerText = "جاري قراءة ملف الفيديو وتحميله لذاكرة المعالجة...";
+
+                const inputName = "input_" + Date.now() + ".mp4";
+                const outputName = "output_" + Date.now() + ".mp4";
+                const transformFile = "transforms_" + Date.now() + ".trf";
+
+                ffmpeg.FS('writeFile', inputName, await fetchFile(uploadedFile));
+
+                // المرور الأول: تحليل الاهتزازات
+                bar.style.width = '30%';
+                percentText.innerText = "30%";
+                statusText.innerText = "المرحلة 1/2: تحليل مسار الحركة واستخراج متجهات التثبيت...";
+
+                await ffmpeg.run(
+                    '-i', inputName,
+                    '-vf', `vidstabdetect=shakiness=${shakinessVal}:accuracy=15:result=${transformFile}`,
+                    '-f', 'null', '-'
+                );
+
+                // المرور الثاني: إعادة تطبيق وتثبيت الأطر بحسب الإحداثيات المستخرجة
+                bar.style.width = '70%';
+                percentText.innerText = "70%";
+                statusText.innerText = "المرحلة 2/2: معالجة الإطارات، تنعيم الحركة، وضبط النقاوة...";
+
+                await ffmpeg.run(
+                    '-i', inputName,
+                    '-vf', `vidstabtransform=smoothing=30:input=${transformFile}:interpol=bicubic:zoom=1`,
+                    '-vcodec', 'libx264',
+                    '-crf', crfVal,
+                    '-preset', 'medium',
+                    '-pix_fmt', 'yuv420p',
+                    outputName
+                );
+
+                bar.style.width = '95%';
+                percentText.innerText = "95%";
+                statusText.innerText = "جاري تصدير الملف النهائي الجديد...";
+
+                const data = ffmpeg.FS('readFile', outputName);
+                finalBlob = new Blob([data.buffer], { type: 'video/mp4' });
+
+                const downloadBtn = document.getElementById('downloadBtn');
+                downloadBtn.href = URL.createObjectURL(finalBlob);
+                downloadBtn.download = 'UltraStabilized_' + uploadedFile.name;
+
+                bar.style.width = '100%';
+                percentText.innerText = "100%";
+                setTimeout(() => switchStep(4), 500);
+
             } catch (err) {
                 console.error(err);
-                fallbackSimulation(bar, percentText, statusText);
+                alert('حدث ضغط هائل على ذاكرة المتصفح. يفضل استخدام فيديو بحجم أصغر أو مدة أقصر لإتمام المعالجة.');
+                switchStep(2);
             }
-        }
-
-        function fallbackSimulation(bar, percentText, statusText) {
-            let p = 0;
-            let interval = setInterval(() => {
-                if (p >= 100) {
-                    clearInterval(interval);
-                    finalBlob = uploadedFile;
-                    prepareDownloadLink(finalBlob);
-                    switchStep(4);
-                } else {
-                    p += 20;
-                    bar.style.width = p + '%';
-                    percentText.innerText = p + '%';
-                    statusText.innerText = "جاري معالجة الإطارات وتنعيم الحركة (" + p + "%)";
-                }
-            }, 350);
-        }
-
-        // إصلاح آلية التحميل المباشر المتوافقة مع المتصفحات
-        function prepareDownloadLink(blob) {
-            const downloadBtn = document.getElementById('downloadBtn');
-            const fileUrl = URL.createObjectURL(blob);
-            downloadBtn.href = fileUrl;
-            downloadBtn.download = 'Stabilized_' + (uploadedFile ? uploadedFile.name : 'video.mp4');
         }
 
         function switchStep(num) {
