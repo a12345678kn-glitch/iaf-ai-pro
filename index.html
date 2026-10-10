@@ -1,111 +1,352 @@
-const express = require('express');
-const multer = require('multer');
-const ffmpeg = require('fluent-ffmpeg');
-const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
-const fs = require('fs-extra');
-const path = require('path');
 
-// تعيين مسار FFmpeg تلقائياً
-ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080b12">
+<title>IAF Video Compressor Pro | إبراهيم ال فارس</title>
+<style>
+:root{
+  --bg:#080b12;--panel:#111725;--line:#293448;
+  --text:#f5f7ff;--muted:#9ca9bd;
+  --accent:#35e0c1;--blue:#7887ff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:radial-gradient(ellipse at top,#17233e,transparent 55%),var(--bg);
+  color:var(--text);font-family:Arial,Tahoma,sans-serif;
+}
+.wrap{max-width:1050px;margin:auto;padding:22px 15px 45px}
+header{display:flex;align-items:center;gap:13px;margin-bottom:35px}
+.logo{
+  width:52px;height:52px;border-radius:16px;
+  display:grid;place-items:center;color:#061017;font-weight:900;
+  background:linear-gradient(135deg,var(--accent),var(--blue));
+}
+h1{font-size:18px;margin:0 0 6px}
+header p,.muted{color:var(--muted);font-size:12px;margin:0}
+.hero{margin-bottom:25px}
+.hero small{color:var(--accent);font-weight:bold;letter-spacing:1px}
+.hero h2{font-size:clamp(28px,5vw,46px);line-height:1.25;margin:12px 0}
+.hero h2 span{color:var(--accent)}
+.hero p{color:var(--muted);line-height:1.9;max-width:650px}
+.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:17px}
+.panel{
+  padding:20px;border:1px solid var(--line);border-radius:20px;
+  background:linear-gradient(150deg,#141b2b,#0c111b);
+  min-width:0;
+}
+.panel h3{font-size:17px;margin:0 0 8px}
+.desc{font-size:12px;color:var(--muted);line-height:1.8;margin-bottom:17px}
+.drop{
+  padding:26px 12px;text-align:center;border:2px dashed #354960;
+  border-radius:16px;background:#0b111b;
+}
+.drop strong{display:block;margin:10px 0}
+.drop p{font-size:12px;line-height:1.8;color:var(--muted)}
+button,.download{
+  font-family:inherit;font-weight:bold;cursor:pointer;border:0;
+  border-radius:11px;padding:12px 15px;text-decoration:none;
+}
+.primary{background:linear-gradient(100deg,var(--accent),#9aa5ff);color:#071019}
+.secondary{background:#202a3b;color:white;border:1px solid #354158}
+button:disabled{opacity:.45;cursor:not-allowed}
+input,select{
+  width:100%;padding:12px;margin-top:8px;border-radius:10px;
+  color:white;background:#090e17;border:1px solid #354158;
+}
+input[type=range]{padding:0;accent-color:var(--accent)}
+.field{margin-top:18px}
+label{font-size:13px;font-weight:bold}
+.filebox{display:none;margin-top:15px}
+video{width:100%;max-height:300px;background:#030508;border-radius:12px}
+.actions{display:flex;gap:10px;margin-top:20px}
+.actions button{flex:1}
+.status{
+  display:none;margin-top:16px;padding:12px;border-radius:12px;
+  background:#0b151b;border:1px solid #285b54;font-size:12px;line-height:1.8;
+  overflow-wrap:anywhere;
+}
+.status.error{border-color:#873b4d;color:#ffb7c3}
+.track{height:7px;border-radius:20px;background:#263246;margin-top:10px;overflow:hidden}
+.bar{height:100%;width:0;background:var(--accent);transition:width .2s}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{padding:15px;border:1px solid var(--line);border-radius:13px;background:#0b1019}
+.stat small{color:var(--muted)}
+.stat strong{display:block;font-size:21px;margin-top:8px;overflow-wrap:anywhere}
+.green{color:var(--accent)}
+.result{display:none;margin-top:20px}
+.result .download{display:block;text-align:center;margin-top:12px}
+.note{font-size:12px;color:#c3c9dc;line-height:1.9;margin-top:18px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding-top:30px}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr}
+ .panel{padding:15px}
+ .hero{margin-bottom:20px}
+}
+@media(max-width:390px){.actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="logo">IAF</div>
+  <div>
+    <h1>IAF Video Compressor Pro</h1>
+    <p>إبراهيم ال فارس · استوديو ضغط الفيديو</p>
+  </div>
+</header>
 
-const app = express();
-const PORT = 3000;
+<section class="hero">
+  <small>VIDEO COMPRESSION STUDIO</small>
+  <h2>جهّز فيديوك للنشر على <span>TikTok</span></h2>
+  <p>اضغط الفيديو، قلل حجمه، اختر الدقة المناسبة، ثم نزّل النسخة الجديدة. تصميم سريع ومناسب للهاتف والكمبيوتر.</p>
+</section>
 
-// إعداد مجلدات الرفع والمعالجة
-const uploadDir = path.join(__dirname, 'uploads');
-const outputDir = path.join(__dirname, 'processed');
-fs.ensureDirSync(uploadDir);
-fs.ensureDirSync(outputDir);
+<div class="layout">
+<section class="panel">
+  <h3>١. اختيار الفيديو</h3>
+  <p class="desc">اختر ملف فيديو من جهازك للبدء.</p>
+  <div class="drop" id="drop">
+    <div style="font-size:35px;color:var(--accent)">⇧</div>
+    <strong>ارفع الفيديو هنا</strong>
+    <p>يدعم المتصفح الصيغ التي يستطيع قراءتها مثل MP4 وMOV وWebM.</p>
+    <button class="primary" id="pick">اختيار الفيديو</button>
+    <input id="file" type="file" accept="video/*" hidden>
+  </div>
 
-const upload = multer({ dest: uploadDir });
+  <div class="filebox" id="filebox">
+    <p id="filename" class="desc"></p>
+    <video id="preview" controls playsinline></video>
+    <button id="remove" class="secondary" style="margin-top:10px">إزالة الفيديو</button>
+  </div>
 
-// واجهة HTML بسيطة للرفع
-app.get('/', (req, res) => {
-    res.send(`
-        <!DOCTYPE html>
-        <html lang="ar" dir="rtl">
-        <head>
-            <meta charset="UTF-8">
-            <title>معالجة فيديوهات تيك توك فائقة الجودة</title>
-            <script src="https://cdn.tailwindcss.com"></script>
-        </head>
-        <body class="bg-slate-950 text-white flex items-center justify-center min-h-screen">
-            <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 shadow-2xl w-full max-w-lg">
-                <h1 class="text-2xl font-bold text-center mb-6 bg-gradient-to-r from-cyan-400 to-indigo-500 bg-clip-text text-transparent">
-                    معالج تيك توك الاحترافي (FFmpeg)
-                </h1>
-                <form action="/process" method="POST" enctype="multipart/form-data" class="space-y-4">
-                    <input type="file" name="video" accept="video/*" required class="w-full text-sm text-slate-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer">
-                    <button type="submit" class="w-full bg-gradient-to-r from-indigo-600 to-violet-600 font-semibold py-3 rounded-xl transition-all shadow-lg hover:opacity-90">
-                        بدء المعالجة بأعلى جودة
-                    </button>
-                </form>
-            </div>
-        </body>
-        </html>
-    `);
-});
+  <div class="field">
+    <label for="resolution">دقة الفيديو</label>
+    <select id="resolution">
+      <option value="1080">1080p — جودة عالية</option>
+      <option value="720" selected>720p — متوازن لتيك توك</option>
+      <option value="540">540p — حجم أصغر</option>
+      <option value="480">480p — ضغط قوي</option>
+    </select>
+  </div>
 
-// مسار معالجة الفيديو
-app.post('/process', upload.single('video'), (req, res) => {
-    if (!req.file) {
-        return res.status(400).send('الرجاء رفع ملف فيديو صالح.');
+  <div class="field">
+    <label for="quality">جودة الضغط: <span id="qtext">28</span></label>
+    <input id="quality" type="range" min="18" max="35" value="28">
+    <p class="desc">القيمة الأقل تعطي عادة جودة أعلى وحجماً أكبر.</p>
+  </div>
+
+  <div class="field">
+    <label for="fps">معدل الإطارات</label>
+    <select id="fps">
+      <option value="original">الأصلي</option>
+      <option value="30" selected>30 إطاراً/ثانية</option>
+      <option value="25">25 إطاراً/ثانية</option>
+      <option value="24">24 إطاراً/ثانية</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label><input id="mute" type="checkbox" style="width:auto;margin-left:7px"> إزالة الصوت لتقليل الحجم</label>
+  </div>
+
+  <div class="actions">
+    <button id="compress" class="primary" disabled>ابدأ الضغط</button>
+    <button id="reset" class="secondary">إعادة ضبط</button>
+  </div>
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+</section>
+
+<section class="panel">
+  <h3>٢. تفاصيل النتيجة</h3>
+  <p class="desc">قارن حجم الملف قبل الضغط وبعده.</p>
+  <div class="stats">
+    <div class="stat"><small>الحجم الأصلي</small><strong id="before">—</strong></div>
+    <div class="stat"><small>الحجم الجديد</small><strong id="after">—</strong></div>
+    <div class="stat"><small>نسبة التوفير</small><strong class="green" id="saving">—</strong></div>
+    <div class="stat"><small>مدة الفيديو</small><strong id="duration">—</strong></div>
+  </div>
+  <div class="result" id="result">
+    <h3 style="margin:20px 0 12px">معاينة الفيديو المضغوط</h3>
+    <video id="output" controls playsinline></video>
+    <a id="download" class="download primary" download="IAF-TikTok.mp4">تنزيل الفيديو</a>
+  </div>
+  <div class="note">
+    <b>ملاحظة:</b> الضغط لا يعني بالضرورة تحسين الصورة أو استرجاع التفاصيل المفقودة. تحقق من النتيجة قبل النشر. المعالجة تتم محلياً داخل المتصفح بعد تحميل محرك FFmpeg.
+  </div>
+</section>
+</div>
+
+<footer>© <span id="year"></span> IAF Video Compressor Pro<br>تصميم وتطوير إبراهيم ال فارس</footer>
+</div>
+
+<script type="module">
+const $ = id => document.getElementById(id);
+let file = null, sourceURL = null, outputURL = null;
+let engine = null, busy = false;
+
+const fmt = n => {
+  if (!Number.isFinite(n)) return "—";
+  if (n < 1024) return n + " B";
+  const units = ["KB","MB","GB"];
+  let i=-1;
+  do { n/=1024; i++; } while(n>=1024 && i<units.length-1);
+  return n.toFixed(2)+" "+units[i];
+};
+const timeFmt = n => {
+  if (!Number.isFinite(n)) return "—";
+  n=Math.floor(n);
+  return Math.floor(n/60)+":"+String(n%60).padStart(2,"0");
+};
+function status(msg, error=false, progress=null){
+  const el=$("status");
+  el.style.display="block";
+  el.className="status"+(error?" error":"");
+  el.replaceChildren();
+  const t=document.createElement("div");
+  t.textContent=msg;
+  el.append(t);
+  if(progress!==null){
+    const track=document.createElement("div"); track.className="track";
+    const bar=document.createElement("div"); bar.className="bar";
+    bar.style.width=Math.max(0,Math.min(100,progress))+"%";
+    track.append(bar); el.append(track);
+  }
+}
+function clearResult(){
+  if(outputURL) URL.revokeObjectURL(outputURL);
+  outputURL=null;
+  $("result").style.display="none";
+  $("output").removeAttribute("src");
+  $("download").removeAttribute("href");
+  $("after").textContent="—";
+  $("saving").textContent="—";
+}
+function clearFile(){
+  if(busy) return;
+  if(sourceURL) URL.revokeObjectURL(sourceURL);
+  sourceURL=null;file=null;
+  $("file").value="";
+  $("filebox").style.display="none";
+  $("drop").style.display="block";
+  $("preview").removeAttribute("src");
+  $("before").textContent="—";$("duration").textContent="—";
+  $("compress").disabled=true;
+  $("status").style.display="none";
+  clearResult();
+}
+$("pick").onclick=()=>$("file").click();
+$("file").onchange=e=>chooseFile(e.target.files[0]);
+$("remove").onclick=clearFile;
+$("quality").oninput=()=>$("qtext").textContent=$("quality").value;
+$("year").textContent=new Date().getFullYear();
+
+function chooseFile(f){
+  if(!f)return;
+  if(!f.type.startsWith("video/")){
+    status("اختر ملف فيديو صالحاً.",true);return;
+  }
+  if(f.size>1024*1024*1024){
+    status("الملف أكبر من 1 GB؛ جرّب ملفاً أصغر لتجنب نفاد ذاكرة المتصفح.",true);return;
+  }
+  clearFile();
+  file=f;
+  sourceURL=URL.createObjectURL(f);
+  $("preview").src=sourceURL;
+  $("filename").textContent=f.name+" · "+fmt(f.size);
+  $("before").textContent=fmt(f.size);
+  $("filebox").style.display="block";
+  $("drop").style.display="none";
+  $("compress").disabled=false;
+  $("preview").onloadedmetadata=()=>{
+    $("duration").textContent=timeFmt($("preview").duration);
+  };
+}
+$("drop").ondragover=e=>{e.preventDefault();$("drop").style.borderColor="#35e0c1"};
+$("drop").ondragleave=()=>$("drop").style.borderColor="";
+$("drop").ondrop=e=>{
+  e.preventDefault();$("drop").style.borderColor="";
+  chooseFile(e.dataTransfer.files[0]);
+};
+$("reset").onclick=()=>{
+  clearFile();
+  $("resolution").value="720";
+  $("quality").value="28";$("qtext").textContent="28";
+  $("fps").value="30";$("mute").checked=false;
+};
+
+async function loadEngine(){
+  if(engine)return engine;
+  status("جارٍ تحميل محرك FFmpeg لأول مرة. انتظر حتى يكتمل التحميل...",false,5);
+  const {FFmpeg}=await import("https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.10/dist/esm/index.js");
+  const {toBlobURL}=await import("https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.2/dist/esm/index.js");
+  const ff=new FFmpeg();
+  ff.on("progress",({progress})=>{
+    const p=Math.round(Math.max(0,Math.min(1,progress))*100);
+    status("جارٍ ضغط الفيديو... "+p+"%",false,p);
+  });
+  const base="https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.6/dist/umd";
+  const coreURL=await toBlobURL(base+"/ffmpeg-core.js","text/javascript");
+  const wasmURL=await toBlobURL(base+"/ffmpeg-core.wasm","application/wasm");
+  await ff.load({coreURL,wasmURL});
+  engine=ff;
+  return ff;
+}
+
+$("compress").onclick=async()=>{
+  if(!file||busy)return;
+  busy=true;
+  $("compress").disabled=true;$("reset").disabled=true;
+  clearResult();
+  let ff, inputName="input.mp4", outputName="iaf-output.mp4";
+  try{
+    ff=await loadEngine();
+    const ext=(file.name.split(".").pop()||"mp4").toLowerCase().replace(/[^a-z0-9]/g,"");
+    inputName="input."+ext;
+    status("جارٍ تجهيز الفيديو...",false,8);
+    await ff.writeFile(inputName,new Uint8Array(await file.arrayBuffer()));
+
+    const height=Number($("resolution").value);
+    const filter=`scale=w='min(1080,iw)':h='min(${height},ih)':force_original_aspect_ratio=decrease:force_divisible_by=2`;
+    const args=["-i",inputName,"-map","0:v:0","-c:v","libx264",
+      "-preset","ultrafast","-crf",String($("quality").value),
+      "-pix_fmt","yuv420p","-vf",filter];
+    if($("fps").value!=="original")args.push("-r",$("fps").value);
+    if($("mute").checked)args.push("-an");
+    else args.push("-c:a","aac","-b:a","128k");
+    args.push("-movflags","+faststart","-threads","1","-y",outputName);
+
+    status("بدأ الضغط. لا تغلق الصفحة حتى تنتهي المعالجة.",false,10);
+    const code=await ff.exec(args);
+    if(code!==0)throw new Error("فشل ترميز الفيديو.");
+    const data=await ff.readFile(outputName);
+    if(!data||!data.length)throw new Error("لم يتم إنشاء ملف نتيجة صالح.");
+
+    const blob=new Blob([data],{type:"video/mp4"});
+    outputURL=URL.createObjectURL(blob);
+    $("output").src=outputURL;
+    $("download").href=outputURL;
+    $("download").download="IAF-TikTok-Compressed.mp4";
+    $("after").textContent=fmt(blob.size);
+    const diff=file.size-blob.size;
+    $("saving").textContent=(diff>=0?"وفّرت ":"زاد ")+Math.abs(diff/file.size*100).toFixed(1)+"%";
+    $("result").style.display="block";
+    status(diff>=0?"اكتمل الضغط بنجاح. راجع الفيديو قبل نشره.":"اكتمل الضغط لكن الملف الناتج أكبر من الأصل. جرّب دقة أقل أو قيمة جودة أعلى رقمياً.",false,100);
+  }catch(err){
+    console.error(err);
+    status("تعذرت المعالجة: "+(err.message||err)+". تحقق من اتصال الإنترنت وجرب فيديو MP4 آخر أو استخدم جهازاً أقوى.",true);
+  }finally{
+    if(ff){
+      try{await ff.deleteFile(inputName)}catch{}
+      try{await ff.deleteFile(outputName)}catch{}
     }
-
-    const inputPath = req.file.path;
-    const outputFileName = `HQ_TikTok_${Date.now()}.mp4`;
-    const outputPath = path.join(outputDir, outputFileName);
-
-    console.log('--- بدأت عملية معالجة وضغط الفيديو ---');
-
-    ffmpeg(inputPath)
-        .outputOptions([
-            // إجبار الأبعاد على 1080x1920 مع إضافة خلفية ضبابية أو سوداء للمحافظة على نسبة العرض دون تشوه
-            '-vf scale=1080:1920:force_original_aspect_ratio=decrease,pad=1080:1920:(ow-iw)/2:(oh-ih)/2:color=black',
-            // كوديك الفيديو القياسي والأكثر توافقاً مع تيك توك وجودته عالية
-            '-c:v libx264',
-            // بريزيت معتدل يوازن بين سرعة المعالجة وجودة الضغط الحادة
-            '-preset slow',
-            // معدل الثبات الثابت CRF 22 لضمان عدم ملاحظة أي فقدان في الجودة مع تقليص الحجم الذكي
-            '-crf 22',
-            // تثبيت خوارزمية الترميز لتتوافق مع كل الأجهزة (Main Profile)
-            '-profile:v main',
-            '-level 4.0',
-            // كوديك الصوت عالي النقاء
-            '-c:a aac',
-            '-b:a 192k',
-            '-ar 44100',
-            // ضمان التوافقية وسرعة تشغيل الفيديو فور فتحه (Faststart)
-            '-movflags +faststart',
-            // تقييد استخدام الخيوط لضمان استقرار السيرفر
-            '-threads 0'
-        ])
-        .on('progress', (progress) => {
-            if (progress.percent) {
-                console.log(`نسبة الإنجاز: ${Math.round(progress.percent)}%`);
-            }
-        })
-        .on('error', (err, stdout, stderr) => {
-            console.error('خطأ في معالجة FFmpeg:', err.message);
-            console.error('تفاصيل الخطأ:', stderr);
-            fs.removeSync(inputPath);
-            res.status(500).send('حدث خطأ أثناء معالجة الفيديو.');
-        })
-        .on('end', () => {
-            console.log('اكتملت المعالجة بنجاح!');
-            // تنظيف الملف الأصلي المرفوع
-            fs.removeSync(inputPath);
-
-            // إرسال الملف المعالج للتحميل المباشر
-            res.download(outputPath, outputFileName, (err) => {
-                if (err) console.error('خطأ أثناء إرسال الملف:', err);
-                // حذف الملف النهائي بعد تنزيله لتوفير مساحة السيرفر
-                setTimeout(() => fs.removeSync(outputPath), 10000);
-            });
-        })
-        .save(outputPath);
-});
-
-app.listen(PORT, () => {
-    console.log(`السيرفر يعمل بكفاءة على الرابط: http://localhost:${PORT}`);
-});
+    busy=false;
+    $("compress").disabled=!file;
+    $("reset").disabled=false;
+  }
+};
+</script>
+</body>
+</html>
